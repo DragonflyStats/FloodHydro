@@ -1,0 +1,286 @@
+
+brmsformula-helpers Linear and Non-linear formulas in brms
+#### Description 
+Helper functions to specify linear and non-linear formulas for use with brmsformula.
+Usage
+nlf(formula, ..., flist = NULL, dpar = NULL, resp = NULL,
+loop = NULL)
+lf(..., flist = NULL, dpar = NULL, resp = NULL, cmc = NULL)
+set_nl(nl = TRUE, dpar = NULL, resp = NULL)
+brmsformula-helpers 35
+set_rescor(rescor = TRUE)
+set_mecor(mecor = TRUE)
+#### Arguments
+formula Non-linear formula for a distributional parameter. The name of the distributional
+parameter can either be specified on the left-hand side of formula or via
+argument dpar.
+... Additional formula objects to specify predictors of non-linear and distributional
+parameters. Formulas can either be named directly or contain names
+on their left-hand side. The following are distributional parameters of specific
+families (all other parameters are treated as non-linear parameters): sigma
+(residual standard deviation or scale of the gaussian, student, skew_normal,
+lognormal exgaussian, and asym_laplace families); shape (shape parameter
+of the Gamma, weibull, negbinomial, and related zero-inflated / hurdle
+families); nu (degrees of freedom parameter of the student and frechet families);
+phi (precision parameter of the beta and zero_inflated_beta families);
+kappa (precision parameter of the von_mises family); beta (mean parameter
+of the exponential component of the exgaussian family); quantile (quantile
+parameter of the asym_laplace family); zi (zero-inflation probability); hu
+(hurdle probability); zoi (zero-one-inflation probability); coi (conditional oneinflation
+probability); disc (discrimination) for ordinal models; bs, ndt, and
+bias (boundary separation, non-decision time, and initial bias of the wiener
+diffusion model). By default, distributional parameters are modeled on the log
+scale if they can be positive only or on the logit scale if the can only be within
+the unit interval. See ’#### Details’ for more explanation.
+flist Optional list of formulas, which are treated in the same way as formulas passed
+via the ... argument.
+dpar Optional character string specifying the distributional parameter to which the
+formulas passed via ... and flist belong.
+resp Optional character string specifying the response variable to which the formulas
+passed via ... and flist belong. Only relevant in multivariate models.
+loop Logical; Only used in non-linear models. Indicates if the computation of the
+non-linear formula should be done inside (TRUE) or outside (FALSE) a loop over
+observations. Defaults to TRUE.
+cmc Logical; Indicates whether automatic cell-mean coding should be enabled when
+removing the intercept by adding 0 to the right-hand of model formulas. Defaults
+to TRUE to mirror the behavior of standard R formula parsing.
+nl Logical; Indicates whether formula should be treated as specifying a non-linear
+model. By default, formula is treated as an ordinary linear model formula.
+rescor Logical; Indicates if residual correlation between the response variables should
+be modeled. Currently this is only possible in multivariate gaussian and student
+models. Only relevant in multivariate models.
+mecor Logical; Indicates if correlations between latent variables defined by me terms
+should be modeled. Defaults to TRUE.
+36 brmshypothesis
+#### Value
+For lf and nlf a list that can be passed to brmsformula or added to an existing brmsformula
+or mvbrmsformula object. For set_nl and set_rescor a logical #### Value that can be added to an
+existing brmsformula or mvbrmsformula object.
+See Also
+brmsformula, mvbrmsformula
+Examples
+# add more formulas to the model
+bf(y ~ 1) +
+nlf(sigma ~ a * exp(b * x)) +
+lf(a ~ x, b ~ z + (1|g)) +
+gaussian()
+# specify 'nl' later on
+bf(y ~ a * inv_logit(x * b)) +
+lf(a + b ~ z) +
+set_nl(TRUE)
+# specify a multivariate model
+bf(y1 ~ x + (1|g)) +
+bf(y2 ~ z) +
+set_rescor(TRUE)
+brmshypothesis #### Description s of brmshypothesis Objects
+#### Description 
+A brmshypothesis object contains posterior samples as well as summary statistics of non-linear
+hypotheses as returned by hypothesis.
+Usage
+## S3 method for class 'brmshypothesis'
+print(x, digits = 2, chars = 20, ...)
+## S3 method for class 'brmshypothesis'
+plot(x, N = 5, ignore_prior = FALSE,
+chars = 40, colors = NULL, theme = NULL, ask = TRUE,
+plot = TRUE, ...)
+brm_multiple 37
+#### Arguments
+x An object of class brmsfit.
+digits Minimal number of significant digits, see print.default.
+chars Maximum number of characters of each hypothesis to print or plot. If NULL,
+print the full hypotheses. Defaults to 20.
+... Currently ignored.
+N The number of parameters plotted per page.
+ignore_prior A flag indicating if prior distributions should also be plotted. Only used if priors
+were specified on the relevant parameters.
+colors Two #### Values specifying the colors of the posterior and prior density respectively.
+If NULL (the default) colors are taken from the current color scheme of the
+bayesplot package.
+theme A theme object modifying the appearance of the plots. For some basic themes
+see ggtheme and theme_default.
+ask logical; indicates if the user is prompted before a new page is plotted. Only used
+if plot is TRUE.
+plot logical; indicates if plots should be plotted directly in the active graphic device.
+Defaults to TRUE.
+#### Details
+The two most important elements of a brmshypothesis object are hypothesis, which is a data.frame
+containing the summary estimates of the hypotheses, and samples, which is a data.frame containing
+the corresponding posterior samples.
+See Also
+hypothesis
+brm_multiple Run the same brms model on multiple datasets
+#### Description 
+Run the same brms model on multiple datasets and then combine the results into one fitted model
+object. This is useful in particular for multiple missing #### Value imputation, where the same model is
+fitted on multiple imputed data sets.
+Usage
+brm_multiple(formula, data, family = gaussian(), prior = NULL,
+autocor = NULL, cov_ranef = NULL, sample_prior = c("no", "yes",
+"only"), sparse = FALSE, knots = NULL, stanvars = NULL,
+stan_funs = NULL, combine = TRUE, seed = NA, file = NULL, ...)
+38 brm_multiple
+#### Arguments
+formula An object of class formula, brmsformula, or mvbrmsformula (or one that can
+be coerced to that classes): A symbolic #### Description  of the model to be fitted.
+The #### Details of model specification are explained in brmsformula.
+data A list of data.frames each of which will be used to fit a separate model. Alternatively,
+a mids object from the mice package.
+* `` family`` A description  of the response distribution and link function to be used in the
+model. This can be a family function, a call to a family function or a character
+string naming the family. Every family function has a link argument allowing to
+specify the link function to be applied on the response variable. If not specified,
+default links are used. For #### Details of supported families see brmsfamily. By
+default, a linear gaussian model is applied. In multivariate models, family
+might also be a list of families.
+* ``prior``: One or more brmsprior objects created by set_prior or related functions and
+combined using the c method or the + operator. See also get_prior for more
+help.
+* ``autocor`` An optional cor_brms object describing the correlation structure within the response
+variable (i.e., the ’autocorrelation’). See the documentation of cor_brms
+for a #### Description  of the available correlation structures. Defaults to NULL, corresponding
+to no correlations. In multivariate models, autocor might also be a
+list of autocorrelation structures.
+* ``cov_ranef`` A list of matrices that are proportional to the (within) covariance structure of the
+group-level effects. The names of the matrices should correspond to columns in
+data that are used as grouping factors. All levels of the grouping factor should
+appear as rownames of the corresponding matrix. This argument can be used,
+among others to model pedigrees and phylogenetic effects. See vignette("brms_phylogenetics")
+for more details.
+* ``sample_prior``: Indicate if samples from all specified proper priors should be drawn additionally
+to the posterior samples (defaults to "no"). Among others, these samples can be
+used to calculate Bayes factors for point hypotheses via hypothesis. If set to
+"only", samples are drawn solely from the priors ignoring the likelihood, which
+allows among others to generate samples from the prior predictive distribution.
+In this case, all parameters must have proper priors.
+sparse Logical; indicates whether the population-level design matrices should be treated
+as sparse (defaults to FALSE). For design matrices with many zeros, this can considerably
+reduce required memory. Sampling speed is currently not improved or
+even slightly decreased.
+* `` knots ``:Optional list containing user specified knot #### Values to be used for basis construction
+of smoothing terms. See gamm for more details.
+stanvars An optional stanvars object generated by function stanvar to define additional
+variables for use in Stan’s program blocks.
+stan_funs (Deprecated) An optional character string containing self-defined Stan functions,
+which will be included in the functions block of the generated Stan code.
+It is now recommended to use the stanvars argument for this purpose, instead.
+brm_multiple 39
+combine Logical; Indicates if the fitted models should be combined into a single fitted
+model object via combine_models. Defaults to TRUE.
+seed The seed for random number generation to make results reproducible. If NA (the
+default), Stan will set the seed randomly.
+file Either NULL or a character string. In the latter case, the fitted model object is
+saved via saveRDS in a file named after the string supplied in file. The .rds
+extension is added automatically. If the file already exists, brm will load and
+return the saved model object instead of refitting the model. As existing files
+won’t be overwritten, you have to manually remove the file in order to refit
+and save the model under an existing file name. The file name is stored in the
+brmsfit object for later usage.
+* `` ... ``: Further arguments passed to brm.
+#### Details
+The combined model may issue false positive convergence warnings, as the MCMC chains corresponding
+to different datasets may not necessarily overlap, even if each of the original models did
+converge. To find out whether each of the original models converged, investigate fit$rhats, where
+fit denotes the output of brm_multiple.
+#### Value
+If combine = TRUE a brmsfit_multiple object, which inherits from class brmsfit and behaves
+essentially the same. If combine = FALSE a list of brmsfit objects.
+Examples
+## Not run:
+library(mice)
+imp <- mice(nhanes2)
+# fit the model using mice and lm
+fit_imp1 <- with(lm(bmi~age+hyp+chl), data = imp)
+summary(pool(fit_imp1))
+# fit the model using brms
+fit_imp2 <- brm_multiple(bmi~age+hyp+chl, data = imp, chains = 1)
+summary(fit_imp2)
+plot(fit_imp2, pars = "^b_")
+# investigate convergence of the original models
+fit_imp2$rhats
+## End(Not run)
+40 coef.brmsfit
+coef.brmsfit Extract Model Coefficients
+#### Description 
+Extract model coefficients, which are the sum of population-level effects and corresponding grouplevel
+effects
+Usage
+## S3 method for class 'brmsfit'
+coef(object, summary = TRUE, robust = FALSE,
+probs = c(0.025, 0.975), ...)
+#### Arguments
+object An object of class brmsfit.
+summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
+of the raw #### Values? Default is TRUE.
+robust If FALSE (the default) the mean is used as the measure of central tendency and
+the standard deviation as the measure of variability. If TRUE, the median and the
+median absolute deviation (MAD) are applied instead. Only used if summary is
+TRUE.
+probs The percentiles to be computed by the quantile function. Only used if summary
+is TRUE.
+* `` ... ``: Further arguments passed to fixef.brmsfit and ranef.brmsfit.
+#### Value
+If old is FALSE: A list of arrays (one per grouping factor). If summary is TRUE, names of the first
+dimension are the factor levels and names of the third dimension are the group-level effects. If
+summary is FALSE, names of the second dimension are the factor levels and names of the third
+dimension are the group-level effects.
+Author(s)
+Paul-Christian Buerkner <paul.buerkner@gmail.com>
+Examples
+## Not run:
+fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c + (1+Trt_c|visit),
+data = epilepsy, family = gaussian(), chains = 2)
+## extract population and group-level coefficients separately
+fixef(fit)
+ranef(fit)
+## extract combined coefficients
+combine_models 41
+coef(fit)
+## End(Not run)
+combine_models Combine Models fitted with brms
+#### Description 
+Combine multiple brmsfit objects, which fitted the same model. This is usefuly for instance when
+having manually run models in parallel.
+Usage
+combine_models(..., mlist = NULL, check_data = TRUE)
+#### Arguments
+... One or more brmsfit objects.
+mlist Optional list of one or more brmsfit objects.
+check_data Logical; indicates if the data should be checked for being the same across models
+(defaults to TRUE). Setting it to FALSE may be useful for instance when combining
+models fitted on multiple imputed data sets.
+#### Details
+This function just takes the first model and replaces its stanfit object (slot fit) by the combined
+stanfit objects of all models.
+#### Value
+A brmsfit object.
+compare_ic Compare Information Criteria of Different Models
+#### Description 
+Compare information criteria of different models fitted with WAIC or loo.
+Usage
+compare_ic(..., x = NULL, ic = c("loo", "waic", "kfold"))
+42 control_params.brmsfit
+#### Arguments
+... At least two objects returned by WAIC or loo. Alternatively, brmsfit objects
+with information criteria precomputed via add_ic may be passed, as well.
+x A list containing the same types of objects as can be passed via ....
+ic The name of the information criterion to be extracted from brmsfit objects.
+Ignored if information criterion objects are only passed directly.
+#### Details
+for more details see compare.
+#### Value
+An object of class iclist.
+See Also
+WAIC, loo, add_ic, compare
+Examples
+## Not run:
+# model with population-level effects only
+fit1 <- brm(rating ~ treat + period + carry,
+data = inhaler, family = "gaussian")
+waic1 <- WAIC(fit1)
+# model with an additional varying intercept for subjects
+fit2 <- brm(rating ~ treat + period + carry + (1|subject),
+data = inhaler, family = "gaussian")
+waic2 <- WAIC(fit2)
+# compare both models
+compare_ic(waic1, waic2)
+## End(Not run)
