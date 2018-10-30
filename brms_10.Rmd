@@ -1,0 +1,311 @@
+loo.brmsfit Compute the LOO information criterion
+#### Description 
+Perform approximate leave-one-out cross-validation based on the posterior likelihood using the loo
+package. for more details see loo.
+Usage
+## S3 method for class 'brmsfit'
+loo(x, ..., compare = TRUE, resp = NULL,
+pointwise = FALSE, reloo = FALSE, k_threshold = 0.7,
+reloo_args = list(), model_names = NULL)
+#### Arguments
+x A fitted model object.
+... More fitted model objects or further #### Arguments passed to the underlying postprocessing
+functions.
+compare A flag indicating if the information criteria of the models should be compared
+to each other via compare_ic.
+* `` resp``: Optional names of response variables. If specified, predictions are performed
+only for the specified response variables.
+pointwise A flag indicating whether to compute the full log-likelihood matrix at once or
+separately for each observation. The latter approach is usually considerably
+slower but requires much less working memory. Accordingly, if one runs into
+memory issues, pointwise = TRUE is the way to go.
+reloo Logical; Indicate whether reloo should be applied on problematic observations.
+Defaults to FALSE.
+k_threshold The threshold at which pareto k estimates are treated as problematic. Defaults to
+0.7. Only used if argument reloo is TRUE. See pareto_k_ids for more details.
+reloo_args Optional list of additional #### Arguments passed to reloo.
+model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
+will use the passed #### Values as model names.
+loo.brmsfit 89
+#### Details
+When comparing models fitted to the same data, the smaller the LOO, the better the fit. For brmsfit
+objects, LOO is an alias of loo. Use method add_ic to store information criteria in the fitted model
+object for later usage.
+#### Value
+If just one object is provided, an object of class ic. If multiple objects are provided, an object of
+class iclist.
+Author(s)
+Paul-Christian Buerkner <paul.buerkner@gmail.com>
+References
+Vehtari, A., Gelman, A., & Gabry J. (2016). Practical Bayesian model evaluation using leaveone-
+out cross-validation and WAIC. In Statistics and Computing, doi:10.1007/s11222-016-9696-4.
+arXiv preprint arXiv:1507.04544.
+Gelman, A., Hwang, J., & Vehtari, A. (2014). Understanding predictive information criteria for
+Bayesian models. Statistics and Computing, 24, 997-1016.
+Watanabe, S. (2010). Asymptotic equivalence of Bayes cross validation and widely applicable
+information criterion in singular learning theory. The Journal of Machine Learning Research, 11,
+3571-3594.
+Examples
+## Not run:
+# model with population-level effects only
+fit1 <- brm(rating ~ treat + period + carry,
+data = inhaler, family = "gaussian")
+loo(fit1)
+# model with an additional varying intercept for subjects
+fit2 <- brm(rating ~ treat + period + carry + (1|subject),
+data = inhaler, family = "gaussian")
+# compare both models
+loo(fit1, fit2)
+## End(Not run)
+90 loo_model_weights.brmsfit
+loo_model_weights.brmsfit
+Model averaging via stacking or pseudo-BMA weighting.
+#### Description 
+Compute model weights for brmsfit objects via stacking or pseudo-BMA weighting. For more
+#### Details, see loo::loo_model_weights.
+Usage
+## S3 method for class 'brmsfit'
+loo_model_weights(x, ..., model_names = NULL)
+#### Arguments
+x A fitted model object.
+... More fitted model objects or further #### Arguments passed to the underlying postprocessing
+functions.
+model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
+will use the passed #### Values as model names.
+#### Value
+A named vector of model weights.
+Examples
+## Not run:
+# model with population-level effects only
+fit1 <- brm(rating ~ treat + period + carry,
+data = inhaler, family = "gaussian")
+# model with an additional varying intercept for subjects
+fit2 <- brm(rating ~ treat + period + carry + (1|subject),
+data = inhaler, family = "gaussian")
+loo_model_weights(fit1, fit2)
+## End(Not run)
+loo_predict.brmsfit 91
+loo_predict.brmsfit Compute Weighted Expectations Using LOO
+#### Description 
+These functions are wrappers around the E_loo function of the loo package.
+Usage
+## S3 method for class 'brmsfit'
+loo_predict(object, type = c("mean", "var",
+"quantile"), probs = 0.5, psis_object = NULL, resp = NULL, ...)
+## S3 method for class 'brmsfit'
+loo_linpred(object, type = c("mean", "var",
+"quantile"), probs = 0.5, psis_object = NULL, resp = NULL,
+scale = "linear", ...)
+## S3 method for class 'brmsfit'
+loo_predictive_interval(object, prob = 0.9,
+psis_object = NULL, ...)
+#### Arguments
+object An object of class brmsfit.
+type The statistic to be computed on the results. Can by either "mean" (default),
+"var", or "quantile".
+probs A vector of quantiles to compute. Only used if type = quantile.
+psis_object An optional object returend by psis. If psis_object is missing then psis is
+executed internally, which may be time consuming for models fit to very large
+datasets.
+* `` resp``: Optional names of response variables. If specified, predictions are performed
+only for the specified response variables.
+... Optional #### Arguments passed to the underlying methods that is log_lik, as well
+as predict or fitted.
+scale Passed to fitted.
+prob For loo_predictive_interval, a scalar in (0; 1) indicating the desired probability
+mass to include in the intervals. The default is prob = 0.9 (90% intervals).
+#### Value
+loo_predict and loo_linpred return a vector with one element per observation. The only exception
+is if type = "quantile" and length(probs) >= 2, in which case a separate vector for each
+92 loo_R2.brmsfit
+element of probs is computed and they are returned in a matrix with length(probs) rows and one
+column per observation.
+loo_predictive_interval returns a matrix with one row per observation and two columns. loo_predictive_interval(..., is equivalent to loo_predict(..., type = "quantile", probs = c(a, 1-a)) with a = (1 - p)/2,
+except it transposes the result and adds informative column names.
+Examples
+## Not run:
+## data from help("lm")
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+d <- data.frame(
+weight = c(ctl, trt),
+group = gl(2, 10, 20, labels = c("Ctl", "Trt"))
+)
+fit <- brm(weight ~ group, data = d)
+loo_predictive_interval(fit, prob = 0.8)
+## optionally log-weights can be pre-computed and reused
+psis <- loo::psis(-log_lik(fit), cores = 2)
+loo_predictive_interval(fit, prob = 0.8, psis_object = psis)
+loo_predict(fit, type = "var", psis_object = psis)
+## End(Not run)
+loo_R2.brmsfit Compute a LOO-adjusted R-squared for regression models
+#### Description 
+Compute a LOO-adjusted R-squared for regression models
+Usage
+## S3 method for class 'brmsfit'
+loo_R2(object, resp = NULL, ...)
+#### Arguments
+object An object of class brmsfit.
+* `` resp``: Optional names of response variables. If specified, predictions are performed
+only for the specified response variables.
+* `` ... ``: Further arguments passed to fitted and log_lik, which are used in the computation
+of the R-squared values.
+make_conditions 93
+#### Value
+A real #### Value per response variable indicating the LOO-adjusted R-squared.
+Examples
+## Not run:
+fit <- brm(mpg ~ wt + cyl, data = mtcars)
+summary(fit)
+loo_R2(fit)
+# compute R2 with new data
+nd <- data.frame(mpg = c(10, 20, 30), wt = c(4, 3, 2), cyl = c(8, 6, 4))
+loo_R2(fit, newdata = nd)
+## End(Not run)
+make_conditions Prepare Fully Crossed Conditions
+#### Description 
+This is a helper function to prepare fully crossed conditions primarily for use with the conditions
+argument of marginal_effects. Automatically creates labels for each row in the cond__ column.
+Usage
+make_conditions(x, vars, ...)
+#### Arguments
+x An R object from which to extract the variables that should be part of the conditions.
+vars Names of the variables that should be part of the conditions.
+... #### Arguments passed to rows2labels.
+#### Details
+For factor like variables, all levels are used as conditions. For numeric variables, mean + (-1:1) * SD
+are used as conditions.
+#### Value
+A data.frame where each row indicates a condition.
+See Also
+marginal_effects, rows2labels
+94 make_stancode
+Examples
+df <- data.frame(x = c("a", "b"), y = rnorm(10))
+make_conditions(df, vars = c("x", "y"))
+make_stancode Stan Code for brms Models
+#### Description 
+Generate Stan code for brms models
+Usage
+make_stancode(formula, data, family = gaussian(), prior = NULL,
+autocor = NULL, cov_ranef = NULL, sparse = FALSE,
+sample_prior = c("no", "yes", "only"), stanvars = NULL,
+stan_funs = NULL, save_model = NULL, silent = FALSE, ...)
+#### Arguments
+formula An object of class formula, brmsformula, or mvbrmsformula (or one that can
+be coerced to that classes): A symbolic #### Description  of the model to be fitted.
+The #### Details of model specification are explained in brmsformula.
+data An object of class data.frame (or one that can be coerced to that class) containing
+data of all variables used in the model.
+* `` family`` A description  of the response distribution and link function to be used in the
+model. This can be a family function, a call to a family function or a character
+string naming the family. Every family function has a link argument allowing to
+specify the link function to be applied on the response variable. If not specified,
+default links are used. For #### Details of supported families see brmsfamily. By
+default, a linear gaussian model is applied. In multivariate models, family
+might also be a list of families.
+* ``prior``: One or more brmsprior objects created by set_prior or related functions and
+combined using the c method or the + operator. See also get_prior for more
+help.
+* ``autocor`` An optional cor_brms object describing the correlation structure within the response
+variable (i.e., the ’autocorrelation’). See the documentation of cor_brms
+for a #### Description  of the available correlation structures. Defaults to NULL, corresponding
+to no correlations. In multivariate models, autocor might also be a
+list of autocorrelation structures.
+* ``cov_ranef`` A list of matrices that are proportional to the (within) covariance structure of the
+group-level effects. The names of the matrices should correspond to columns in
+data that are used as grouping factors. All levels of the grouping factor should
+appear as rownames of the corresponding matrix. This argument can be used,
+among others to model pedigrees and phylogenetic effects. See vignette("brms_phylogenetics")
+for more details.
+make_standata 95
+sparse Logical; indicates whether the population-level design matrices should be treated
+as sparse (defaults to FALSE). For design matrices with many zeros, this can considerably
+reduce required memory. Sampling speed is currently not improved or
+even slightly decreased.
+* ``sample_prior``: Indicate if samples from all specified proper priors should be drawn additionally
+to the posterior samples (defaults to "no"). Among others, these samples can be
+used to calculate Bayes factors for point hypotheses via hypothesis. If set to
+"only", samples are drawn solely from the priors ignoring the likelihood, which
+allows among others to generate samples from the prior predictive distribution.
+In this case, all parameters must have proper priors.
+stanvars An optional stanvars object generated by function stanvar to define additional
+variables for use in Stan’s program blocks.
+stan_funs (Deprecated) An optional character string containing self-defined Stan functions,
+which will be included in the functions block of the generated Stan code.
+It is now recommended to use the stanvars argument for this purpose, instead.
+save_model Either NULL or a character string. In the latter case, the model’s Stan code is
+saved via cat in a text file named after the string supplied in save_model.
+silent logical; If TRUE, warnings of the Stan parser will be suppressed.
+... Other #### Arguments for internal usage only
+#### Value
+A character string containing the fully commented Stan code to fit a brms model.
+Examples
+make_stancode(rating ~ treat + period + carry + (1|subject),
+data = inhaler, family = "cumulative")
+make_stancode(count ~ log_Age_c + log_Base4_c * Trt_c
++ (1|patient) + (1|visit),
+data = epilepsy, family = "poisson")
+make_standata Data for brms Models
+#### Description 
+Generate data for brms models to be passed to Stan
+Usage
+make_standata(formula, data, family = gaussian(), prior = NULL,
+autocor = NULL, cov_ranef = NULL, sample_prior = c("no", "yes",
+"only"), stanvars = NULL, knots = NULL, check_response = TRUE,
+only_response = FALSE, control = list(), ...)
+96 make_standata
+#### Arguments
+formula An object of class formula, brmsformula, or mvbrmsformula (or one that can
+be coerced to that classes): A symbolic #### Description  of the model to be fitted.
+The #### Details of model specification are explained in brmsformula.
+data An object of class data.frame (or one that can be coerced to that class) containing
+data of all variables used in the model.
+* `` family`` A description  of the response distribution and link function to be used in the
+model. This can be a family function, a call to a family function or a character
+string naming the family. Every family function has a link argument allowing to
+specify the link function to be applied on the response variable. If not specified,
+default links are used. For #### Details of supported families see brmsfamily. By
+default, a linear gaussian model is applied. In multivariate models, family
+might also be a list of families.
+* ``prior``: One or more brmsprior objects created by set_prior or related functions and
+combined using the c method or the + operator. See also get_prior for more
+help.
+* ``autocor`` An optional cor_brms object describing the correlation structure within the response
+variable (i.e., the ’autocorrelation’). See the documentation of cor_brms
+for a #### Description  of the available correlation structures. Defaults to NULL, corresponding
+to no correlations. In multivariate models, autocor might also be a
+list of autocorrelation structures.
+* ``cov_ranef`` A list of matrices that are proportional to the (within) covariance structure of the
+group-level effects. The names of the matrices should correspond to columns in
+data that are used as grouping factors. All levels of the grouping factor should
+appear as rownames of the corresponding matrix. This argument can be used,
+among others to model pedigrees and phylogenetic effects. See vignette("brms_phylogenetics")
+for more details.
+* ``sample_prior``: Indicate if samples from all specified proper priors should be drawn additionally
+to the posterior samples (defaults to "no"). Among others, these samples can be
+used to calculate Bayes factors for point hypotheses via hypothesis. If set to
+"only", samples are drawn solely from the priors ignoring the likelihood, which
+allows among others to generate samples from the prior predictive distribution.
+In this case, all parameters must have proper priors.
+stanvars An optional stanvars object generated by function stanvar to define additional
+variables for use in Stan’s program blocks.
+* `` knots ``:Optional list containing user specified knot #### Values to be used for basis construction
+of smoothing terms. See gamm for more details.
+check_response Logical; check validity of the response?
+only_response Logical; extract data related to the response only?
+control A named list currently for internal usage only
+... Other potential #### Arguments
+#### Value
+A named list of objects containing the required data to fit a brms model with Stan.
+marginal_effects.brmsfit 97
+Author(s)
+Paul-Christian Buerkner <paul.buerkner@gmail.com>
+Examples
+data1 <- make_standata(rating ~ treat + period + carry + (1|subject),
+data = inhaler, family = "cumulative")
+names(data1)
+data2 <- make_standata(count ~ log_Age_c + log_Base4_c * Trt_c
++ (1|patient) + (1|visit),
+data = epilepsy, family = "poisson")
+names(data2)
