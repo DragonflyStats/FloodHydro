@@ -7,6 +7,7 @@ work with other model fitting functions such as glm or glmer. However, the stand
 as described in family will work with brms. You can also specify custom families for use in
 brms with the custom_family function.
 Usage
+<pre><code>
 brmsfamily(family, link = NULL, link_sigma = "log",
 link_shape = "log", link_nu = "logm1", link_phi = "log",
 link_kappa = "log", link_beta = "log", link_zi = "logit",
@@ -60,8 +61,10 @@ cratio(link = "logit", link_disc = "log", threshold = c("flexible",
 "equidistant"))
 acat(link = "logit", link_disc = "log", threshold = c("flexible",
 "equidistant"))
+</code></pre>
+
 #### Arguments
-family A character string naming the distribution of the response variable be used in
+* family A character string naming the distribution of the response variable be used in
 the model. Currently, the following families are supported: gaussian, student,
 binomial, bernoulli, poisson, negbinomial, geometric, Gamma, skew_normal,
 lognormal, shifted_lognormal, exgaussian, wiener, inverse.gaussian,
@@ -72,11 +75,11 @@ zero_inflated_negbinomial, zero_inflated_poisson, and zero_one_inflated_beta.
 link A specification for the model link function. This can be a name/expression or
 character string. See the ’#### Details’ section for more information on link functions
 supported by each family.
-link_sigma Link of auxiliary parameter sigma if being predicted.
-link_shape Link of auxiliary parameter shape if being predicted.
-link_nu Link of auxiliary parameter nu if being predicted.
-link_phi Link of auxiliary parameter phi if being predicted.
-link_kappa Link of auxiliary parameter kappa if being predicted.
+* link_sigma Link of auxiliary parameter sigma if being predicted.
+* link_shape Link of auxiliary parameter shape if being predicted.
+* link_nu Link of auxiliary parameter nu if being predicted.
+* link_phi Link of auxiliary parameter phi if being predicted.
+* link_kappa Link of auxiliary parameter kappa if being predicted.
 24 brmsfamily
 link_beta Link of auxiliary parameter beta if being predicted.
 link_zi Link of auxiliary parameter zi if being predicted.
@@ -93,8 +96,10 @@ link_quantile Link of auxiliary parameter quantile if being predicted.
 threshold A character string indicating the type of thresholds (i.e. intercepts) used in
 an ordinal model. "flexible" provides the standard unstructured thresholds
 and "equidistant" restricts the distance between consecutive thresholds to the
-same #### Value.
+same value.
+
 #### Details
+
 Family gaussian with identity link leads to linear regression. Family student with identity
 link leads to robust linear regression that is less influenced by outliers. Family skew_normal can
 handle skewed responses in linear regression. Families poisson, negbinomial, and geometric
@@ -120,25 +125,18 @@ response.
 In the following, we list all possible links for each family. The families gaussian, student,
 skew_normal, exgaussian, asym_laplace, and gen_extreme_#### Value accept the links (as names)
 identity, log, and inverse; families poisson, negbinomial, geometric, zero_inflated_poisson,
-zero_inflated_negbinomial, hurdle_poisson, and hurdle_negbinomial the links log, identity,
-brmsfit-class 25
-and sqrt; families binomial, bernoulli, Beta, zero_inflated_binomial, zero_inflated_beta,
-and zero_one_inflated_beta the links logit, probit, probit_approx, cloglog, cauchit, and
+zero_inflated_negbinomial, hurdle_poisson, and hurdle_negbinomial the links log, identity, and sqrt; families binomial, bernoulli, Beta, zero_inflated_binomial, zero_inflated_beta,and zero_one_inflated_beta the links logit, probit, probit_approx, cloglog, cauchit, and
 identity; families cumulative, cratio, sratio, and acat the links logit, probit, probit_approx,
-cloglog, and cauchit; family categorical the link logit; families Gamma, weibull, exponential,
-frechet, and hurdle_gamma the links log, identity, and inverse; families lognormal and
-hurdle_lognormal the links identity and inverse; family inverse.gaussian the links 1/mu^2,
+cloglog, and cauchit; family categorical the link logit; families Gamma, weibull, exponential, frechet, and hurdle_gamma the links log, identity, and inverse; families lognormal and hurdle_lognormal the links identity and inverse; family inverse.gaussian the links 1/mu^2,
 inverse, identity and log; family von_mises the link tan_half; family wiener the link identity.
 The first link mentioned for each family is the default.
 Please note that when calling the Gamma family function, the default link will be inverse not log.
 Also, the probit_approx link cannot be used when calling the binomial family function.
-The current implementation of inverse.gaussian models has some convergence problems and
-requires carefully chosen prior distributions to work efficiently. For this reason, we currently do
-not recommend to use the inverse.gaussian family, unless you really feel that your data requires
-exactly this type of model.
+The current implementation of inverse.gaussian models has some convergence problems and requires carefully chosen prior distributions to work efficiently. For this reason, we currently do not recommend to use the inverse.gaussian family, unless you really feel that your data requires exactly this type of model.
 See Also
 brm, family, customfamily
-Examples
+
+#### Examples
 # create a family object
 (fam1 <- student("log"))
 # alternatively use the brmsfamily function
@@ -152,26 +150,26 @@ samples, model formula, Stan code, relevant data, and other information.
 #### Details
 See methods(class = "brmsfit") for an overview of available methods.
 Slots
-formula A brmsformula object
-family A brmsfamily object
-data A data.frame containing all variables used in the model
-data.name The name of data as specified by the user
-26 brmsformula
-model The model code in Stan language
-prior A brmsprior object containing information on the priors used in the model
-autocor An cor_brms object containing the autocorrelation structure if specified
-ranef A data.frame containing the group-level structure
-cov_ranef A list of customized group-level covariance matrices
-stanvars A stanvars object or NULL
-stan_funs A character string of length one or NULL
-loo An empty slot for adding the loo information criterion after model fitting
-waic An empty slot for adding the waic information criterion after model fitting
-R2 An empty slot for adding the bayes_R2 (Bayesian R-squared) #### Value after model fitting
-marglik An empty slot for adding a bridge object after model fitting containing the log marginal
+
+* formula A brmsformula object
+* family A brmsfamily object
+* data A data.frame containing all variables used in the model
+* data.name The name of data as specified by the user
+* model The model code in Stan language
+* prior A brmsprior object containing information on the priors used in the model
+* autocor An cor_brms object containing the autocorrelation structure if specified
+* ranef A data.frame containing the group-level structure
+* cov_ranef A list of customized group-level covariance matrices
+* stanvars A stanvars object or NULL
+* stan_funs A character string of length one or NULL
+* loo An empty slot for adding the loo information criterion after model fitting
+* waic An empty slot for adding the waic information criterion after model fitting
+* R2 An empty slot for adding the bayes_R2 (Bayesian R-squared) #### Value after model fitting
+* marglik An empty slot for adding a bridge object after model fitting containing the log marginal
 likelihood (see bridge_sampler for #### Details)
-fit An object of class stanfit among others containing the posterior samples
+* fit An object of class stanfit among others containing the posterior samples
 exclude The names of the parameters for which samples are not saved
-algorithm The name of the algorithm used to fit the model
+* algorithm The name of the algorithm used to fit the model
 version The versions of brms and rstan with which the model was fitted
 file Optional name of a file in which the model object was stored in or loaded from
 See Also
@@ -234,12 +232,8 @@ and vignette("brms_multilevel").
 Group-level terms
 Multiple grouping factors each with multiple group-level effects are possible. (Of course we can
 also run models without any group-level effects.) Instead of | you may use || in grouping terms to
-prevent correlations from being modeled. Alternatively, it is possible to model different group-level
-terms of the same grouping factor as correlated (even across different formulas, e.g., in non-linear
-models) by using |<ID>| instead of |. All group-level terms sharing the same ID will be modeled
-as correlated. If, for instance, one specifies the terms (1+x|2|g) and (1+z|2|g) somewhere in the
-formulas passed to brmsformula, correlations between the corresponding group-level effects will
-be estimated.
+prevent correlations from being modeled. Alternatively, it is possible to model different group-level terms of the same grouping factor as correlated (even across different formulas, e.g., in non-linear models) by using |<ID>| instead of |. All group-level terms sharing the same ID will be modeled
+as correlated. If, for instance, one specifies the terms (1+x|2|g) and (1+z|2|g) somewhere in the formulas passed to brmsformula, correlations between the corresponding group-level effects will be estimated.
 If levels of the grouping factor belong to different sub-populations, it may be reasonable to assume
 a different covariance matrix for each of the sub-populations. For instance, the variation within the
 treatment group and within the control group in a randomized control trial might differ. Suppose
@@ -276,32 +270,29 @@ main application of monotonic effects are ordinal predictors that can this way b
 brmsformula 29
 (falsely) treating them as continuous or as unordered categorical predictors. for more details and
 examples see vignette("brms_monotonic").
+  
 Quite often, predictors are measured and as such naturally contain measurement error. Although
 most researchers are well aware of this problem, measurement error in predictors is ignored in
 most regression analyses, possibly because only few packages allow for modeling it. Notably, measurement
-error can be handled in structural equation models, but many more general regression
-models (such as those featured by brms) cannot be transferred to the SEM framework. In brms,
+error can be handled in structural equation models, but many more general regression models (such as those featured by brms) cannot be transferred to the SEM framework. In brms,
 effects of noise-free predictors can be modeled using the me (for ’measurement error’) function.
-If, say, y is the response variable and x is a measured predictor with known measurement error
-sdx, we can simply include it on the right-hand side of the model formula via y ~ me(x, sdx).
-This can easily be extended to more general formulas. If x2 is another measured predictor with
-corresponding error sdx2 and z is a predictor without error (e.g., an experimental setting), we
+If, say, y is the response variable and x is a measured predictor with known measurement error sdx, we can simply include it on the right-hand side of the model formula via y ~ me(x, sdx). This can easily be extended to more general formulas. If x2 is another measured predictor with corresponding error sdx2 and z is a predictor without error (e.g., an experimental setting), we
 can model all main effects and interactions of the three predictors in the well known manner:
 y ~ me(x, sdx) * me(x2, sdx2) * z. In future version of brms, a vignette will be added
-to explain more #### Details about these so called ’error-in-variables’ models and provide real world
+to explain moredetails about these so called ’error-in-variables’ models and provide real world
 examples.
 When a variable contains missing #### Values, the corresponding rows will be excluded from the data by
 default (row-wise exclusion). However, quite often we want to keep these rows and instead estimate
 the missing #### Values. There are two approaches for this: (a) Impute missing #### Values before the model
 fitting for instance via multiple imputation (see brm_multiple for a way to handle multiple imputed
-datasets). (b) Impute missing #### Values on the fly during model fitting. The latter approach is explained
-in the following. Using a variable with missing #### Values as predictors requires two things, First, we
+datasets). (b) Impute missing #### Values on the fly during model fitting. The latter approach is explained in the following. Using a variable with missing #### Values as predictors requires two things, First, we
 need to specify that the predictor contains missings that should to be imputed. If, say, y is the
 primary response, x is a predictor with missings and z is a predictor without missings, we go for
 y ~ mi(x) + z. Second, we need to model x as an additional response with corresponding
 predictors and the addition term mi(). In our example, we could write x | mi() ~ z. See mi for
 examples with real data.
-Additional response information
+
+#### Additional response information
 Another special of the brms formula syntax is the optional aterms part, which may contain multiple
 terms of the form fun(<variable>) separated by + each providing special information on the
 response variable. fun can be replaced with either se, weights, cens, trunc, trials, cat, or dec.
@@ -336,9 +327,8 @@ say, 0 and 100, we can specify this via yi | trunc(lb = 0, ub = 100) ~ predictor
 Instead of numbers, variables in the data set can also be passed allowing for varying truncation
 points across observations. Defining only one of the two #### Arguments in trunc leads to one-sided
 truncation.
-For all continuous families, missing #### Values in the responses can be imputed within Stan by using
-the addition term mi. This is mostly useful in combination with mi predictor terms as explained
-above under ’Special predictor terms’.
+  
+For all continuous families, missing #### Values in the responses can be imputed within Stan by using the addition term mi. This is mostly useful in combination with mi predictor terms as explained above under ’Special predictor terms’.
 For families binomial and zero_inflated_binomial, addition should contain a variable indicating
 the number of trials underlying each observation. In lme4 syntax, we may write for instance
 cbind(success, n - success), which is equivalent to success | trials(n) in brms
@@ -358,7 +348,8 @@ The addition argument disp (short for dispersion) has been removed in version 2.
 use the distributional regression approach by specifying sigma ~ 1 + offset(log(xdisp))
 or shape ~ 1 + offset(log(xdisp)), where xdisp is the variable being previously passed to
 disp.
-Parameterization of the population-level intercept
+
+#### Parameterization of the population-level intercept
 The population-level intercept (if incorporated) is estimated separately and not as part of populationlevel
 parameter vector b. As a result, priors on the intercept also have to be specified separately. Furthermore,
 to increase sampling efficiency, the population-level design matrix X is centered around its
@@ -367,13 +358,14 @@ equal to <X_means, b>, where <,> is the scalar product. The bias is corrected af
 model, but be aware that you are effectively defining a prior on the intercept of the centered design
 matrix not on the real intercept. for more details on setting priors on population-level intercepts,
 see set_prior.
-brmsformula 31
 This behavior can be avoided by using the reserved (and internally generated) variable intercept.
 Instead of y ~ x, you may write y ~ 0 + intercept + x. This way, priors can be defined on
 the real intercept, directly. In addition, the intercept is just treated as an ordinary population-level
 effect and thus priors defined on b will also apply to it. Note that this parameterization may be less
 efficient than the default parameterization discussed above.
-Formula syntax for non-linear models
+
+#### Formula syntax for non-linear models
+
 In brms, it is possible to specify non-linear models of arbitrary complexity. The non-linear model
 can just be specified within the formula argument. Suppose, that we want to predict the response
 y through the predictor x, where x is linked to y through y = alpha - beta * lambda^x,
@@ -397,7 +389,7 @@ It is also possible to predict parameters of the response distribution such as t
 deviation sigma in gaussian models or the hurdle probability hu in hurdle models. The syntax
 closely resembles that of a non-linear parameter, for instance sigma ~ x + s(z) + (1+x|g). For
 some examples of distributional models, see vignette("brms_distreg").
-Alternatively, one may fix distributional parameters to certain #### Values. However, this is mainly useful
+Alternatively, one may fix distributional parameters to certain values. However, this is mainly useful
 when models become too complicated and otherwise have convergence issues. We thus suggest to
 be generally careful when making use of this option. The quantile parameter of the asym_laplace
 distribution is a good example where it is useful. By fixing quantile, one can perform quantile
@@ -413,7 +405,7 @@ In categorical models, distributional parameters do not have fixed names. Instea
 after the response categories (excluding the first one, which serves as the reference category), with
 the prefix 'mu'. If, for instance, categories are named cat1, cat2, and cat3, the distributional
 parameters will be named mucat2 and mucat3.
-32 brmsformula
+
 Some distributional parameters currently supported by brmsformula have to be positive (a negative
 standard deviation or precision parameter does not make any sense) or are bounded between 0 and
 1 (for zero-inflated / hurdle probabilities, quantiles, or the initial bias parameter of drift-diffusion
@@ -425,7 +417,8 @@ to get to the effects on the original scale. Alternatively, it is possible to us
 predict parameters on their original scale, directly. However, this is much more likely to lead to
 problems in the model fitting, if the parameter actually has a restricted range.
 See also brmsfamily for an overview of valid link functions.
-Formula syntax for mixture models
+
+#### Formula syntax for mixture models
 The specification of mixture models closely resembles that of non-mixture models. If not specified
 otherwise (see below), all mean parameters of the mixture components are predicted using the righthand
 side of formula. All types of predictor terms allowed in non-mixture models are allowed in
