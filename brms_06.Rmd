@@ -2,8 +2,12 @@ cor_fixed Fixed user-defined covariance matrices
 #### Description 
 Define a fixed covariance matrix of the response variable for instance to model multivariate effect
 sizes in meta-analysis.
-Usage
+
+#### Usage
+<pre><code>
 cor_fixed(V)
+</code></pre>
+
 #### Arguments
 V Known covariance matrix of the response variable. If a vector is passed, it will
 be used as diagonal entries (variances) and covariances will be set to zero.
@@ -20,16 +24,20 @@ cor_ma MA(q) correlation structure
 #### Description 
 This function is a constructor for the cor_arma class, allowing for moving average terms only.
 Usage
+
+<pre><code>
 cor_ma(formula = ~1, q = 1, cov = FALSE)
+</code></pre>
+
 #### Arguments
-formula A one sided formula of the form ~ t, or ~ t | g, specifying a time covariate
+* formula A one sided formula of the form ~ t, or ~ t | g, specifying a time covariate
 t and, optionally, a grouping factor g. A covariate for this correlation structure
 must be integer #### Valued. When a grouping factor is present in formula, the
 correlation structure is assumed to apply only to observations within the same
 grouping level; observations with different grouping levels are assumed to be
 uncorrelated. Defaults to ~ 1, which corresponds to using the order of the
 observations in the data as a covariate, and no groups.
-q A non-negative integer specifying the moving average (MA) order of the ARMA
+* q A non-negative integer specifying the moving average (MA) order of the ARMA
 structure. Default is 1.
 cov A flag indicating whether ARMA effects should be estimated by means of residual
 covariance matrices (currently only possible for stationary ARMA effects of
@@ -43,12 +51,15 @@ Paul-Christian Buerkner <paul.buerkner@gmail.com>
 cor_sar 51
 See Also
 cor_arma
+
 Examples
+
 cor_ma(~visit|patient, q = 2)
+
 cor_sar Spatial simultaneous autoregressive (SAR) structures
 #### Description 
 These functions are constructors for the cor_sar class implementing spatial simultaneous autoregressive
-structures. The lagsar structure implements SAR of the response #### Values:
+structures. The lagsar structure implements SAR of the response values:
 y = Wy +  + e
 The errorsar structure implements SAR of the residuals:
 y =  + u; u = Wu + e
@@ -83,7 +94,12 @@ chains = 2, cores = 2)
 summary(fit2)
 plot(fit2)
 ## End(Not run)
+
+
+
+
 cs Category Specific Predictors in brms Models
+
 #### Description 
 Category Specific Predictors in brms Models
 Usage
@@ -105,87 +121,7 @@ prior = set_prior("normal(0,5)"), chains = 2)
 summary(fit)
 plot(fit, ask = FALSE)
 ## End(Not run)
-custom_family Custom Families in brms Models
-#### Description 
-Define custom families (i.e. response distribution) for use in brms models. It allows users to benefit
-from the modeling flexibility of brms, while applying their self-defined likelihood functions. All
-of the post-processing methods for brmsfit objects can be made compatible with custom families.
-See vignette("brms_customfamilies") for more details. For a list of built-in families see
-brmsfamily.
-Usage
-custom_family(name, dpars = "mu", links = "identity",
-type = c("real", "int"), lb = NA, ub = NA, vars = NULL,
-specials = NULL, log_lik = NULL, predict = NULL, fitted = NULL,
-env = parent.frame())
-#### Arguments
-name Name of the custom family.
-dpars Names of the distributional parameters of the family. One parameter must be
-named "mu" and the main formula of the model will correspond to that parameter.
-links Names of the link functions of the distributional parameters.
-type Indicates if the response distribution is continuous ("real") or discrete ("int").
-lb Vector of lower bounds of the distributional parameters. Defaults to NA that is
-no lower bound.
-ub Vector of upper bounds of the distributional parameters. Defaults to NA that is
-no upper bound.
-vars Names of variables, which are part of the likelihood function without being distributional
-parameters. That is, vars can be used to pass data to the likelihood.
-See stanvar for #### Details about adding self-defined data to the generated Stan
-model.
-54 custom_family
-specials A character vector of special options to enable for this custom family. Currently
-for internal use only.
-log_lik Optional function to compute log-likelihood #### Values of the model in R. This is
-only relevant if one wants to ensure compatibility with method log_lik.
-predict Optional function to compute predicted #### Values of the model in R. This is only
-relevant if one wants to ensure compatibility with method predict.
-fitted Optional function to compute fitted #### Values of the model in R. This is only relevant
-if one wants to ensure compatibility with method fitted.
-env An environment in which certain post-processing functions related to the custom
-family can be found, if there were not directly passed to custom_family.
-This is only relevant if one wants to ensure compatibility with the methods
-predict, fitted, or log_lik. By default, env is the enviroment from which
-custom_family is called.
-#### Details
-The corresponding probability density or mass Stan functions need to have the same name as the
-custom family. That is if a family is called myfamily, then the Stan functions should be called
-myfamily_lpdf or myfamily_lpmf depending on whether it defines a continuous or discrete distribution.
-#### Value
-An object of class customfamily inheriting from class brmsfamily.
-See Also
-brmsfamily, stanvar
-Examples
-## Not run:
-## demonstrate how to fit a beta-binomial model
-## generate some fake data
-phi <- 0.7
-n <- 300
-z <- rnorm(n, sd = 0.2)
-ntrials <- sample(1:10, n, replace = TRUE)
-eta <- 1 + z
-mu <- exp(eta) / (1 + exp(eta))
-a <- mu * phi
-b <- (1 - mu) * phi
-p <- rbeta(n, a, b)
-y <- rbinom(n, ntrials, p)
-dat <- data.frame(y, z, ntrials)
-# define a custom family
-beta_binomial2 <- custom_family(
-"beta_binomial2", dpars = c("mu", "phi"),
-links = c("logit", "log"), lb = c(NA, 0),
-density_ratio 55
-type = "int", vars = "trials[n]"
-)
-# define the corresponding Stan density function
-stan_funs <- "
-real beta_binomial2_lpmf(int y, real mu, real phi, int N) {
-return beta_binomial_lpmf(y | N, mu * phi, (1 - mu) * phi);
-}
-"
-# fit the model
-fit <- brm(y | trials(ntrials) ~ z, data = dat,
-family = beta_binomial2, stan_funs = stan_funs)
-summary(fit)
-## End(Not run)
+
 density_ratio Compute Density Ratios
 #### Description 
 Compute the ratio of two densities at given points based on samples of the corresponding distributions.
