@@ -1,44 +1,4 @@
-epilepsy Epileptic seizure counts
-#### Description 
-Breslow and Clayton (1993) analyze data initially provided by Thall and Vail (1990) concerning
-seizure counts in a randomized trial of anti-convulsant therapy in epilepsy. Covariates are treatment,
-8-week baseline seizure counts, and age of the patients in years.
-Usage
-epilepsy
-Format
-A dataframe of 236 observations containing information on the following 9 variables.
-Age The age of the patients in years
-Base The seizure count at 8-weeks baseline
-Trt Either 0 or 1 indicating if the patient received anti-convulsant therapy
-log_Age_c The logarithm of Age centered around its mean
-log_Base4_c The logarithm of Base divided by 4 (i.e. log(Base/4)) centered around its mean
-Trt_c Trt centered around its mean
-visit The session number from 1 (first visit) to 4 (last visit)
-count The seizure count between two visits
-patient The patient number
-obs The observation number, i.e. a unique identifier for each observation
-Source
-Thall, P. F., & Vail, S. C. (1990). Some covariance models for longitudinal count data with overdispersion.
-Biometrics, 46(2), 657-671.
-Breslow, N. E., & Clayton, D. G. (1993). Approximate inference in generalized linear mixed models.
-Journal of the American Statistical Association, 88(421), 9-25.
-ExGaussian 57
-Examples
-## Not run:
-## poisson regression without random effects.
-fit1 <- brm(count ~ log_Age_c + log_Base4_c * Trt_c,
-data = epilepsy, family = poisson())
-summary(fit1)
-plot(fit1)
-## poisson regression with random intercepts of patients and visits
-## as well as normal priors for fixed effects parameters.
-fit2 <- brm(count ~ log_Age_c + log_Base4_c * Trt_c
-+ (1|patient) + (1|visit),
-data = epilepsy, family = poisson(),
-prior = set_prior("normal(0,5)"))
-summary(fit2)
-plot(fit2)
-## End(Not run)
+
 ExGaussian The Exponentially Modified Gaussian Distribution
 #### Description 
 Density, distribution function, and random generation for the exponentially modified Gaussian distribution
