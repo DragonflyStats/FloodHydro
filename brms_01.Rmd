@@ -232,7 +232,8 @@ resp_dec(x)
 resp_cens(x, y2 = NULL)
 resp_trunc(lb = -Inf, ub = Inf)
 resp_mi(sdy = NULL)
-Arguments
+
+#### Arguments
 x A vector; usually a variable defined in the data. Allowed #### Values depend on the
 function: resp_se and resp_weights require positive numeric #### Values. resp_trials
 and resp_cat require positive integers. resp_dec requires 0 and 1, or alternatively
@@ -259,7 +260,7 @@ section of brmsformula.
 A vector containing additional information on the response variable in an appropriate format.
 See Also
 brm, brmsformula
-Examples
+#### Examples
 ## Not run:
 ## Random effects meta-analysis
 nstudies <- 20
@@ -293,6 +294,7 @@ add_ic Add information criteria and fit indices to fitted model objects
 Description
 Add information criteria and fit indices to fitted model objects
 Usage
+<pre><code>
 add_ic(x, ...)
 ## S3 method for class 'brmsfit'
 add_ic(x, ic = "loo", model_name = NULL,
@@ -300,7 +302,10 @@ overwrite = FALSE, file = NULL, force_save = FALSE, ...)
 add_ic(x, ...) <- #### Value
 add_loo(x, ...)
 add_waic(x, ...)
-Arguments
+</code></pre>
+
+#### Arguments
+
 x An R object typically of class brmsfit.
 ... Further arguments passed to the underlying functions computing the information
 criteria or fit indices.
@@ -334,7 +339,8 @@ print(fit$loo)
 print(fit$waic)
 ## End(Not run)
 as.mcmc.brmsfit Extract posterior samples for use with the coda package
-Description
+
+#### Description
 Extract posterior samples for use with the coda package
 Usage
 ## S3 method for class 'brmsfit'
