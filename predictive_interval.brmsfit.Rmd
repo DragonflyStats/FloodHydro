@@ -1,0 +1,30 @@
+
+
+predictive_interval.brmsfit 133
+predictive_interval.brmsfit
+Predictive Intervals
+#### Description 
+Compute intervals from the posterior predictive distribution.
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+predictive_interval(object, prob = 0.9, ...)
+</code></pre>
+#### Arguments
+
+object An R object of class brmsfit.
+prob A number p (0 < p < 1) indicating the desired probability mass to include in the
+intervals. Defaults to 0.9.
+* `` ... ``: Further arguments passed to posterior_predict.
+#### Value
+A matrix with 2 columns for the lower and upper bounds of the intervals, respectively, and as many
+rows as observations being predicted.
+
+Examples
+```{r}
+## Not run:
+fit <- brm(count ~ log_Base4_c, data = epilepsy, family = poisson())
+predictive_interval(fit)
+## End(Not run)
+```
