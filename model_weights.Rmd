@@ -1,0 +1,46 @@
+
+model_weights.brmsfit Model Weighting Methods
+#### Description 
+Compute model weights in various ways, for instance via stacking of predictive distributions,
+Akaike weights, or marginal likelihoods.
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+model_weights(x, ..., weights = "loo2",
+model_names = NULL)
+model_weights(x, ...)
+</code></pre>
+#### Arguments
+
+x A fitted model object.
+... More fitted model objects or further arguments
+ passed to the underlying postprocessing
+functions.
+weights Name of the criterion to compute weights from. Should be one of "loo",
+"waic", "kfold", "loo2" (current default), or "marglik". For the former three
+options, Akaike weights will be computed based on the information criterion
+values returned by the respective methods. For "loo2", method loo_model_weights
+will be used to obtain weights. For "marglik", method post_prob will be used
+to compute weights based on log marginal likelihoodvalues (make sure to specify
+reasonable priors in this case). Alternatively, weights can be a numeric
+vector of pre-specified weights.
+model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
+will use the passed values as model names.
+#### Value
+A numeric vector of weights for the models.
+MultiNormal 111
+
+Examples
+```{r}
+## Not run:
+# model with 'treat' as predictor
+fit1 <- brm(rating ~ treat + period + carry, data = inhaler)
+summary(fit1)
+# model without 'treat' as predictor
+fit2 <- brm(rating ~ period + carry, data = inhaler)
+summary(fit2)
+# obtain Akaike weights based on the WAIC
+model_weights(fit1, fit2, weights = "waic")
+## End(Not run)
+```
