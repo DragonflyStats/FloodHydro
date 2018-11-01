@@ -1,0 +1,68 @@
+
+
+
+posterior_samples.brmsfit 121
+posterior_samples.brmsfit
+Extract posterior samples
+#### Description 
+Extract posterior samples of specified parameters
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+posterior_samples(x, pars = NA, exact_match = FALSE,
+add_chain = FALSE, subset = NULL, as.matrix = FALSE,
+as.array = FALSE, ...)
+## S3 method for class 'brmsfit'
+as.data.frame(x, row.names = NULL, optional = FALSE,
+...)
+## S3 method for class 'brmsfit'
+as.matrix(x, ...)
+## S3 method for class 'brmsfit'
+as.array(x, ...)
+posterior_samples(x, pars = NA, ...)
+</code></pre>
+#### Arguments
+
+x An R object typically of class brmsfit
+pars Names of parameters for which posterior samples should be returned, as given
+by a character vector or regular expressions. By default, all posterior samples of
+all parameters are extracted.
+exact_match Indicates whether parameter names should be matched exactly or treated as regular
+expression. Default is FALSE.
+add_chain A flag indicating if the returned data.frame should contain two additional
+columns. The chain column indicates the chain in which each sample was
+generated, the iter column indicates the iteration number within each chain.
+subset A numeric vector indicating the rows (i.e., posterior samples) to be returned. If
+NULL (the default), all posterior samples are returned.
+as.matrix Should the output be a matrix instead of a data.frame? Defaults to FALSE.
+as.array Should the output be an array instead of a data.frame? Defaults to FALSE.
+... For as.data.frame, as.matrix, and as.array: Further arguments
+ to be passed
+to posterior_samples.
+row.names, optional
+See as.data.frame.
+
+#### Details
+Currently there are methods for brmsfit objects. as.data.frame.brmsfit, as.matrix.brmsfit,
+and as.array.brmsfit are basically aliases of posterior_samples.brmsfit and differ from
+each other only in type of the returned object.
+#### Value
+A data frame (matrix or array) containing the posterior samples, with one column per parameter. In
+case an array is returned, it contains one additional dimension for the chains.
+Author(s)
+Paul-Christian Buerkner <paul.buerkner@gmail.com>
+
+Examples
+```{r}
+## Not run:
+fit <- brm(rating ~ treat + period + carry + (1|subject),
+data = inhaler, family = "cumulative")
+# extract posterior samples of population-level effects
+samples1 <- posterior_samples(fit, "^b")
+head(samples1)
+# extract posterior samples of group-level standard deviations
+samples2 <- posterior_samples(fit, "^sd_")
+head(samples2)
+## End(Not run)
+```
