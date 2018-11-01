@@ -3,7 +3,9 @@ Display Marginal Effects of Predictors
 #### Description 
 Display marginal effects of one or more numeric and/or categorical predictors including two-way
 interaction effects.
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 marginal_effects(x, effects = NULL,
 conditions = NULL, int_conditions = NULL, re_formula = NA,
@@ -20,7 +22,9 @@ errorbar_args = list(), surface_args = list(),
 spaghetti_args = list(), point_args = list(), rug_args = list(),
 theme = NULL, ask = TRUE, plot = TRUE, ...)
 98 marginal_effects.brmsfit
+
 #### Arguments
+
 x An R object usually of class brmsfit.
 effects An optional character vector naming effects (main effects or interactions) for
 which to compute marginal plots. Interactions are specified by a : between
@@ -81,7 +85,9 @@ the actual data points can be excluded from the plot. too_far determines what
 is too far. The grid is scaled into the unit square and then grid points more than
 too_far from the predictor variables are excluded. By default, all grid points
 are used. Ignored for non-surface plots.
-... Further #### Arguments such as subset or nsamples passed to predict or fitted.
+... Further 
+#### Arguments
+ such as subset or nsamples passed to predict or fitted.
 ncol Number of plots to display per column for each effect. If NULL (default), ncol
 is computed internally based on the number of rows of conditions.
 points Logical; indicating whether the original data points should be added via geom_jitter.
@@ -97,17 +103,31 @@ regression line on top of the regression lines for each sample.
 jitter_width Only used if points = TRUE: Amount of horizontal jittering of the data points.
 Mainly useful for ordinal models. Defaults to 0 that is no jittering.
 stype Indicates how surface plots should be displayed. Either "contour" or "raster".
-line_args Only used in plots of continuous predictors: A named list of #### Arguments passed
+line_args Only used in plots of continuous predictors: A named list of 
+#### Arguments
+ passed
 to geom_smooth.
-cat_args Only used in plots of categorical predictors: A named list of #### Arguments passed
+cat_args Only used in plots of categorical predictors: A named list of 
+#### Arguments
+ passed
 to geom_point.
-errorbar_args Only used in plots of categorical predictors: A named list of #### Arguments passed
+errorbar_args Only used in plots of categorical predictors: A named list of 
+#### Arguments
+ passed
 to geom_errorbar.
-surface_args Only used in surface plots: A named list of #### Arguments passed to geom_contour
+surface_args Only used in surface plots: A named list of 
+#### Arguments
+ passed to geom_contour
 or geom_raster (depending on argument stype).
-spaghetti_args Only used in spaghetti plots: A named list of #### Arguments passed to geom_smooth.
-point_args Only used if points = TRUE: A named list of #### Arguments passed to geom_jitter.
-rug_args Only used if rug = TRUE: A named list of #### Arguments passed to geom_rug.
+spaghetti_args Only used in spaghetti plots: A named list of 
+#### Arguments
+ passed to geom_smooth.
+point_args Only used if points = TRUE: A named list of 
+#### Arguments
+ passed to geom_jitter.
+rug_args Only used if rug = TRUE: A named list of 
+#### Arguments
+ passed to geom_rug.
 100 marginal_effects.brmsfit
 theme A theme object modifying the appearance of the plots. For some basic themes
 see ggtheme and theme_default.
@@ -184,7 +204,9 @@ marginal_smooths.brmsfit
 Display Smooth Terms
 #### Description 
 Display smooth s and t2 terms of models fitted with brms.
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 marginal_smooths(x, smooths = NULL,
 int_conditions = NULL, probs = c(0.025, 0.975), spaghetti = FALSE,
@@ -192,7 +214,9 @@ resolution = 100, too_far = 0, subset = NULL, nsamples = NULL,
 102 marginal_smooths.brmsfit
 ...)
 marginal_smooths(x, ...)
+
 #### Arguments
+
 x An R object usually of class brmsfit.
 smooths Optional character vector of smooth terms to display. If NULL (the default) all
 smooth terms are shown.
@@ -208,7 +232,7 @@ probs The quantiles to be used in the computation of credible intervals (default
 and 97.5 percent quantiles)
 spaghetti Logical. Indicates if predictions should be visualized via spaghetti plots. Only
 applied for numeric predictors. If TRUE, it is recommended to set argument
-nsamples to a relatively small #### Value (e.g. 100) in order to reduce computation
+nsamples to a relatively small value (e.g. 100) in order to reduce computation
 time.
 resolution Number of support points used to generate the plots. Higher resolution leads to
 smoother plots. Defaults to 100. If surface is TRUE, this implies 10000 support
@@ -245,48 +269,17 @@ ms <- marginal_smooths(fit2)
 plot(ms, stype = "contour")
 plot(ms, stype = "raster")
 ## End(Not run)
-me Predictors with Measurement Error in brms Models
-#### Description 
-Specify predictors with measurement error. This function is almost solely useful when called in
-formulas passed to the brms package.
-Usage
-me(x, sdx = NULL, gr = NULL)
-#### Arguments
-x The variable measured with error.
-sdx Known measurement error of x treated as standard deviation.
-gr Optional grouping factor to specify which #### Values of x correspond to the same
-#### Value of the latent variable. If NULL (the default) each observation will have its
-own #### Value of the latent variable.
-#### Details
-For detailed documentation see help(brmsformula).
-By default, latent noise-free variables are assumed to be correlated. To change that, add set_mecor(FALSE)
-to your model formula object (see examples).
-See Also
-brmsformula, brmsformula-helpers
-104 mi
-Examples
-## Not run:
-# sample some data
-N <- 100
-dat <- data.frame(
-y = rnorm(N), x1 = rnorm(N),
-x2 = rnorm(N), sdx = abs(rnorm(N, 1))
-)
-# fit a simple error-in-variables model
-fit1 <- brm(y ~ me(x1, sdx) + me(x2, sdx), data = dat,
-save_mevars = TRUE)
-summary(fit1)
-# turn off modeling of correlations
-bform <- bf(y ~ me(x1, sdx) + me(x2, sdx)) + set_mecor(FALSE)
-fit2 <- brm(bform, data = dat, save_mevars = TRUE)
-summary(fit2)
-## End(Not run)
+
 mi Predictors with Missing #### Values in brms Models
 #### Description 
 Predictors with Missing #### Values in brms Models
-Usage
+
+#### Usage
+<pre><code>
 mi(x)
+
 #### Arguments
+
 x The variable containing missings.
 #### Details
 For detailed documentation see help(brmsformula).
@@ -304,84 +297,20 @@ summary(fit)
 plot(marginal_effects(fit, resp = "bmi"), ask = FALSE)
 LOO(fit, newdata = na.omit(fit$data))
 ## End(Not run)
-mixture Finite Mixture Families in brms
-#### Description 
-Set up a finite mixture family for use in brms.
-Usage
-mixture(..., flist = NULL, nmix = 1, order = NULL)
-#### Arguments
-... One or more objects providing a #### Description  of the response distributions to be
-combined in the mixture model. These can be family functions, calls to family
-functions or character strings naming the families. For #### Details of supported
-families see brmsfamily.
-flist Optional list of objects, which are treated in the same way as objects passed via
-the ... argument.
-nmix Optional numeric vector specifying the number of times each family is repeated.
-If specified, it must have the same length as the number of families passed via
-... and flist.
-order Ordering constraint to identify mixture components. If 'mu' or TRUE, populationlevel
-intercepts of the mean parameters are ordered. If 'none' or FALSE, no
-ordering constraint is applied. If NULL (the default), order is set to 'mu' if all
-families are the same and 'none' otherwise. Other ordering constraints may be
-implemented in the future.
-#### Details
-Most families supported by brms can be used to form mixtures. The response variable has to be
-valid for all components of the mixture family. Currently, the number of mixture components has to
-be specified by the user. It is not yet possible to estimate the number of mixture components from
-the data.
-106 mixture
-For most mixture models, you may want to specify priors on the population-level intercepts via
-set_prior to improve convergence. In addition, it is sometimes necessary to set inits = 0 in the
-call to brm to allow chains to initialize properly.
-for more details on the specification of mixture models, see brmsformula.
-#### Value
-An object of class mixfamily.
-Examples
-## Not run:
-## simulate some data
-set.seed(1234)
-dat <- data.frame(
-y = c(rnorm(200), rnorm(100, 6)),
-x = rnorm(300),
-z = sample(0:1, 300, TRUE)
-)
-## fit a simple normal mixture model
-mix <- mixture(gaussian, gaussian)
-prior <- c(
-prior(normal(0, 7), Intercept, dpar = mu1),
-prior(normal(5, 7), Intercept, dpar = mu2)
-)
-fit1 <- brm(bf(y ~ x + z), dat, family = mix,
-prior = prior, chains = 2)
-summary(fit1)
-pp_check(fit1)
-## use different predictors for the components
-fit2 <- brm(bf(y ~ 1, mu1 ~ x, mu2 ~ z), dat, family = mix,
-prior = prior, chains = 2)
-summary(fit2)
-## fix the mixing proportions
-fit3 <- brm(bf(y ~ x + z, theta1 = 1, theta2 = 2),
-dat, family = mix, prior = prior,
-inits = 0, chains = 2)
-summary(fit3)
-pp_check(fit3)
-## predict the mixing proportions
-fit4 <- brm(bf(y ~ x + z, theta2 ~ x),
-dat, family = mix, prior = prior,
-inits = 0, chains = 2)
-summary(fit4)
-pp_check(fit4)
-## compare model fit
-LOO(fit1, fit2, fit3, fit4)
-mm 107
-## End(Not run)
+
 mm Set up multi-membership grouping terms in brms
 #### Description 
 Function to set up a multi-membership grouping term in brms. The function does not evaluate its
-#### Arguments – it exists purely to help set up a model with grouping terms.
-Usage
-mm(..., weights = NULL, scale = TRUE, dist = "gaussian")
+
 #### Arguments
+ – it exists purely to help set up a model with grouping terms.
+
+#### Usage
+<pre><code>
+mm(..., weights = NULL, scale = TRUE, dist = "gaussian")
+
+#### Arguments
+
 ... One or more terms containing grouping factors.
 weights A matrix specifying the weights of each member. It should have as many
 columns as grouping terms specified in .... If NULL (the default), equally

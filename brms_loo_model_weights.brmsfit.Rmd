@@ -1,0 +1,45 @@
+---
+title: "loo_model_weights.brmsfit"
+author: "Kevin O Brien"
+date: "1 November 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+loo_model_weights.brmsfit
+Model averaging via stacking or pseudo-BMA weighting.
+#### Description 
+Compute model weights for brmsfit objects via stacking or pseudo-BMA weighting. For more details, see loo::loo_model_weights.
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+loo_model_weights(x, ..., model_names = NULL)
+</code></pre>
+
+#### Arguments
+* x A fitted model object.
+* ... More fitted model objects or further #### Arguments passed to the underlying postprocessing functions.
+* model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise will use the passed values as model names.
+
+#### Value
+
+A named vector of model weights.
+
+### Examples
+
+```{r}
+## Not run:
+# model with population-level effects only
+fit1 <- brm(rating ~ treat + period + carry,
+data = inhaler, family = "gaussian")
+# model with an additional varying intercept for subjects
+fit2 <- brm(rating ~ treat + period + carry + (1|subject),
+data = inhaler, family = "gaussian")
+loo_model_weights(fit1, fit2)
+## End(Not run)
+```

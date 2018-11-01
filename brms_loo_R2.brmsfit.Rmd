@@ -1,0 +1,43 @@
+---
+title: "``loo_R2.brmsfit`` Compute a LOO-adjusted R-squared for regression models"
+author: "Kevin O Brien"
+date: "1 November 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+
+
+#### Description 
+Compute a LOO-adjusted R-squared for regression models
+
+Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+loo_R2(object, resp = NULL, ...)
+</code></pre>
+
+#### Arguments
+* `` object``: An object of class brmsfit.
+* `` resp``: Optional names of response variables. If specified, predictions are performed only for the specified response variables.
+* `` ... ``: Further arguments passed to fitted and log_lik, which are used in the computation of the R-squared values.
+
+#### Value
+A real value per response variable indicating the LOO-adjusted R-squared.
+
+#### Examples
+
+
+```{r}
+fit <- brm(mpg ~ wt + cyl, data = mtcars)
+summary(fit)
+loo_R2(fit)
+# compute R2 with new data
+nd <- data.frame(mpg = c(10, 20, 30), wt = c(4, 3, 2), cyl = c(8, 6, 4))
+loo_R2(fit, newdata = nd)
+## End(Not run)
+```
