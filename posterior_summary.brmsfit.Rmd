@@ -1,0 +1,41 @@
+
+posterior_summary.brmsfit
+Summarize Posterior Samples
+#### Description 
+Summarizes posterior samples based on point estimates (mean or median), estimation errors (SD or
+MAD) and quantiles.
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+posterior_summary(x, pars = NA, probs = c(0.025,
+0.975), robust = FALSE, ...)
+posterior_summary(x, ...)
+posterior_table 123
+## Default S3 method:
+posterior_summary(x, probs = c(0.025, 0.975),
+robust = FALSE, ...)
+</code></pre>
+#### Arguments
+
+x An R object.
+pars Names of parameters for which posterior samples should be returned, as given
+by a character vector or regular expressions. By default, all posterior samples of
+all parameters are extracted.
+probs The percentiles to be computed by the quantile function.
+robust If FALSE (the default) the mean is used as the measure of central tendency and
+the standard deviation as the measure of variability. If TRUE, the median and the
+median absolute deviation (MAD) are applied instead.
+... More </code></pre>
+#### Arguments
+ passed to or from other methods.
+#### Value
+A matrix where rows indicate parameters and columns indicate the summary estimates.
+
+Examples
+```{r}
+## Not run:
+fit <- brm(time ~ age * sex, data = kidney)
+posterior_summary(fit)
+## End(Not run)
+```
