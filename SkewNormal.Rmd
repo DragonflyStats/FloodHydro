@@ -1,0 +1,35 @@
+SkewNormal The Skew-Normal Distribution
+#### Description 
+Density, distribution function, and random generation for the skew-normal distribution with mean
+mu, standard deviation sigma, and skewness alpha.
+
+#### Usage
+<pre><code>
+dskew_normal(x, mu = 0, sigma = 1, alpha = 0, xi = NULL,
+omega = NULL, log = FALSE)
+pskew_normal(q, mu = 0, sigma = 1, alpha = 0, xi = NULL,
+omega = NULL, lower.tail = TRUE, log.p = FALSE)
+qskew_normal(p, mu = 0, sigma = 1, alpha = 0, xi = NULL,
+omega = NULL, lower.tail = TRUE, log.p = FALSE, tol = 1e-08)
+rskew_normal(n, mu = 0, sigma = 1, alpha = 0, xi = NULL,
+omega = NULL)
+</code></pre>
+
+#### Arguments
+
+* x, q Vector of quantiles.
+* mu Vector of mean #### Values.
+* sigma Vector of standard deviation #### Values.
+* alpha Vector of skewness values.
+
+* xi Optional vector of location values. If NULL (the default), will be computed internally.
+* omega Optional vector of scale #### Values. If NULL (the default), will be computed internally.
+* log Logical; If TRUE, #### Values are returned on the log scale.
+* lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
+* log.p Logical; If TRUE, #### Values are returned on the log scale.
+* p Vector of probabilities.
+* tol Tolerance of the approximation used in the computation of quantiles.
+* n Number of samples to draw from the distribution.
+
+#### Details
+See vignette("brms_families") for #### Details on the parameterization.
