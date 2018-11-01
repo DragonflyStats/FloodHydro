@@ -1,0 +1,28 @@
+StudentT The Student-t Distribution
+#### Description 
+Density, distribution function, quantile function and random generation for the Student-t distribution
+with location mu, scale sigma, and degrees of freedom df.
+
+#### Usage
+<pre><code>
+dstudent_t(x, df, mu = 0, sigma = 1, log = FALSE)
+pstudent_t(q, df, mu = 0, sigma = 1, lower.tail = TRUE,
+log.p = FALSE)
+qstudent_t(p, df, mu = 0, sigma = 1)
+rstudent_t(n, df, mu = 0, sigma = 1)
+</code></pre>
+#### Arguments
+
+x, q Vector of quantiles.
+df Vector of degrees of freedom.
+mu Vector of locationvalues.
+sigma Vector of scalevalues.
+summary.brmsfit 155
+log, log.p Logical; If TRUE,values are returned on the log scale.
+lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
+p Vector of probabilities.
+n Number of samples to draw from the distribution.
+#### Details
+See vignette("brms_families") for #### Details on the parameterization.
+See Also
+TDist
