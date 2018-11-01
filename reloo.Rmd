@@ -1,0 +1,50 @@
+
+
+reloo Compute exact cross-validation for problematic observations
+#### Description 
+Compute exact cross-validation for problematic observations for which approximate leave-one-out
+cross-validation may return incorrect results.
+
+#### Usage
+<pre><code>
+reloo(x, ...)
+## S3 method for class 'loo'
+reloo(x, fit, k_threshold = 0.7, check = TRUE,
+resp = NULL, ...)
+</code></pre>
+#### Arguments
+
+x An R object typically of class loo.
+* `` ... ``: Further arguments passed to update.brmsfit such as iter, chains, or cores.
+fit An R object typically of class brmsfit.
+k_threshold The threshold at which pareto k estimates are treated as problematic. Defaults
+to 0.7. See pareto_k_ids for more details.
+check Logical; If TRUE (the default), a crude check is performed if the loo object was
+generated from the brmsfit object passed to argument fit.
+* `` resp``: Optional names of response variables. If specified, predictions are performed
+only for the specified response variables.
+#### Details
+Warnings about Pareto k estimates indicate observations for which the approximation to LOO is
+problematic (this is described in detail in Vehtari, Gelman, and Gabry (2017) and the loo package
+documentation). If there are J observations with k estimates above k_threshold, then reloo will
+refit the original model J times, each time leaving out one of the J problematic observations. The
+pointwise contributions of these observations to the total ELPD are then computed directly and
+substituted for the previous estimates from these J observations that are stored in the original loo
+object.
+residuals.brmsfit 139
+#### Value
+An object of the class as x.
+See Also
+loo, kfold
+
+Examples
+```{r}
+## Not run:
+fit1 <- brm(count ~ log_Age_c + log_Base4_c * Trt + (1|patient),
+data = epilepsy, family = poisson())
+# throws warning about some pareto k estimates being too high
+(loo1 <- loo(fit1))
+(loo1 <- reloo(loo1, fit1))
+## End(Not run)
+```
+
