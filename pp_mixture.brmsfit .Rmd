@@ -1,0 +1,87 @@
+
+pp_mixture.brmsfit Posterior Probabilities of Mixture Component Memberships
+#### Description 
+Compute the posterior probabilities of mixture component memberships for each observation including
+uncertainty estimates.
+
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+pp_mixture(x, newdata = NULL, re_formula = NULL,
+resp = NULL, nsamples = NULL, subset = NULL, log = FALSE,
+summary = TRUE, robust = FALSE, probs = c(0.025, 0.975), ...)
+pp_mixture(x, ...)
+</code></pre>
+
+#### Arguments
+* x An R object usually of class brmsfit.
+* newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
+original data of the model is used.
+* re_formula formula containing group-level effects to be considered in the prediction. If
+NULL (default), include all group-level effects; if NA, include no group-level effects.
+* `` resp``: Optional names of response variables. If specified, predictions are performed
+only for the specified response variables.
+* nsamples Positive integer indicating how many posterior samples should be used. If NULL
+(the default) all samples are used. Ignored if subset is not NULL.
+* subset A numeric vector specifying the posterior samples to be used. If NULL (the
+default), all samples are used.
+* log Logical; Indicates whether to return probabilities on the log-scale.
+* summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
+of the raw #### Values? Default is TRUE.
+* robust If FALSE (the default) the mean is used as the measure of central tendency and the standard deviation as the measure of variability. If TRUE, the median and the
+median absolute deviation (MAD) are applied instead. Only used if summary is TRUE.
+* probs The percentiles to be computed by the quantile function. Only used if summary is TRUE.
+* `` ... ``: Further arguments passed to extract_draws that control several aspects of data
+validation and prediction.
+
+#### Details
+The returned probabilities can be written as P(Kn = kjY n), that is the posterior probability that
+observation n originates from component k. They are computed using Bayes’ Theorem
+P(Kn = kjY n) = P(Y njKn = k)P(Kn = k)=P(Y n);
+where P(Y njKn = k) is the (posterior) likelihood of observation n for component k, P(Kn = k)
+is the (posterior) mixing probability of component k (i.e. parameter theta<k>), and
+P(Y n) =
+X
+(k = 1; :::;K)P(Y njKn = k)P(Kn = k)
+is a normalizing constant.
+
+#### Value
+If summary = TRUE, an N x E x K array, where N is the number of observations, K is the number
+of mixture components, and E is equal to length(probs) + 2. If summary = FALSE, an S x N x
+K array, where S is the number of posterior samples.
+
+#### Examples
+
+```{r}
+## Not run:
+## simulate some data
+set.seed(1234)
+dat <- data.frame(
+y = c(rnorm(100), rnorm(50, 2)),
+x = rnorm(150)
+)
+```
+
+```{r}
+## fit a simple normal mixture model
+mix <- mixture(gaussian, nmix = 2)
+prior <- c(
+prior(normal(0, 5), Intercept, nlpar = mu1),
+prior(normal(0, 5), Intercept, nlpar = mu2),
+prior(dirichlet(2, 2), theta)
+)
+fit1 <- brm(bf(y ~ x), dat, family = mix,
+prior = prior, chains = 2, inits = 0)
+summary(fit1)
+## compute the membership probabilities
+ppm <- pp_mixture(fit1)
+str(ppm)
+## extract point estimates for each observation
+head(ppm[, 1, ])
+## classify every observation according to
+## the most likely component
+apply(ppm[, 1, ], 1, which.max)
+## End(Not run)
+```
+
