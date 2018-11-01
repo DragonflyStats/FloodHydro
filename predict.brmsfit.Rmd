@@ -1,0 +1,103 @@
+
+
+
+predict.brmsfit Model Predictions of brmsfit Objects
+
+#### Description 
+
+Predict responses based on the fitted model. Can be performed for the data used to fit the model
+(posterior predictive checks) or for new data. By definition, these predictions have higher variance
+than predictions of the fitted #### Values (i.e., the ’regression line’) performed by the fitted method.
+This is because the measurement error is incorporated. The estimated means of both methods
+should, however, be very similar.
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+predict(object, newdata = NULL, re_formula = NULL,
+transform = NULL, resp = NULL, negative_rt = FALSE,
+nsamples = NULL, subset = NULL, sort = FALSE, ntrys = 5,
+summary = TRUE, robust = FALSE, probs = c(0.025, 0.975), ...)
+## S3 method for class 'brmsfit'
+posterior_predict(object, newdata = NULL,
+re_formula = NULL, re.form = NULL, transform = NULL, resp = NULL,
+negative_rt = FALSE, nsamples = NULL, subset = NULL,
+sort = FALSE, ntrys = 5, ...)
+</code></pre>
+
+#### Arguments
+
+* object An object of class brmsfit.
+* newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
+original data of the model is used.
+* re_formula formula containing group-level effects to be considered in the prediction. If
+NULL (default), include all group-level effects; if NA, include no group-level effects.
+* transform A function or a character string naming a function to be applied on the predicted
+responses before summary statistics are computed.
+* `` resp``: Optional names of response variables. If specified, predictions are performed
+only for the specified response variables.
+* negative_rt Only relevant for Wiener diffusion models. A flag indicating whether response
+times of responses on the lower boundary should be returned as negative #### Values.
+This allows to distinguish responses on the upper and lower boundary. Defaults
+to FALSE.
+* nsamples Positive integer indicating how many posterior samples should be used. If NULL
+(the default) all samples are used. Ignored if subset is not NULL.
+subset A numeric vector specifying the posterior samples to be used. If NULL (the
+default), all samples are used.
+* sort Logical. Only relevant for time series models. Indicating whether to return
+predicted values in the original order (FALSE; default) or in the order of the time
+series (TRUE).
+* ntrys Parameter used in rejection sampling for truncated discrete models only (defaults
+to 5). See details for more information.
+* summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
+of the raw values? Default is TRUE.
+* robust If FALSE (the default) the mean is used as the measure of central tendency and
+the standard deviation as the measure of variability. If TRUE, the median and the
+median absolute deviation (MAD) are applied instead. Only used if summary is
+TRUE.
+
+* probs The percentiles to be computed by the quantile function. Only used if summary is TRUE.
+* `` ... ``: Further arguments passed to extract_draws that control several aspects of data
+validation and prediction.
+re.form Alias of re_formula.
+#### Details
+NA #### Values within factors in newdata, are interpreted as if all dummy variables of this factor are zero.
+This allows, for instance, to make predictions of the grand mean when using sum coding.
+Method posterior_predict.brmsfit is an alias of predict.brmsfit with summary = FALSE.
+For truncated discrete models only: In the absence of any general algorithm to sample from truncated
+discrete distributions, rejection sampling is applied in this special case. This means that #### Values
+are sampled until a #### Value lies within the defined truncation boundaries. In practice, this procedure
+may be rather slow (especially in R). Thus, we try to do approximate rejection sampling by sampling
+each #### Value ntrys times and then select a valid #### Value. If all #### Values are invalid, the closest
+boundary is used, instead. If there are more than a few of these pathological cases, a warning will
+occur suggesting to increase argument ntrys.
+#### Value
+Predicted #### Values of the response variable. If summary = TRUE the output depends on the family:
+For categorical and ordinal families, it is a N x C matrix, where N is the number of observations
+and C is the number of categories. For all other families, it is a N x E matrix where E is equal
+to length(probs) + 2. If summary = FALSE, the output is as a S x N matrix, where S is the
+number of samples. In multivariate models, the output is an array of 3 dimensions, where the third
+dimension indicates the response variables.
+
+Examples
+```{r}
+## Not run:
+## fit a model
+fit <- brm(time | cens(censored) ~ age + sex + (1+age||patient),
+data = kidney, family = "exponential", inits = "0")
+## predicted responses
+pp <- predict(fit)
+head(pp)
+```
+
+```{r}
+## predicted responses excluding the group-level effect of age
+pp2 <- predict(fit, re_formula = ~ (1|patient))
+head(pp2)
+## predicted responses of patient 1 for new data
+newdata <- data.frame(sex = factor(c("male", "female")),
+age = c(20, 50),
+patient = c(1, 1))
+predict(fit, newdata = newdata)
+## End(Not run)
+```
