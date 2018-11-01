@@ -1,0 +1,26 @@
+
+
+update_adterms Update Formula Addition Terms
+#### Description 
+Update additions terms used in formulas of brms. See addition-terms for #### Details.
+
+#### Usage
+<pre><code>
+update_adterms(formula, adform, action = c("update", "replace"))
+</code></pre>
+#### Arguments
+
+formula Two-sided formula to be updated.
+adform One-sided formula containing addition terms to update formula with.
+action Indicates what should happen to the existing addition terms in formula. If
+"update" (the default), old addition terms that have no corresponding term in
+adform will be kept. If "replace", all old addition terms will be removed.
+#### Value
+An object of class formula.
+validate_newdata 159
+Examples
+form <- y | trials(size) ~ x
+update_adterms(form, ~ trials(10))
+update_adterms(form, ~ weights(w))
+update_adterms(form, ~ weights(w), action = "replace")
+update_adterms(y ~ x, ~ trials(10))
