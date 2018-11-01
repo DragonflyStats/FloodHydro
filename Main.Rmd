@@ -3,112 +3,57 @@ mmc Multi-Membership Covariates
 Specify covarariates that vary over different levels of multi-membership grouping factors thus requiring
 special treatment. This function is almost solely useful, when called in combination with
 mm. Outside of multi-membership terms it will behave very much like cbind.
-Usage
+
+#### Usage
+<pre><code>
 mmc(...)
+</code></pre>
 #### Arguments
+
 ... One or more terms containing covariates corresponding to the grouping levels
 specified in mm.
 #### Value
 A matrix with covariates as columns.
 See Also
 mm
+
 Examples
+```{r}
 ## Not run:
 # simulate some data
 dat <- data.frame(
 y = rnorm(100), x1 = rnorm(100), x2 = rnorm(100),
 g1 = sample(1:10, 100, TRUE), g2 = sample(1:10, 100, TRUE)
 )
-# multi-membership model with level specific covariate #### Values
+# multi-membership model with level specific covariatevalues
 dat$xc <- (dat$x1 + dat$x2) / 2
 fit <- brm(y ~ xc + (1 + mmc(x1, x2) | mm(g1, g2)), data = dat)
 summary(fit)
 mo 109
 ## End(Not run)
-mo Monotonic Predictors in brms Models
-#### Description 
-Monotonic Predictors in brms Models
-Usage
-mo(x)
-#### Arguments
-x An integer variable or an ordered factor to be modeled as monotonic.
-#### Details
-For detailed documentation see help(brmsformula) as well as vignette("brms_monotonic").
-This function is almost solely useful when called in formulas passed to the brms package.
-See Also
-brmsformula
-Examples
-## Not run:
-# generate some data
-income_options <- c("below_20", "20_to_40", "40_to_100", "greater_100")
-income <- factor(sample(income_options, 100, TRUE),
-levels = income_options, ordered = TRUE)
-mean_ls <- c(30, 60, 70, 75)
-ls <- mean_ls[income] + rnorm(100, sd = 7)
-dat <- data.frame(income, ls)
-# fit a simple monotonic model
-fit1 <- brm(ls ~ mo(income), data = dat)
-# summarise the model
-summary(fit1)
-plot(fit1, N = 6)
-plot(marginal_effects(fit1), points = TRUE)
-# model interaction with other variables
-110 model_weights.brmsfit
-dat$x <- sample(c("a", "b", "c"), 100, TRUE)
-fit2 <- brm(ls ~ mo(income)*x, data = dat)
-# summarise the model
-summary(fit2)
-plot(marginal_effects(fit2), points = TRUE)
-## End(Not run)
-model_weights.brmsfit Model Weighting Methods
-#### Description 
-Compute model weights in various ways, for instance via stacking of predictive distributions,
-Akaike weights, or marginal likelihoods.
-Usage
-## S3 method for class 'brmsfit'
-model_weights(x, ..., weights = "loo2",
-model_names = NULL)
-model_weights(x, ...)
-#### Arguments
-x A fitted model object.
-... More fitted model objects or further #### Arguments passed to the underlying postprocessing
-functions.
-weights Name of the criterion to compute weights from. Should be one of "loo",
-"waic", "kfold", "loo2" (current default), or "marglik". For the former three
-options, Akaike weights will be computed based on the information criterion
-#### Values returned by the respective methods. For "loo2", method loo_model_weights
-will be used to obtain weights. For "marglik", method post_prob will be used
-to compute weights based on log marginal likelihood #### Values (make sure to specify
-reasonable priors in this case). Alternatively, weights can be a numeric
-vector of pre-specified weights.
-model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
-will use the passed #### Values as model names.
-#### Value
-A numeric vector of weights for the models.
-MultiNormal 111
-Examples
-## Not run:
-# model with 'treat' as predictor
-fit1 <- brm(rating ~ treat + period + carry, data = inhaler)
-summary(fit1)
-# model without 'treat' as predictor
-fit2 <- brm(rating ~ period + carry, data = inhaler)
-summary(fit2)
-# obtain Akaike weights based on the WAIC
-model_weights(fit1, fit2, weights = "waic")
-## End(Not run)
+```
+
+
+
+
+
+
 MultiNormal The Multivariate Normal Distribution
 #### Description 
 Density function and random generation for the multivariate normal distribution with mean vector
 mu and covariance matrix Sigma.
-Usage
+
+#### Usage
+<pre><code>
 dmulti_normal(x, mu, Sigma, log = FALSE, check = FALSE)
 rmulti_normal(n, mu, Sigma, check = FALSE)
+</code></pre>
 #### Arguments
+
 x Vector or matrix of quantiles. If x is a matrix, each row is taken to be a quantile.
 mu Mean vector with length equal to the number of dimensions.
 Sigma Covariance matrix.
-log Logical; If TRUE, #### Values are returned on the log scale.
+log Logical; If TRUE,values are returned on the log scale.
 check Logical; Indicates whether several input checks should be performed. Defaults
 to FALSE to improve efficiency.
 n Number of samples to draw from the distribution.
@@ -119,15 +64,19 @@ MultiStudentT The Multivariate Student-t Distribution
 #### Description 
 Density function and random generation for the multivariate Student-t distribution with location
 vector mu, covariance matrix Sigma, and degrees of freedom df.
-Usage
+
+#### Usage
+<pre><code>
 dmulti_student_t(x, df, mu, Sigma, log = FALSE, check = FALSE)
 rmulti_student_t(n, df, mu, Sigma, check = FALSE)
+</code></pre>
 #### Arguments
+
 x Vector or matrix of quantiles. If x is a matrix, each row is taken to be a quantile.
 df Vector of degrees of freedom.
 mu Location vector with length equal to the number of dimensions.
 Sigma Covariance matrix.
-log Logical; If TRUE, #### Values are returned on the log scale.
+log Logical; If TRUE,values are returned on the log scale.
 check Logical; Indicates whether several input checks should be performed. Defaults
 to FALSE to improve efficiency.
 n Number of samples to draw from the distribution.
@@ -137,10 +86,14 @@ mvbrmsformula Set up a multivariate model formula for use in brms
 #### Description 
 Set up a multivariate model formula for use in the brms package allowing to define (potentially
 non-linear) additive multilevel models for all parameters of the assumed response distributions.
-Usage
+
+#### Usage
+<pre><code>
 mvbrmsformula(..., flist = NULL, rescor = NULL)
 ngrps.brmsfit 113
+</code></pre>
 #### Arguments
+
 ... Objects of class formula or brmsformula, each specifying a univariate model.
 See brmsformula for #### Details on how to specify univariate models.
 flist Optional list of formulas, which are treated in the same way as formulas passed
@@ -156,434 +109,80 @@ well as some additional information for multivariate models.
 See Also
 brmsformula, brmsformula-helpers
 Examples
+```{r}
 bf1 <- bf(y1 ~ x + (1|g))
 bf2 <- bf(y2 ~ s(z))
 mvbf(bf1, bf2)
-ngrps.brmsfit Number of levels
-#### Description 
-Extract the number of levels of one or more grouping factors.
-Usage
-## S3 method for class 'brmsfit'
-ngrps(object, ...)
-ngrps(object, ...)
-#### Arguments
-object An R object.
-... Currently ignored.
-114 pairs.brmsfit
-#### Value
-A named list containing the number of levels per grouping factor.
+```
+
+
+
 nsamples.brmsfit Number of Posterior Samples
 #### Description 
 Extract the number of posterior samples stored in a fitted Bayesian model.
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 nsamples(x, subset = NULL, incl_warmup = FALSE, ...)
 nsamples(x, ...)
+</code></pre>
 #### Arguments
+
 x An R object
 subset An optional integer vector defining a subset of samples to be considered.
 incl_warmup A flag indicating whether to also count warmup / burn-in samples.
 * `` ... ``: Further arguments passed to or from other methods.
 #### Details
 Currently there are methods for brmsfit objects.
-pairs.brmsfit Create a matrix of output plots from a brmsfit object
-#### Description 
-A pairs method that is customized for MCMC output.
-Usage
-## S3 method for class 'brmsfit'
-pairs(x, pars = NA, exact_match = FALSE, ...)
-parnames 115
-#### Arguments
-x An object of class brmsfit
-pars Names of parameters for which posterior samples should be returned, as given
-by a character vector or regular expressions. By default, all posterior samples of
-all parameters are extracted.
-exact_match Indicates whether parameter names should be matched exactly or treated as regular
-expression. Default is FALSE.
-... Further #### Arguments to be passed to mcmc_pairs.
-#### Details
-For a detailed #### Description  see mcmc_pairs.
-Examples
-## Not run:
-fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c
-+ (1|patient) + (1|visit),
-data = epilepsy, family = "poisson")
-pairs(fit, pars = parnames(fit)[1:3], exact_match = TRUE)
-pairs(fit, pars = "^sd_")
-## End(Not run)
-parnames Extract Parameter Names
-#### Description 
-Extract all parameter names of a given model.
-Usage
-parnames(x, ...)
-#### Arguments
-x An R object
-* `` ... ``: Further arguments passed to or from other methods.
-#### Details
-Currently there are methods for brmsfit objects.
-#### Value
-A character vector containing the parameter names of the model.
-116 parse_bf
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-parse_bf Parse Formulas of brms Models
-#### Description 
-Parse formulas objects for use in brms.
-Usage
-parse_bf(formula, ...)
-## Default S3 method:
-parse_bf(formula, family = NULL, autocor = NULL, ...)
-## S3 method for class 'brmsformula'
-parse_bf(formula, family = NULL, autocor = NULL,
-check_response = TRUE, resp_rhs_all = TRUE, mv = FALSE, ...)
-## S3 method for class 'mvbrmsformula'
-parse_bf(formula, family = NULL,
-autocor = NULL, ...)
-#### Arguments
-formula An object of class formula, brmsformula, or mvbrmsformula (or one that can
-be coerced to that classes): A symbolic #### Description  of the model to be fitted.
-The #### Details of model specification are explained in brmsformula.
-* `` ... ``: Further arguments passed to or from other methods.
-* `` family`` A description  of the response distribution and link function to be used in the
-model. This can be a family function, a call to a family function or a character
-string naming the family. Every family function has a link argument allowing to
-specify the link function to be applied on the response variable. If not specified,
-default links are used. For #### Details of supported families see brmsfamily. By
-default, a linear gaussian model is applied. In multivariate models, family
-might also be a list of families.
-* ``autocor`` An optional cor_brms object describing the correlation structure within the response
-variable (i.e., the ’autocorrelation’). See the documentation of cor_brms
-for a #### Description  of the available correlation structures. Defaults to NULL, corresponding
-to no correlations. In multivariate models, autocor might also be a
-list of autocorrelation structures.
-check_response Logical; Indicates whether the left-hand side of formula (i.e. response variables
-and addition #### Arguments) should be parsed. If FALSE, formula may also be onesided.
-plot.brmsfit 117
-resp_rhs_all Logical; Indicates whether to also include response variables on the right-hand
-side of formula .$allvars, where . represents the output of parse_bf.
-mv Indicates if the univariate model is part of a multivariate model.
-#### Details
-This is the main formula parsing function of brms. It should usually not be called directly, but
-is exported to allow package developers making use of the formula syntax implemented in brms.
-As long as no other packages depend on this functions, it may be changed without deprecation
-warnings, when new features make this necessary.
-#### Value
-An object of class brmsterms or mvbrmsterms (for multivariate models), which is a list containing
-all required information initially stored in formula in an easier to use format, basically a list of
-formulas (not an abstract syntax tree).
-See Also
-brm, brmsformula, mvbrmsformula
-plot.brmsfit Trace and Density Plots for MCMC Samples
-#### Description 
-Trace and Density Plots for MCMC Samples
-Usage
-## S3 method for class 'brmsfit'
-plot(x, pars = NA, combo = c("dens", "trace"),
-N = 5, exact_match = FALSE, theme = NULL, plot = TRUE,
-ask = TRUE, newpage = TRUE, ...)
-#### Arguments
-x An object of class brmsfit.
-pars Names of the parameters to plot, as given by a character vector or a regular
-expression. By default, all parameters except for group-level and smooth effects
-are plotted.
-combo A character vector with at least two elements. Each element of combo corresponds
-to a column in the resulting graphic and should be the name of one of
-the available MCMC functions (omitting the mcmc_ prefix).
-N The number of parameters plotted per page.
-exact_match Indicates whether parameter names should be matched exactly or treated as regular
-expression. Default is FALSE.
-118 posterior_average.brmsfit
-theme A theme object modifying the appearance of the plots. For some basic themes
-see ggtheme and theme_default.
-plot logical; indicates if plots should be plotted directly in the active graphic device.
-Defaults to TRUE.
-ask logical; indicates if the user is prompted before a new page is plotted. Only used
-if plot is TRUE.
-newpage logical; indicates if the first set of plots should be plotted to a new page. Only
-used if plot is TRUE.
-* `` ... ``: Further arguments passed to mcmc_combo.
-#### Value
-An invisible list of gtable objects.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-Examples
-## Not run:
-fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c
-+ (1|patient) + (1|visit),
-data = epilepsy, family = "poisson")
-plot(fit)
-## plot population-level effects only
-plot(fit, pars = "^b_")
-## End(Not run)
-posterior_average.brmsfit
-Posterior samples of parameters averaged across models
-#### Description 
-Extract posterior samples of parameters averaged across models. Weighting can be done in various
-ways, for instance using Akaike weights based on information criteria or marginal likelihoods.
-Usage
-## S3 method for class 'brmsfit'
-posterior_average(x, ..., pars = NULL,
-weights = "loo2", nsamples = NULL, missing = NULL,
-model_names = NULL, control = list(), seed = NULL)
-posterior_average(x, ...)
-posterior_average.brmsfit 119
-#### Arguments
-x A fitted model object.
-... More fitted model objects or further #### Arguments passed to the underlying postprocessing
-functions.
-pars Names of parameters for which to average across models. Only those parameters
-can be averaged that appear in every model. Defaults to all overlapping
-parameters.
-weights Name of the criterion to compute weights from. Should be one of "loo",
-"waic", "kfold", "loo2" (current default), or "marglik". For the former three
-options, Akaike weights will be computed based on the information criterion
-#### Values returned by the respective methods. For "loo2", method loo_model_weights
-will be used to obtain weights. For "marglik", method post_prob will be used
-to compute weights based on log marginal likelihood #### Values (make sure to specify
-reasonable priors in this case). Alternatively, weights can be a numeric
-vector of pre-specified weights.
-nsamples Total number of posterior samples to use.
-missing An optional numeric #### Value or a named list of numeric #### Values to use if a model
-does not contain a parameter for which posterior samples should be averaged.
-Defaults to NULL, in which case only those parameters can be averaged that are
-present in all of the models.
-model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
-will use the passed #### Values as model names.
-control Optional list of further #### Arguments passed to the function specified in weights.
-seed A single numeric #### Value passed to set.seed to make results reproducible.
-#### Details
-Weights are computed with the model_weights method.
-#### Value
-A data.frame of posterior samples. Samples are rows and parameters are columns.
-See Also
-model_weights, pp_average
-Examples
-## Not run:
-# model with 'treat' as predictor
-fit1 <- brm(rating ~ treat + period + carry, data = inhaler)
-summary(fit1)
-# model without 'treat' as predictor
-fit2 <- brm(rating ~ period + carry, data = inhaler)
-summary(fit2)
-120 posterior_interval.brmsfit
-# compute model-averaged posteriors of overlapping parameters
-posterior_average(fit1, fit2, weights = "waic")
-## End(Not run)
-posterior_interval.brmsfit
-Compute posterior uncertainty intervals
-#### Description 
-Compute posterior uncertainty intervals for brmsfit objects.
-Usage
-## S3 method for class 'brmsfit'
-posterior_interval(object, pars = NA, prob = 0.95,
-...)
-#### Arguments
-object An object of class brmsfit
-pars Names of parameters for which posterior samples should be returned, as given
-by a character vector or regular expressions. By default, all posterior samples of
-all parameters are extracted.
-prob A #### Value between 0 and 1 indicating the desired probability to be covered by the
-uncertainty intervals. The default is 0.95.
-... More #### Arguments passed to as.matrix.brmsfit.
-#### Value
-A matrix with lower and upper interval bounds as columns and as many rows as selected parameters.
-Examples
-## Not run:
-fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c,
-data = epilepsy, family = negbinomial())
-posterior_interval(fit)
-## End(Not run)
-posterior_samples.brmsfit 121
-posterior_samples.brmsfit
-Extract posterior samples
-#### Description 
-Extract posterior samples of specified parameters
-Usage
-## S3 method for class 'brmsfit'
-posterior_samples(x, pars = NA, exact_match = FALSE,
-add_chain = FALSE, subset = NULL, as.matrix = FALSE,
-as.array = FALSE, ...)
-## S3 method for class 'brmsfit'
-as.data.frame(x, row.names = NULL, optional = FALSE,
-...)
-## S3 method for class 'brmsfit'
-as.matrix(x, ...)
-## S3 method for class 'brmsfit'
-as.array(x, ...)
-posterior_samples(x, pars = NA, ...)
-#### Arguments
-x An R object typically of class brmsfit
-pars Names of parameters for which posterior samples should be returned, as given
-by a character vector or regular expressions. By default, all posterior samples of
-all parameters are extracted.
-exact_match Indicates whether parameter names should be matched exactly or treated as regular
-expression. Default is FALSE.
-add_chain A flag indicating if the returned data.frame should contain two additional
-columns. The chain column indicates the chain in which each sample was
-generated, the iter column indicates the iteration number within each chain.
-subset A numeric vector indicating the rows (i.e., posterior samples) to be returned. If
-NULL (the default), all posterior samples are returned.
-as.matrix Should the output be a matrix instead of a data.frame? Defaults to FALSE.
-as.array Should the output be an array instead of a data.frame? Defaults to FALSE.
-... For as.data.frame, as.matrix, and as.array: Further #### Arguments to be passed
-to posterior_samples.
-row.names, optional
-See as.data.frame.
-122 posterior_summary.brmsfit
-#### Details
-Currently there are methods for brmsfit objects. as.data.frame.brmsfit, as.matrix.brmsfit,
-and as.array.brmsfit are basically aliases of posterior_samples.brmsfit and differ from
-each other only in type of the returned object.
-#### Value
-A data frame (matrix or array) containing the posterior samples, with one column per parameter. In
-case an array is returned, it contains one additional dimension for the chains.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-Examples
-## Not run:
-fit <- brm(rating ~ treat + period + carry + (1|subject),
-data = inhaler, family = "cumulative")
-# extract posterior samples of population-level effects
-samples1 <- posterior_samples(fit, "^b")
-head(samples1)
-# extract posterior samples of group-level standard deviations
-samples2 <- posterior_samples(fit, "^sd_")
-head(samples2)
-## End(Not run)
-posterior_summary.brmsfit
-Summarize Posterior Samples
-#### Description 
-Summarizes posterior samples based on point estimates (mean or median), estimation errors (SD or
-MAD) and quantiles.
-Usage
-## S3 method for class 'brmsfit'
-posterior_summary(x, pars = NA, probs = c(0.025,
-0.975), robust = FALSE, ...)
-posterior_summary(x, ...)
-posterior_table 123
-## Default S3 method:
-posterior_summary(x, probs = c(0.025, 0.975),
-robust = FALSE, ...)
-#### Arguments
-x An R object.
-pars Names of parameters for which posterior samples should be returned, as given
-by a character vector or regular expressions. By default, all posterior samples of
-all parameters are extracted.
-probs The percentiles to be computed by the quantile function.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead.
-... More #### Arguments passed to or from other methods.
-#### Value
-A matrix where rows indicate parameters and columns indicate the summary estimates.
-Examples
-## Not run:
-fit <- brm(time ~ age * sex, data = kidney)
-posterior_summary(fit)
-## End(Not run)
-posterior_table Table Creation for Posterior Samples
-#### Description 
-Create a table for unique #### Values of posterior samples. This is usually only useful when summarizing
-predictions of ordinal models.
-Usage
-posterior_table(x, levels = NULL)
-#### Arguments
-x A matrix of posterior samples where rows indicate samples and columns indicate
-parameters.
-levels Optional #### Values of possible posterior #### Values. Defaults to all unique #### Values in x.
-124 post_prob.brmsfit
-#### Value
-A matrix where rows indicate parameters and columns indicate the unique #### Values of posterior samples.
-Examples
-## Not run:
-fit <- brm(rating ~ period + carry + treat,
-data = inhaler, family = cumulative())
-pr <- predict(fit, summary = FALSE)
-posterior_table(pr)
-## End(Not run)
-post_prob.brmsfit Posterior Model Probabilities from Marginal Likelihoods
-#### Description 
-Compute posterior model probabilities from marginal likelihoods. The brmsfit method is just a
-thin wrapper around the corresponding method for bridge objects.
-Usage
-## S3 method for class 'brmsfit'
-post_prob(x, ..., prior_prob = NULL,
-model_names = NULL)
-#### Arguments
-x A fitted model object.
-... More fitted model objects or further #### Arguments passed to the underlying postprocessing
-functions.
-prior_prob Numeric vector with prior model probabilities. If omitted, a uniform prior is
-used (i.e., all models are equally likely a priori). The default NULL corresponds
-to equal prior model weights.
-model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
-will use the passed #### Values as model names.
-#### Details
-Computing the marginal likelihood requires samples of all variables defined in Stan’s parameters
-block to be saved. Otherwise post_prob cannot be computed. Thus, please set save_all_pars = TRUE
-in the call to brm, if you are planning to apply post_prob to your models.
-The computation of model probabilities based on bridge sampling requires a lot more posterior
-samples than usual. A good conservative rule of thump is perhaps 10-fold more samples (read:
-pp_average.brmsfit 125
-the default of 4000 samples may not be enough in many cases). If not enough posterior samples
-are provided, the bridge sampling algorithm tends to be unstable leading to considerably different
-results each time it is run. We thus recommend running post_prob multiple times to check the
-stability of the results.
-More #### Details are provided under bridgesampling:post_prob.
-See Also
-bridge_sampler, bayes_factor
-Examples
-## Not run:
-# model with the treatment effect
-fit1 <- brm(
-count ~ log_Age_c + log_Base4_c + Trt_c,
-data = epilepsy, family = negbinomial(),
-prior = prior(normal(0, 1), class = b),
-save_all_pars = TRUE
-)
-summary(fit1)
-# model without the treatent effect
-fit2 <- brm(
-count ~ log_Age_c + log_Base4_c,
-data = epilepsy, family = negbinomial(),
-prior = prior(normal(0, 1), class = b),
-save_all_pars = TRUE
-)
-summary(fit2)
-# compute the posterior model probabilities
-post_prob(fit1, fit2)
-# specify prior model probabilities
-post_prob(fit1, fit2, prior_prob = c(0.8, 0.2))
-## End(Not run)
+
+
+
+
+
+
+
+
+
+
+
+
+
 pp_average.brmsfit Posterior predictive samples averaged across models
 #### Description 
 Compute posterior predictive samples averaged across models. Weighting can be done in various
 ways, for instance using Akaike weights based on information criteria or marginal likelihoods.
 126 pp_average.brmsfit
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 pp_average(x, ..., weights = "loo2",
 method = c("predict", "fitted", "residuals"), nsamples = NULL,
 summary = TRUE, probs = c(0.025, 0.975), robust = FALSE,
 model_names = NULL, control = list(), seed = NULL)
 pp_average(x, ...)
+</code></pre>
 #### Arguments
+
 x A fitted model object.
-... More fitted model objects or further #### Arguments passed to the underlying postprocessing
+... More fitted model objects or further </code></pre>
+#### Arguments
+ passed to the underlying postprocessing
 functions.
 weights Name of the criterion to compute weights from. Should be one of "loo",
 "waic", "kfold", "loo2" (current default), or "marglik". For the former three
 options, Akaike weights will be computed based on the information criterion
 #### Values returned by the respective methods. For "loo2", method loo_model_weights
 will be used to obtain weights. For "marglik", method post_prob will be used
-to compute weights based on log marginal likelihood #### Values (make sure to specify
+to compute weights based on log marginal likelihoodvalues (make sure to specify
 reasonable priors in this case). Alternatively, weights can be a numeric
 vector of pre-specified weights.
 method Type of predictions to average. Should be one of "predict" (default), "fitted",
 or "residuals".
 nsamples Total number of posterior samples to use.
 summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw #### Values? Default is TRUE.
+of the rawvalues? Default is TRUE.
 probs The percentiles to be computed by the quantile function. Only used if summary
 is TRUE.
 robust If FALSE (the default) the mean is used as the measure of central tendency and
@@ -591,17 +190,21 @@ the standard deviation as the measure of variability. If TRUE, the median and th
 median absolute deviation (MAD) are applied instead. Only used if summary is
 TRUE.
 model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
-will use the passed #### Values as model names.
-control Optional list of further #### Arguments passed to the function specified in weights.
-seed A single numeric #### Value passed to set.seed to make results reproducible.
+will use the passed values as model names.
+control Optional list of further </code></pre>
+#### Arguments
+ passed to the function specified in weights.
+seed A single numericvalue passed to set.seed to make results reproducible.
 #### Details
 Weights are computed with the model_weights method.
-#### Value
+#### Value 
 Same as the output of the method specified in argument method.
 pp_check.brmsfit 127
 See Also
 model_weights, posterior_average
+
 Examples
+```{r}
 ## Not run:
 # model with 'treat' as predictor
 fit1 <- brm(rating ~ treat + period + carry, data = inhaler)
@@ -609,541 +212,92 @@ summary(fit1)
 # model without 'treat' as predictor
 fit2 <- brm(rating ~ period + carry, data = inhaler)
 summary(fit2)
-# compute model-averaged predicted #### Values
+# compute model-averaged predictedvalues
 (df <- unique(inhaler[, c("treat", "period", "carry")]))
 pp_average(fit1, fit2, newdata = df)
-# compute model-averaged fitted #### Values
+# compute model-averaged fittedvalues
 pp_average(fit1, fit2, method = "fitted", newdata = df)
 ## End(Not run)
-pp_check.brmsfit Posterior Predictive Checks for brmsfit Objects
-#### Description 
-Perform posterior predictive checks with the help of the bayesplot package.
-Usage
-## S3 method for class 'brmsfit'
-pp_check(object, type, nsamples, group = NULL,
-x = NULL, newdata = NULL, resp = NULL, subset = NULL, ...)
-#### Arguments
-object An object of class brmsfit.
-type Type of the ppc plot as given by a character string. See PPC for an overview of
-currently supported types. You may also use an invalid type (e.g. type = "xyz")
-to get a list of supported types in the resulting error message.
-nsamples Positive integer indicating how many posterior samples should be used. If NULL
-all samples are used. If not specified, the number of posterior samples is chosen
-automatically. Ignored if subset is not NULL.
-group Optional name of a factor variable in the model by which to stratify the ppc plot.
-This argument is required for ppc *_grouped types and ignored otherwise.
-128 pp_mixture.brmsfit
-x Optional name of a variable in the model. Only used for ppc types having an x
-argument and ignored otherwise.
-newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
-original data of the model is used.
-* `` resp``: Optional names of response variables. If specified, predictions are performed
-only for the specified response variables.
-subset A numeric vector specifying the posterior samples to be used. If NULL (the
-default), all samples are used.
-* `` ... ``: Further arguments passed to predict.brmsfit as well as to the PPC function
-specified in type.
-#### Details
-For a detailed explanation of each of the ppc functions, see the PPC documentation of the bayesplot
-package.
-#### Value
-A ggplot object that can be further customized using the ggplot2 package.
-Examples
-## Not run:
-fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c
-+ (1|patient) + (1|obs),
-data = epilepsy, family = poisson())
-pp_check(fit) # shows dens_overlay plot by default
-pp_check(fit, type = "error_hist", nsamples = 11)
-pp_check(fit, type = "scatter_avg", nsamples = 100)
-pp_check(fit, type = "stat_2d")
-pp_check(fit, type = "rootogram")
-pp_check(fit, type = "loo_pit")
-## get an overview of all valid types
-pp_check(fit, type = "xyz")
-## End(Not run)
-pp_mixture.brmsfit Posterior Probabilities of Mixture Component Memberships
-#### Description 
-Compute the posterior probabilities of mixture component memberships for each observation including
-uncertainty estimates.
-pp_mixture.brmsfit 129
-Usage
-## S3 method for class 'brmsfit'
-pp_mixture(x, newdata = NULL, re_formula = NULL,
-resp = NULL, nsamples = NULL, subset = NULL, log = FALSE,
-summary = TRUE, robust = FALSE, probs = c(0.025, 0.975), ...)
-pp_mixture(x, ...)
-#### Arguments
-x An R object usually of class brmsfit.
-newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
-original data of the model is used.
-re_formula formula containing group-level effects to be considered in the prediction. If
-NULL (default), include all group-level effects; if NA, include no group-level effects.
-* `` resp``: Optional names of response variables. If specified, predictions are performed
-only for the specified response variables.
-nsamples Positive integer indicating how many posterior samples should be used. If NULL
-(the default) all samples are used. Ignored if subset is not NULL.
-subset A numeric vector specifying the posterior samples to be used. If NULL (the
-default), all samples are used.
-log Logical; Indicates whether to return probabilities on the log-scale.
-summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw #### Values? Default is TRUE.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
-TRUE.
-probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-* `` ... ``: Further arguments passed to extract_draws that control several aspects of data
-validation and prediction.
-#### Details
-The returned probabilities can be written as P(Kn = kjY n), that is the posterior probability that
-observation n originates from component k. They are computed using Bayes’ Theorem
-P(Kn = kjY n) = P(Y njKn = k)P(Kn = k)=P(Y n);
-where P(Y njKn = k) is the (posterior) likelihood of observation n for component k, P(Kn = k)
-is the (posterior) mixing probability of component k (i.e. parameter theta<k>), and
-P(Y n) =
-X
-(k = 1; :::;K)P(Y njKn = k)P(Kn = k)
-is a normalizing constant.
-130 predict.brmsfit
-#### Value
-If summary = TRUE, an N x E x K array, where N is the number of observations, K is the number
-of mixture components, and E is equal to length(probs) + 2. If summary = FALSE, an S x N x
-K array, where S is the number of posterior samples.
-Examples
-## Not run:
-## simulate some data
-set.seed(1234)
-dat <- data.frame(
-y = c(rnorm(100), rnorm(50, 2)),
-x = rnorm(150)
-)
-## fit a simple normal mixture model
-mix <- mixture(gaussian, nmix = 2)
-prior <- c(
-prior(normal(0, 5), Intercept, nlpar = mu1),
-prior(normal(0, 5), Intercept, nlpar = mu2),
-prior(dirichlet(2, 2), theta)
-)
-fit1 <- brm(bf(y ~ x), dat, family = mix,
-prior = prior, chains = 2, inits = 0)
-summary(fit1)
-## compute the membership probabilities
-ppm <- pp_mixture(fit1)
-str(ppm)
-## extract point estimates for each observation
-head(ppm[, 1, ])
-## classify every observation according to
-## the most likely component
-apply(ppm[, 1, ], 1, which.max)
-## End(Not run)
-predict.brmsfit Model Predictions of brmsfit Objects
-#### Description 
-Predict responses based on the fitted model. Can be performed for the data used to fit the model
-(posterior predictive checks) or for new data. By definition, these predictions have higher variance
-than predictions of the fitted #### Values (i.e., the ’regression line’) performed by the fitted method.
-This is because the measurement error is incorporated. The estimated means of both methods
-should, however, be very similar.
-predict.brmsfit 131
-Usage
-## S3 method for class 'brmsfit'
-predict(object, newdata = NULL, re_formula = NULL,
-transform = NULL, resp = NULL, negative_rt = FALSE,
-nsamples = NULL, subset = NULL, sort = FALSE, ntrys = 5,
-summary = TRUE, robust = FALSE, probs = c(0.025, 0.975), ...)
-## S3 method for class 'brmsfit'
-posterior_predict(object, newdata = NULL,
-re_formula = NULL, re.form = NULL, transform = NULL, resp = NULL,
-negative_rt = FALSE, nsamples = NULL, subset = NULL,
-sort = FALSE, ntrys = 5, ...)
-#### Arguments
-object An object of class brmsfit.
-newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
-original data of the model is used.
-re_formula formula containing group-level effects to be considered in the prediction. If
-NULL (default), include all group-level effects; if NA, include no group-level effects.
-transform A function or a character string naming a function to be applied on the predicted
-responses before summary statistics are computed.
-* `` resp``: Optional names of response variables. If specified, predictions are performed
-only for the specified response variables.
-negative_rt Only relevant for Wiener diffusion models. A flag indicating whether response
-times of responses on the lower boundary should be returned as negative #### Values.
-This allows to distinguish responses on the upper and lower boundary. Defaults
-to FALSE.
-nsamples Positive integer indicating how many posterior samples should be used. If NULL
-(the default) all samples are used. Ignored if subset is not NULL.
-subset A numeric vector specifying the posterior samples to be used. If NULL (the
-default), all samples are used.
-sort Logical. Only relevant for time series models. Indicating whether to return
-predicted #### Values in the original order (FALSE; default) or in the order of the time
-series (TRUE).
-ntrys Parameter used in rejection sampling for truncated discrete models only (defaults
-to 5). See #### Details for more information.
-summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw #### Values? Default is TRUE.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
-TRUE.
-132 predict.brmsfit
-probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-* `` ... ``: Further arguments passed to extract_draws that control several aspects of data
-validation and prediction.
-re.form Alias of re_formula.
-#### Details
-NA #### Values within factors in newdata, are interpreted as if all dummy variables of this factor are zero.
-This allows, for instance, to make predictions of the grand mean when using sum coding.
-Method posterior_predict.brmsfit is an alias of predict.brmsfit with summary = FALSE.
-For truncated discrete models only: In the absence of any general algorithm to sample from truncated
-discrete distributions, rejection sampling is applied in this special case. This means that #### Values
-are sampled until a #### Value lies within the defined truncation boundaries. In practice, this procedure
-may be rather slow (especially in R). Thus, we try to do approximate rejection sampling by sampling
-each #### Value ntrys times and then select a valid #### Value. If all #### Values are invalid, the closest
-boundary is used, instead. If there are more than a few of these pathological cases, a warning will
-occur suggesting to increase argument ntrys.
-#### Value
-Predicted #### Values of the response variable. If summary = TRUE the output depends on the family:
-For categorical and ordinal families, it is a N x C matrix, where N is the number of observations
-and C is the number of categories. For all other families, it is a N x E matrix where E is equal
-to length(probs) + 2. If summary = FALSE, the output is as a S x N matrix, where S is the
-number of samples. In multivariate models, the output is an array of 3 dimensions, where the third
-dimension indicates the response variables.
-Examples
-## Not run:
-## fit a model
-fit <- brm(time | cens(censored) ~ age + sex + (1+age||patient),
-data = kidney, family = "exponential", inits = "0")
-## predicted responses
-pp <- predict(fit)
-head(pp)
-## predicted responses excluding the group-level effect of age
-pp2 <- predict(fit, re_formula = ~ (1|patient))
-head(pp2)
-## predicted responses of patient 1 for new data
-newdata <- data.frame(sex = factor(c("male", "female")),
-age = c(20, 50),
-patient = c(1, 1))
-predict(fit, newdata = newdata)
-## End(Not run)
-predictive_interval.brmsfit 133
-predictive_interval.brmsfit
-Predictive Intervals
-#### Description 
-Compute intervals from the posterior predictive distribution.
-Usage
-## S3 method for class 'brmsfit'
-predictive_interval(object, prob = 0.9, ...)
-#### Arguments
-object An R object of class brmsfit.
-prob A number p (0 < p < 1) indicating the desired probability mass to include in the
-intervals. Defaults to 0.9.
-* `` ... ``: Further arguments passed to posterior_predict.
-#### Value
-A matrix with 2 columns for the lower and upper bounds of the intervals, respectively, and as many
-rows as observations being predicted.
-Examples
-## Not run:
-fit <- brm(count ~ log_Base4_c, data = epilepsy, family = poisson())
-predictive_interval(fit)
-## End(Not run)
+```
+
+
+
+
+
 134 print.brmsprior
 print.brmsfit Print a summary for a fitted model represented by a brmsfit object
 #### Description 
 Print a summary for a fitted model represented by a brmsfit object
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 print(x, digits = 2, ...)
+</code></pre>
 #### Arguments
+
 x An object of class brmsfit
 digits The number of significant digits for printing out the summary; defaults to 2. The
 effective sample size is always rounded to integers.
-... Additional #### Arguments that would be passed to method summary of brmsfit.
+... Additional </code></pre>
+#### Arguments
+ that would be passed to method summary of brmsfit.
 Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
 print.brmsprior Print method for brmsprior objects
 #### Description 
 Print method for brmsprior objects
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsprior'
 print(x, show_df, ...)
+</code></pre>
 #### Arguments
+
 x An object of class brmsprior.
 show_df Logical; Print priors as a single data.frame (TRUE) or as a sequence of sampling
 statements (FALSE)?
 ... Currently ignored.
-prior_samples.brmsfit 135
-prior_samples.brmsfit Extract prior samples
-#### Description 
-Extract prior samples of specified parameters
-Usage
-## S3 method for class 'brmsfit'
-prior_samples(x, pars = NA, ...)
-prior_samples(x, pars = NA, ...)
-#### Arguments
-x An R object typically of class brmsfit
-pars Names of parameters for which prior samples should be returned, as given by
-a character vector or regular expressions. By default, all prior samples are extracted
-... Currently ignored
-#### Details
-To make use of this function, the model must contain samples of prior distributions. This can be
-ensured by setting sample_prior = TRUE in function brm. Currently there are methods for brmsfit
-objects.
-#### Value
-A data frame containing the prior samples.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-Examples
-## Not run:
-fit <- brm(rating ~ treat + period + carry + (1|subject),
-data = inhaler, family = "cumulative",
-prior = set_prior("normal(0,2)", class = "b"),
-sample_prior = TRUE)
-# extract all prior samples
-samples1 <- prior_samples(fit)
-head(samples1)
-136 prior_summary.brmsfit
-# extract prior samples for the population-level effects of 'treat'
-samples2 <- prior_samples(fit, "b_treat")
-head(samples2)
-## End(Not run)
-prior_summary.brmsfit Extract Priors of a Bayesian Model Fitted with brms
-#### Description 
-Extract Priors of a Bayesian Model Fitted with brms
-Usage
-## S3 method for class 'brmsfit'
-prior_summary(object, all = TRUE, ...)
-#### Arguments
-object A brmsfit object
-all Logical; Show all parameters in the model which may have priors (TRUE) or only
-those with proper priors (FALSE)?
-* `` ... ``: Further arguments passed to or from other methods.
-#### Value
-For brmsfit objects, an object of class brmsprior.
-Examples
-## Not run:
-fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c
-+ (1|patient) + (1|obs),
-data = epilepsy, family = poisson(),
-prior = c(prior(student_t(5,0,10), class = b),
-prior(cauchy(0,2), class = sd)))
-prior_summary(fit)
-prior_summary(fit, all = FALSE)
-print(prior_summary(fit, all = FALSE), show_df = FALSE)
-## End(Not run)
-ranef.brmsfit 137
-ranef.brmsfit Extract Group-Level Estimates
-#### Description 
-Extract the group-level (’random’) effects of each level from a brmsfit object.
-Usage
-## S3 method for class 'brmsfit'
-ranef(object, summary = TRUE, robust = FALSE,
-probs = c(0.025, 0.975), pars = NULL, groups = NULL, ...)
-#### Arguments
-object An object of class brmsfit.
-summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw #### Values? Default is TRUE.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
-TRUE.
-probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-pars Optional names of coefficients to extract. By default, all coefficients are extracted.
-groups Optional names of grouping variables for which to extract effects.
-... Currently ignored.
-#### Value
-If old is FALSE: A list of arrays (one per grouping factor). If summary is TRUE, names of the first
-dimension are the factor levels and names of the third dimension are the group-level effects. If
-summary is FALSE, names of the second dimension are the factor levels and names of the third
-dimension are the group-level effects.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-138 reloo
-Examples
-## Not run:
-fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c + (1+Trt_c|visit),
-data = epilepsy, family = gaussian(), chains = 2)
-ranef(fit)
-## End(Not run)
-reloo Compute exact cross-validation for problematic observations
-#### Description 
-Compute exact cross-validation for problematic observations for which approximate leave-one-out
-cross-validation may return incorrect results.
-Usage
-reloo(x, ...)
-## S3 method for class 'loo'
-reloo(x, fit, k_threshold = 0.7, check = TRUE,
-resp = NULL, ...)
-#### Arguments
-x An R object typically of class loo.
-* `` ... ``: Further arguments passed to update.brmsfit such as iter, chains, or cores.
-fit An R object typically of class brmsfit.
-k_threshold The threshold at which pareto k estimates are treated as problematic. Defaults
-to 0.7. See pareto_k_ids for more details.
-check Logical; If TRUE (the default), a crude check is performed if the loo object was
-generated from the brmsfit object passed to argument fit.
-* `` resp``: Optional names of response variables. If specified, predictions are performed
-only for the specified response variables.
-#### Details
-Warnings about Pareto k estimates indicate observations for which the approximation to LOO is
-problematic (this is described in detail in Vehtari, Gelman, and Gabry (2017) and the loo package
-documentation). If there are J observations with k estimates above k_threshold, then reloo will
-refit the original model J times, each time leaving out one of the J problematic observations. The
-pointwise contributions of these observations to the total ELPD are then computed directly and
-substituted for the previous estimates from these J observations that are stored in the original loo
-object.
-residuals.brmsfit 139
-#### Value
-An object of the class as x.
-See Also
-loo, kfold
-Examples
-## Not run:
-fit1 <- brm(count ~ log_Age_c + log_Base4_c * Trt + (1|patient),
-data = epilepsy, family = poisson())
-# throws warning about some pareto k estimates being too high
-(loo1 <- loo(fit1))
-(loo1 <- reloo(loo1, fit1))
-## End(Not run)
-residuals.brmsfit Extract Model Residuals from brmsfit Objects
-#### Description 
-Extract Model Residuals from brmsfit Objects
-Usage
-## S3 method for class 'brmsfit'
-residuals(object, newdata = NULL, re_formula = NULL,
-type = c("ordinary", "pearson"), method = c("fitted", "predict"),
-resp = NULL, nsamples = NULL, subset = NULL, sort = FALSE,
-summary = TRUE, robust = FALSE, probs = c(0.025, 0.975), ...)
-## S3 method for class 'brmsfit'
-predictive_error(object, newdata = NULL,
-re_formula = NULL, re.form = NULL, resp = NULL, nsamples = NULL,
-subset = NULL, sort = FALSE, robust = FALSE, probs = c(0.025,
-0.975), ...)
-#### Arguments
-object An object of class brmsfit.
-newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
-original data of the model is used.
-re_formula formula containing group-level effects to be considered in the prediction. If
-NULL (default), include all group-level effects; if NA, include no group-level effects.
-140 residuals.brmsfit
-type The type of the residuals, either "ordinary" or "pearson". More information
-is provided under ’#### Details’.
-method Indicates the method to compute model implied #### Values. Either "fitted" (predicted
-#### Values of the regression curve) or "predict" (predicted response #### Values).
-Using "predict" is recommended but "fitted" is the current default for reasons
-of backwards compatibility.
-* `` resp``: Optional names of response variables. If specified, predictions are performed
-only for the specified response variables.
-nsamples Positive integer indicating how many posterior samples should be used. If NULL
-(the default) all samples are used. Ignored if subset is not NULL.
-subset A numeric vector specifying the posterior samples to be used. If NULL (the
-default), all samples are used.
-sort Logical. Only relevant for time series models. Indicating whether to return
-predicted #### Values in the original order (FALSE; default) or in the order of the time
-series (TRUE).
-summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw #### Values? Default is TRUE.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
-TRUE.
-probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-* `` ... ``: Further arguments passed to extract_draws that control several aspects of data
-validation and prediction.
-re.form Alias of re_formula.
-#### Details
-Residuals of type ordinary are of the form R = Y 􀀀 Y p, where Y is the observed and Y p is the
-predicted response. Residuals of type pearson are of the form R = (Y 􀀀 Y p)=SD(Y ), where
-SD(Y ) is an estimation of the standard deviation of Y .
-Currently, residuals.brmsfit does not support categorical or ordinal models.
-Method predictive_error.brmsfit is an alias of residuals.brmsfit with method = "predict"
-and summary = FALSE.
-#### Value
-Model residuals. If summary = TRUE this is a N x C matrix and if summary = FALSE a S x
-N matrix, where S is the number of samples, N is the number of observations, and C is equal to
-length(probs) + 2.
-restructure 141
-Examples
-## Not run:
-## fit a model
-fit <- brm(rating ~ treat + period + carry + (1|subject),
-data = inhaler, cores = 2)
-## extract residuals
-res <- residuals(fit, summary = TRUE)
-head(res)
-## End(Not run)
+
+
+
+
+
 restructure Restructure Old brmsfit Objects
 #### Description 
 Restructure old brmsfit objects to work with the latest brms version. This function is called
 internally when applying post-processing methods. However, in order to avoid unnecessary run
 time caused by the restructuring, I recommend explicitly calling restructure once per model after
 updating brms.
-Usage
+
+#### Usage
+<pre><code>
 restructure(x, rstr_summary = FALSE)
+</code></pre>
 #### Arguments
+
 x An object of class brmsfit.
 rstr_summary Logical; If TRUE, the cached summary stored by rstan is restructured as well.
 #### Value
 A brmsfit object compatible with the latest version of brms.
-rows2labels Convert Rows to Labels
-#### Description 
-Convert information in rows to labels for each row.
-Usage
-rows2labels(x, digits = 2, sep = " & ", incl_vars = TRUE, ...)
-142 s
-#### Arguments
-x A data.frame for which to extract labels.
-digits Minimal number of decimal places shown in the labels of numeric variables.
-sep A single character string defining the separator between variables used in the
-labels.
-incl_vars Indicates if variable names should be part of the labels. Defaults to TRUE.
-... Currently unused.
-#### Value
-A character vector of the same length as the number of rows of x.
-See Also
-make_conditions, marginal_effects
-s Defining smooths in brms formulas
-#### Description 
-Functions used in definition of smooth terms within a model formulas. The function does not
-evaluate a (spline) smooth - it exists purely to help set up a model using spline based smooths.
-Usage
-s(...)
-t2(...)
-#### Arguments
-... #### Arguments passed to mgcv::s or mgcv::t2.
-#### Details
-The function defined here are just simple wrappers of the respective functions of the mgcv package.
-See Also
-brmsformula, mgcv::s, mgcv::t2
-set_prior 143
-Examples
-## Not run:
-# simulate some data
-dat <- mgcv::gamSim(1, n = 200, scale = 2)
-# fit univariate smooths for all predictors
-fit1 <- brm(y ~ s(x0) + s(x1) + s(x2) + s(x3),
-data = dat, chains = 2)
-summary(fit1)
-plot(marginal_smooths(fit1), ask = FALSE)
-# fit a more complicated smooth model
-fit2 <- brm(y ~ t2(x0, x1) + s(x2, by = x3),
-data = dat, chains = 2)
-summary(fit2)
-plot(marginal_smooths(fit2), ask = FALSE)
-## End(Not run)
+0
+
+
 set_prior Prior Definitions for brms Models
 #### Description 
 Define priors for specific parameters or classes of parameters
-Usage
+
+#### Usage
+<pre><code>
 set_prior(prior, class = "b", coef = "", group = "", resp = "",
 dpar = "", nlpar = "", lb = NA, ub = NA, check = TRUE)
 prior(prior, ...)
 prior_(prior, ...)
 prior_string(prior, ...)
+</code></pre>
 #### Arguments
+
 prior A character string defining a distribution in Stan language
 class The parameter class. Defaults to "b" (i.e. population-level effects). See ’#### Details’
 for other valid parameter classes.
@@ -1159,16 +313,25 @@ ub Upper bound for parameter restriction. Currently only allowed for classes "b"
 "ar", "ma", and "arr". Defaults to NULL, that is no restriction.
 check Logical; Indicates whether priors should be checked for validity (as far as possible).
 Defaults to TRUE. If FALSE, prior is passed to the Stan code as is, and all
-other #### Arguments are ignored.
-... #### Arguments passed to set_prior.
+other </code></pre>
+#### Arguments
+ are ignored.
+... </code></pre>
+#### Arguments
+ passed to set_prior.
 #### Details
 set_prior is used to define prior distributions for parameters in brms models. The functions
 prior, prior_, and prior_string are aliases of set_prior each allowing for a different kind
-of argument specification. prior allows specifying #### Arguments as expression without quotation
-marks using non-standard evaluation. prior_ allows specifying #### Arguments as one-sided formulas
-or wrapped in quote. prior_string allows specifying #### Arguments as strings just as set_prior
+of argument specification. prior allows specify  arguments
+ as expression without quotation
+marks using non-standard evaluation. prior_ allows specify  arguments
+ as one-sided formulas
+or wrapped in quote. prior_string allows specify  arguments
+ as strings just as set_prior
 itself.
-Below, we explain its usage and list some common prior distributions for parameters. A complete
+Below, we explain its 
+#### Usage
+<pre><code> and list some common prior distributions for parameters. A complete
 overview on possible prior distributions is given in the Stan Reference Manual available at http:
 //mc-stan.org/.
 To combine multiple priors, use c(...) or the + operator (see ’Examples’). brms does not check if
@@ -1202,7 +365,7 @@ Setting a prior on the intercept will not break vectorization of the other popul
 Note that technically, this prior is set on an intercept that results when internally centering all
 population-level predictors around zero to improve sampling efficiency. On this centered intercept,
 specifying a prior is actually much easier and intuitive than on the original intercept, since
-the former represents the expected response #### Value when all predictors are at their means. To treat
+the former represents the expected responsevalue when all predictors are at their means. To treat
 the intercept as an ordinary population-level effect and avoid the centering parameterization, use
 0 + intercept on the right-hand side of the model formula.
 A special shrinkage prior to be applied on population-level effects is the horseshoe prior. See
@@ -1214,7 +377,9 @@ to define the prior, we can write set_prior("<prior>", coef = "x", nlpar = "alph
 a shortcut we can use set_prior("<prior>", nlpar = "alpha") to set the same prior on all
 population-level effects of alpha at once.
 If desired, population-level effects can be restricted to fall only within a certain interval using the
-lb and ub #### Arguments of set_prior. This is often required when defining priors that are not defined
+lb and ub </code></pre>
+#### Arguments
+ of set_prior. This is often required when defining priors that are not defined
 everywhere on the real line, such as uniform or gamma priors. When defining a uniform(2,4)
 prior, you should write set_prior("uniform(2,4)", lb = 2, ub = 4). When using a prior that
 is defined on the positive reals only (such as a gamma prior) set lb = 0. In most situations, it is
@@ -1272,7 +437,9 @@ lagsar and errorsar (Spatial simultaneous autoregression).
 Priors can be defined by set_prior("<prior>", class = "ar") for ar and similar for other
 autocorrelation parameters. By default, ar and ma are bounded between -1 and 1, car, lagsar, and
 errorsar are bounded between 0, and 1, and arr is unbounded (you may change this by using the
-#### Arguments lb and ub). The default prior is flat over the definition area.
+</code></pre>
+#### Arguments
+ lb and ub). The default prior is flat over the definition area.
 7. Distance parameters of monotonic effects
 As explained in the #### Details section of brm, monotonic effects make use of a special parameter vector
 to estimate the ’normalized distances’ between consecutive predictor categories. This is realized in
@@ -1309,11 +476,14 @@ function get_prior.
 #### Value
 An object of class brmsprior to be used in the prior argument of brm.
 Functions
-• prior: Alias of set_prior allowing to specify #### Arguments as expressions without quotation
+• prior: Alias of set_prior allowing to specify  arguments
+ as expressions without quotation
 marks.
-• prior_: Alias of set_prior allowing to specify #### Arguments as as one-sided formulas or
+• prior_: Alias of set_prior allowing to specify  arguments
+ as as one-sided formulas or
 wrapped in quote.
-• prior_string: Alias of set_prior allowing to specify #### Arguments as strings.
+• prior_string: Alias of set_prior allowing to specify  arguments
+ as strings.
 References
 Gelman A. (2006). Prior distributions for variance parameters in hierarchical models. Bayesian
 analysis, 1(3), 515 – 534.
@@ -1354,7 +524,9 @@ Shifted_Lognormal The Shifted Log Normal Distribution
 #### Description 
 Density, distribution function, quantile function and random generation for the shifted log normal
 distribution with mean meanlog, standard deviation sdlog, and shift parameter shift.
-Usage
+
+#### Usage
+<pre><code>
 dshifted_lnorm(x, meanlog = 0, sdlog = 1, shift = 0, log = FALSE)
 pshifted_lnorm(q, meanlog = 0, sdlog = 1, shift = 0,
 lower.tail = TRUE, log.p = FALSE)
@@ -1362,55 +534,36 @@ qshifted_lnorm(p, meanlog = 0, sdlog = 1, shift = 0,
 lower.tail = TRUE, log.p = FALSE)
 rshifted_lnorm(n, meanlog = 0, sdlog = 1, shift = 0)
 SkewNormal 149
+</code></pre>
 #### Arguments
+
 x, q Vector of quantiles.
 meanlog Vector of means.
 sdlog Vector of standard deviations.
 shift Vector of shifts.
-log Logical; If TRUE, #### Values are returned on the log scale.
+log Logical; If TRUE,values are returned on the log scale.
 lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-log.p Logical; If TRUE, #### Values are returned on the log scale.
+log.p Logical; If TRUE,values are returned on the log scale.
 p Vector of probabilities.
 n Number of samples to draw from the distribution.
 #### Details
 See vignette("brms_families") for #### Details on the parameterization.
-SkewNormal The Skew-Normal Distribution
-#### Description 
-Density, distribution function, and random generation for the skew-normal distribution with mean
-mu, standard deviation sigma, and skewness alpha.
-Usage
-dskew_normal(x, mu = 0, sigma = 1, alpha = 0, xi = NULL,
-omega = NULL, log = FALSE)
-pskew_normal(q, mu = 0, sigma = 1, alpha = 0, xi = NULL,
-omega = NULL, lower.tail = TRUE, log.p = FALSE)
-qskew_normal(p, mu = 0, sigma = 1, alpha = 0, xi = NULL,
-omega = NULL, lower.tail = TRUE, log.p = FALSE, tol = 1e-08)
-rskew_normal(n, mu = 0, sigma = 1, alpha = 0, xi = NULL,
-omega = NULL)
-#### Arguments
-x, q Vector of quantiles.
-mu Vector of mean #### Values.
-sigma Vector of standard deviation #### Values.
-alpha Vector of skewness #### Values.
-150 stancode.brmsfit
-xi Optional vector of location #### Values. If NULL (the default), will be computed internally.
-omega Optional vector of scale #### Values. If NULL (the default), will be computed internally.
-log Logical; If TRUE, #### Values are returned on the log scale.
-lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-log.p Logical; If TRUE, #### Values are returned on the log scale.
-p Vector of probabilities.
-tol Tolerance of the approximation used in the computation of quantiles.
-n Number of samples to draw from the distribution.
-#### Details
-See vignette("brms_families") for #### Details on the parameterization.
+
+
+
+
 stancode.brmsfit Extract Stan model code
 #### Description 
 Extract Stan model code
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 stancode(object, version = TRUE, ...)
 stancode(object, ...)
+</code></pre>
 #### Arguments
+
 object An object of class brmsfit
 version Logical; indicates if the first line containing the brms version number should be
 included. Defaults to TRUE.
@@ -1421,13 +574,17 @@ standata.brmsfit 151
 standata.brmsfit Extract Data passed to Stan
 #### Description 
 Extract all data that was used by Stan to fit the model
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 standata(object, newdata = NULL, re_formula = NULL,
 incl_autocor = TRUE, new_objects = list(), internal = FALSE,
 control = list(), ...)
 standata(object, ...)
+</code></pre>
 #### Arguments
+
 object An object of class brmsfit.
 newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
 original data of the model is used.
@@ -1441,20 +598,28 @@ newdata. Currently, only required for objects passed to cor_sar and
 cor_fixed.
 internal Logical, indicates if the data should be prepared for internal use in other postprocessing
 methods.
-control A named list currently for internal usage only.
-... More #### Arguments passed to make_standata.
+control A named list currently for internal 
+#### Usage
+<pre><code> only.
+... More </code></pre>
+#### Arguments
+ passed to make_standata.
 #### Value
 A named list containing the data originally passed to Stan.
 152 stanplot.brmsfit
 stanplot.brmsfit MCMC Plots Implemented in bayesplot
 #### Description 
 Convenient way to call MCMC plotting functions implemented in the bayesplot package.
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 stanplot(object, pars = NA, type = "intervals",
 exact_match = FALSE, ...)
 stanplot(object, ...)
+</code></pre>
 #### Arguments
+
 object An R object typically of class brmsfit
 pars Names of parameters to be plotted, as given by a character vector or regular expressions.
 By default, all parameters except for group-level and smooth effects
@@ -1466,14 +631,18 @@ nuts_stepsize, nuts_treedepth, and nuts_energy. For an overview on the
 various plot types see MCMC-overview.
 exact_match Indicates whether parameter names should be matched exactly or treated as regular
 expression. Default is FALSE.
-... Additional #### Arguments passed to the plotting functions. See MCMC-overview for
+... Additional </code></pre>
+#### Arguments
+ passed to the plotting functions. See MCMC-overview for
 more #### Details.
 #### Details
 Also consider using the shinystan package available via method launch_shinystan in brms for
 flexible and interactive visual analysis.
 #### Value
 A ggplot object that can be further customized using the ggplot2 package.
+
 Examples
+```{r}
 ## Not run:
 model <- brm(count ~ log_Age_c + log_Base4_c * Trt
 + (1|patient) + (1|visit),
@@ -1492,14 +661,22 @@ stanplot(model, type = "rhat")
 stanplot(model, type = "nuts_acceptance")
 stanplot(model, type = "nuts_divergence")
 ## End(Not run)
+```
+
+
+
 stanvar User-defined variables passed to Stan
 #### Description 
 Prepare user-defined variables to be passed to one of Stan’s program blocks. This is primarily useful
 for defining more complex priors, for refitting models without recompilation despite changing
 priors, or for defining custom Stan functions.
-Usage
+
+#### Usage
+<pre><code>
 stanvar(x = NULL, name = NULL, scode = NULL, block = "data")
+</code></pre>
 #### Arguments
+
 x An R object containing data to be passed to Stan. Only required if block = 'data'
 and ignored otherwise.
 name Optinal character string providing the desired variable name of the object in x.
@@ -1530,42 +707,32 @@ stanvars <- stanvar(scode = "real<lower=0> tau;",
 block = "parameters")
 make_stancode(count ~ Trt + log_Base4_c, epilepsy,
 prior = bprior, stanvars = stanvars)
-StudentT The Student-t Distribution
-#### Description 
-Density, distribution function, quantile function and random generation for the Student-t distribution
-with location mu, scale sigma, and degrees of freedom df.
-Usage
-dstudent_t(x, df, mu = 0, sigma = 1, log = FALSE)
-pstudent_t(q, df, mu = 0, sigma = 1, lower.tail = TRUE,
-log.p = FALSE)
-qstudent_t(p, df, mu = 0, sigma = 1)
-rstudent_t(n, df, mu = 0, sigma = 1)
-#### Arguments
-x, q Vector of quantiles.
-df Vector of degrees of freedom.
-mu Vector of location #### Values.
-sigma Vector of scale #### Values.
-summary.brmsfit 155
-log, log.p Logical; If TRUE, #### Values are returned on the log scale.
-lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-p Vector of probabilities.
-n Number of samples to draw from the distribution.
-#### Details
-See vignette("brms_families") for #### Details on the parameterization.
-See Also
-TDist
+
+
+
+
+
+
+
+
+
+
 summary.brmsfit Create a summary of a fitted model represented by a brmsfit object
 #### Description 
 Create a summary of a fitted model represented by a brmsfit object
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 summary(object, priors = FALSE, prob = 0.95,
 mc_se = FALSE, use_cache = TRUE, ...)
+</code></pre>
 #### Arguments
+
 object An object of class brmsfit
 priors Logical; Indicating if priors should be included in the summary. Default is
 FALSE.
-prob A #### Value between 0 and 1 indicating the desired probability to be covered by the
+prob Avalue between 0 and 1 indicating the desired probability to be covered by the
 uncertainty intervals. The default is 0.95.
 mc_se Logical; Indicating if the uncertainty caused by the MCMC sampling should be
 shown in the summary. Defaults to FALSE.
@@ -1573,7 +740,9 @@ use_cache Logical; Indicating if summary results should be cached for future use
 Defaults to TRUE. For models fitted with earlier versions of brms, it may be necessary
 to set use_cache to FALSE in order to get the summary method working
 correctly.
-... Other potential #### Arguments
+... Other potential </code></pre>
+#### Arguments
+
 Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
 156 theme_black
@@ -1581,9 +750,13 @@ theme_black Black Theme for ggplot2 Graphics
 #### Description 
 A black theme for ggplot graphics inspired by a blog post of Jon Lefcheck (https://jonlefcheck.
 net/2013/03/11/black-theme-for-ggplot2-2/).
-Usage
+
+#### Usage
+<pre><code>
 theme_black(base_size = 12, base_family = "")
+</code></pre>
 #### Arguments
+
 base_size base font size
 base_family base font family
 #### Details
@@ -1591,7 +764,9 @@ When using theme_black in plots powered by the bayesplot package such as pp_chec
 I recommend using the "viridisC" color scheme (see examples).
 #### Value
 A theme object used in ggplot2 graphics.
+
 Examples
+```{r}
 ## Not run:
 # change default ggplot theme
 theme_set(theme_black())
@@ -1606,11 +781,17 @@ plot(marginal_effects(fit), ask = FALSE)
 pp_check(fit)
 stanplot(fit, type = "hex", pars = c("b_Intercept", "b_Trt1"))
 ## End(Not run)
+```
+
+
+
 theme_default 157
 theme_default Default bayesplot Theme for ggplot2 Graphics
 #### Description 
 This theme is imported from the bayesplot package. See theme_default for a complete documentation.
+</code></pre>
 #### Arguments
+
 base_size base font size
 base_family base font family
 #### Value
@@ -1618,24 +799,34 @@ A theme object used in ggplot2 graphics.
 update.brmsfit Update brms models
 #### Description 
 This method allows to update an existing brmsfit object
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 update(object, formula., newdata = NULL,
 recompile = NULL, ...)
+</code></pre>
 #### Arguments
+
 object An object of class brmsfit.
 formula. Changes to the formula; for #### Details see update.formula and brmsformula.
 newdata Optional data.frame to update the model with new data.
 recompile Logical, indicating whether the Stan model should be recompiled. If NULL (the
 default), update tries to figure out internally, if recompilation is necessary. Setting
-it to FALSE will cause all Stan code changing #### Arguments to be ignored.
-... Other #### Arguments passed to brm.
+it to FALSE will cause all Stan code changing </code></pre>
+#### Arguments
+ to be ignored.
+... Other </code></pre>
+#### Arguments
+ passed to brm.
 #### Details
 Sometimes, when updating the model formula, it may happen that R complains about a mismatch
 between model frame and formula. This error can be avoided by supplying your original data
 again via argument newdata.
 158 update_adterms
+
 Examples
+```{r}
 ## Not run:
 fit1 <- brm(time | cens(censored) ~ age * sex + disease + (1|patient),
 data = kidney, family = gaussian("log"))
@@ -1653,35 +844,22 @@ fit4 <- update(fit1, family = weibull(), inits = "0",
 prior = set_prior("normal(0,5)"))
 summary(fit4)
 ## End(Not run)
-update_adterms Update Formula Addition Terms
-#### Description 
-Update additions terms used in formulas of brms. See addition-terms for #### Details.
-Usage
-update_adterms(formula, adform, action = c("update", "replace"))
-#### Arguments
-formula Two-sided formula to be updated.
-adform One-sided formula containing addition terms to update formula with.
-action Indicates what should happen to the existing addition terms in formula. If
-"update" (the default), old addition terms that have no corresponding term in
-adform will be kept. If "replace", all old addition terms will be removed.
-#### Value
-An object of class formula.
-validate_newdata 159
-Examples
-form <- y | trials(size) ~ x
-update_adterms(form, ~ trials(10))
-update_adterms(form, ~ weights(w))
-update_adterms(form, ~ weights(w), action = "replace")
-update_adterms(y ~ x, ~ trials(10))
+```
+
+
 validate_newdata Validate New Data
 #### Description 
 Validate new data passed to post-processing methods of brms. Unless you are a package developer,
 you will rarely need to call validate_newdata directly.
-Usage
+
+#### Usage
+<pre><code>
 validate_newdata(newdata, object, re_formula = NULL,
 allow_new_levels = FALSE, resp = NULL, check_response = TRUE,
 incl_autocor = TRUE, all_group_vars = NULL, ...)
+</code></pre>
 #### Arguments
+
 newdata A data.frame containing new data to be validated.
 object A brmsfit object.
 re_formula formula containing group-level effects to be considered in the prediction. If
@@ -1701,48 +879,21 @@ variables in the model.
 ... Currently ignored.
 #### Value
 A validated 'data.frame' based on newdata.
-160 VarCorr.brmsfit
-VarCorr.brmsfit Extract Variance and Correlation Components
-#### Description 
-This function calculates the estimated standard deviations, correlations and covariances of the
-group-level terms in a multilevel model of class brmsfit. For linear models, the residual standard
-deviations, correlations and covariances are also returned.
-Usage
-## S3 method for class 'brmsfit'
-VarCorr(x, sigma = 1, summary = TRUE,
-robust = FALSE, probs = c(0.025, 0.975), ...)
-#### Arguments
-x An object of class brmsfit.
-sigma Ignored (included for compatibility with VarCorr).
-summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw #### Values? Default is TRUE.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
-TRUE.
-probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-... Currently ignored.
-#### Value
-A list of lists (one per grouping factor), each with three elements: a matrix containing the standard
-deviations, an array containing the correlation matrix, and an array containing the covariance matrix
-with variances on the diagonal.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-Examples
-## Not run:
-fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c + (1+Trt_c|visit),
-data = epilepsy, family = gaussian(), chains = 2)
-VarCorr(fit)
-## End(Not run)
+
+
+
 vcov.brmsfit 161
 vcov.brmsfit Covariance and Correlation Matrix of Population-Level Effects
 #### Description 
 Get a point estimate of the covariance or correlation matrix of population-level parameters
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 vcov(object, correlation = FALSE, pars = NULL, ...)
+</code></pre>
 #### Arguments
+
 object An object of class brmsfit.
 correlation Logical; if FALSE (the default), compute the covariance matrix, if TRUE, compute
 the correlation matrix.
@@ -1753,29 +904,39 @@ Estimates are obtained by calculating the maximum likelihood covariances (correl
 posterior samples.
 #### Value
 covariance or correlation matrix of population-level parameters
+
 Examples
+```{r}
 ## Not run:
 fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c + (1+Trt_c|visit),
 data = epilepsy, family = gaussian(), chains = 2)
 vcov(fit)
 ## End(Not run)
+```
+
+
+
 162 waic.brmsfit
 VonMises The von Mises Distribution
 #### Description 
 Density, distribution function, and random generation for the von Mises distribution with location
 mu, and precision kappa.
-Usage
+
+#### Usage
+<pre><code>
 dvon_mises(x, mu, kappa, log = FALSE)
 pvon_mises(q, mu, kappa, lower.tail = TRUE, log.p = FALSE,
 acc = 1e-20)
 rvon_mises(n, mu, kappa)
+</code></pre>
 #### Arguments
+
 x, q Vector of quantiles.
-mu Vector of location #### Values.
-kappa Vector of precision #### Values.
-log Logical; If TRUE, #### Values are returned on the log scale.
+mu Vector of locationvalues.
+kappa Vector of precisionvalues.
+log Logical; If TRUE,values are returned on the log scale.
 lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-log.p Logical; If TRUE, #### Values are returned on the log scale.
+log.p Logical; If TRUE,values are returned on the log scale.
 acc Accuracy of numerical approximations.
 n Number of samples to draw from the distribution.
 #### Details
@@ -1784,14 +945,20 @@ waic.brmsfit Compute the WAIC
 #### Description 
 Compute the widely applicable information criterion (WAIC) based on the posterior likelihood
 using the loo package. for more details see waic
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 waic(x, ..., compare = TRUE, resp = NULL,
 pointwise = FALSE, model_names = NULL)
 waic.brmsfit 163
+</code></pre>
 #### Arguments
+
 x A fitted model object.
-... More fitted model objects or further #### Arguments passed to the underlying postprocessing
+... More fitted model objects or further </code></pre>
+#### Arguments
+ passed to the underlying postprocessing
 functions.
 compare A flag indicating if the information criteria of the models should be compared
 to each other via compare_ic.
@@ -1802,11 +969,13 @@ separately for each observation. The latter approach is usually considerably
 slower but requires much less working memory. Accordingly, if one runs into
 memory issues, pointwise = TRUE is the way to go.
 model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
-will use the passed #### Values as model names.
+will use the passed values as model names.
 #### Details
 When comparing models fitted to the same data, the smaller the WAIC, the better the fit. For
 brmsfit objects, WAIC is an alias of waic. Use method add_ic to store information criteria in the
-fitted model object for later usage.
+fitted model object for later 
+#### Usage
+<pre><code>.
 #### Value
 If just one object is provided, an object of class ic. If multiple objects are provided, an object of
 class iclist.
@@ -1821,7 +990,9 @@ Bayesian models. Statistics and Computing, 24, 997-1016.
 Watanabe, S. (2010). Asymptotic equivalence of Bayes cross validation and widely applicable
 information criterion in singular learning theory. The Journal of Machine Learning Research, 11,
 3571-3594.
+
 Examples
+```{r}
 ## Not run:
 # model with population-level effects only
 fit1 <- brm(rating ~ treat + period + carry,
@@ -1834,14 +1005,22 @@ data = inhaler, family = "gaussian")
 # compare both models
 waic(fit1, fit2)
 ## End(Not run)
+```
+
+
+
 Wiener The Wiener Diffusion Model Distribution
 #### Description 
 Density function and random generation for theWiener diffusion model distribution with boundary
 separation alpha, non-decision time tau, bias beta and drift rate delta.
-Usage
+
+#### Usage
+<pre><code>
 dwiener(x, alpha, tau, beta, delta, resp = 1, log = FALSE)
 rwiener(n, alpha, tau, beta, delta, types = c("q", "resp"))
+</code></pre>
 #### Arguments
+
 x Vector of quantiles.
 alpha Boundary separation parameter.
 tau Non-decision time parameter.
@@ -1849,7 +1028,7 @@ beta Bias parameter.
 delta Drift rate parameter.
 resp Response: "upper" or "lower". If no character vector, it is coerced to logical
 where TRUE indicates "upper" and FALSE indicates "lower".
-log Logical; If TRUE, #### Values are returned on the log scale.
+log Logical; If TRUE,values are returned on the log scale.
 n Number of samples to draw from the distribution.
 types Which types of responses to return? By default, return both the response times
 "q" and the dichotomous responses "resp". If either "q" or "resp", return only
@@ -1863,7 +1042,9 @@ ZeroInflated 165
 ZeroInflated Zero-Inflated Distributions
 #### Description 
 Density and distribution functions for zero-inflated distributions.
-Usage
+
+#### Usage
+<pre><code>
 dzero_inflated_poisson(x, lambda, zi, log = FALSE)
 pzero_inflated_poisson(q, lambda, zi, lower.tail = TRUE, log.p = FALSE)
 dzero_inflated_negbinomial(x, mu, shape, zi, log = FALSE)
@@ -1875,13 +1056,15 @@ log.p = FALSE)
 dzero_inflated_beta(x, shape1, shape2, zi, log = FALSE)
 pzero_inflated_beta(q, shape1, shape2, zi, lower.tail = TRUE,
 log.p = FALSE)
+</code></pre>
 #### Arguments
+
 x Vector of quantiles.
 zi zero-inflation propability
-log Logical; If TRUE, #### Values are returned on the log scale.
+log Logical; If TRUE,values are returned on the log scale.
 q Vector of quantiles.
 lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-log.p Logical; If TRUE, #### Values are returned on the log scale.
+log.p Logical; If TRUE,values are returned on the log scale.
 mu, lambda location parameter
 shape, shape1, shape2
 shape parameter
