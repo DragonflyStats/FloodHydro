@@ -1,0 +1,60 @@
+
+## ``pp_check.brmsfit`` Posterior Predictive Checks for brmsfit Objects
+
+#### Description 
+Perform posterior predictive checks with the help of the bayesplot package.
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+pp_check(object, type, nsamples, group = NULL,
+x = NULL, newdata = NULL, resp = NULL, subset = NULL, ...)
+</code></pre>
+
+#### Arguments
+* object An object of class brmsfit.
+* type Type of the ppc plot as given by a character string. See PPC for an overview of
+currently supported types. You may also use an invalid type (e.g. type = "xyz")
+to get a list of supported types in the resulting error message.
+* nsamples Positive integer indicating how many posterior samples should be used. If NULL all samples are used. If not specified, the number of posterior samples is chosen
+automatically. Ignored if subset is not NULL.
+* group Optional name of a factor variable in the model by which to stratify the ppc plot. This argument is required for ppc *_grouped types and ignored otherwise.
+
+* x Optional name of a variable in the model. Only used for ppc types having an x
+argument and ignored otherwise.
+* newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
+original data of the model is used.
+* `` resp``: Optional names of response variables. If specified, predictions are performed
+only for the specified response variables.
+* subset A numeric vector specifying the posterior samples to be used. If NULL (the default), all samples are used.
+* `` ... ``: Further arguments passed to predict.brmsfit as well as to the PPC function
+specified in type.
+
+#### Details
+For a detailed explanation of each of the ppc functions, see the PPC documentation of the bayesplot
+package.
+
+#### Value
+A ggplot object that can be further customized using the ggplot2 package.
+
+### Examples
+```{r}
+## Not run:
+fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c
++ (1|patient) + (1|obs),
+data = epilepsy, family = poisson())
+```
+
+```{r}
+pp_check(fit) # shows dens_overlay plot by default
+pp_check(fit, type = "error_hist", nsamples = 11)
+pp_check(fit, type = "scatter_avg", nsamples = 100)
+pp_check(fit, type = "stat_2d")
+pp_check(fit, type = "rootogram")
+pp_check(fit, type = "loo_pit")
+## get an overview of all valid types
+pp_check(fit, type = "xyz")
+## End(Not run)
+```
+
+
