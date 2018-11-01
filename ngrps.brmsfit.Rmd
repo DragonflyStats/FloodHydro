@@ -1,0 +1,19 @@
+
+
+ngrps.brmsfit Number of levels
+#### Description 
+Extract the number of levels of one or more grouping factors.
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+ngrps(object, ...)
+ngrps(object, ...)
+</code></pre>
+#### Arguments
+
+object An R object.
+... Currently ignored.
+114 pairs.brmsfit
+#### Value
+A named list containing the number of levels per grouping factor.
