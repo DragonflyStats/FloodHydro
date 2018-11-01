@@ -1,0 +1,32 @@
+## posterior_interval.brmsfit
+
+Compute posterior uncertainty intervals
+
+#### Description 
+Compute posterior uncertainty intervals for brmsfit objects.
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+posterior_interval(object, pars = NA, prob = 0.95,
+...)
+</code></pre>
+
+#### Arguments
+* object An object of class brmsfit
+* pars Names of parameters for which posterior samples should be returned, as given
+by a character vector or regular expressions. By default, all posterior samples of
+all parameters are extracted.
+* prob A value between 0 and 1 indicating the desired probability to be covered by the
+uncertainty intervals. The default is 0.95.
+* ... More arguments passed to as.matrix.brmsfit.
+* Value A matrix with lower and upper interval bounds as columns and as many rows as selected parameters.
+
+Examples
+```{r}
+## Not run:
+fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c,
+data = epilepsy, family = negbinomial())
+posterior_interval(fit)
+## End(Not run)
+```
