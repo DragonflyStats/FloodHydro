@@ -4,19 +4,23 @@ ExGaussian The Exponentially Modified Gaussian Distribution
 Density, distribution function, and random generation for the exponentially modified Gaussian distribution
 with mean mu and standard deviation sigma of the gaussian component, as well as scale
 beta of the exponential component.
-Usage
+
+#### Usage
+<pre><code>
 dexgaussian(x, mu, sigma, beta, log = FALSE)
 pexgaussian(q, mu, sigma, beta, lower.tail = TRUE, log.p = FALSE)
 rexgaussian(n, mu, sigma, beta)
+</code></pre>
+
 #### Arguments
 x, q Vector of quantiles.
-mu Vector of means of the combined distribution.
-sigma Vector of standard deviations of the gaussian component.
-beta Vector of scales of the exponential component.
-log Logical; If TRUE, #### Values are returned on the log scale.
-lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-log.p Logical; If TRUE, #### Values are returned on the log scale.
-n Number of samples to draw from the distribution.
+* mu Vector of means of the combined distribution.
+* sigma Vector of standard deviations of the gaussian component.
+* beta Vector of scales of the exponential component.
+* log Logical; If TRUE, #### Values are returned on the log scale.
+* lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
+* log.p Logical; If TRUE, #### Values are returned on the log scale.
+* n Number of samples to draw from the distribution.
 58 expp1
 #### Details
 See vignette("brms_families") for #### Details on the parameterization.
@@ -50,6 +54,7 @@ This method helps in preparing brms models for certin post-processing tasks most
 forms of predictions. Unless you are a package developer, you will rarely need to call extract_draws
 directly.
 Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 extract_draws(x, newdata = NULL, re_formula = NULL,
 allow_new_levels = FALSE, sample_new_levels = "uncertainty",
@@ -57,11 +62,12 @@ incl_autocor = TRUE, resp = NULL, nsamples = NULL, subset = NULL,
 nug = NULL, smooths_only = FALSE, offset = TRUE,
 new_objects = list(), ...)
 extract_draws(x, ...)
+</code></pre>
 #### Arguments
-x An R object typically of class 'brmsfit'.
-newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
+* x An R object typically of class 'brmsfit'.
+* newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
 original data of the model is used.
-re_formula formula containing group-level effects to be considered in the prediction. If
+* re_formula formula containing group-level effects to be considered in the prediction. If
 NULL (default), include all group-level effects; if NA, include no group-level effects.
 allow_new_levels
 A flag indicating if new levels of group-level effects are allowed (defaults to
@@ -75,7 +81,7 @@ new levels from the (multivariate) normal distribution implied by the group-leve
 standard deviations and correlations. This options may be useful for conducting
 Bayesian power analysis. If "old_levels", directly sample new levels from the
 existing levels.
-incl_autocor A flag indicating if ARMA autocorrelation parameters should be included in the
+* incl_autocor A flag indicating if ARMA autocorrelation parameters should be included in the
 predictions. Defaults to TRUE. Setting it to FALSE will not affect other correlation
 structures such as cor_bsts, or cor_fixed.
 * `` resp``: Optional names of response variables. If specified, predictions are performed
@@ -85,15 +91,14 @@ nsamples Positive integer indicating how many posterior samples should be used. 
 (the default) all samples are used. Ignored if subset is not NULL.
 subset A numeric vector specifying the posterior samples to be used. If NULL (the
 default), all samples are used.
-nug Small positive number for Gaussian process terms only. For numerical reasons,
+* nug*  Small positive number for Gaussian process terms only. For numerical reasons,
 the covariance matrix of a Gaussian process might not be positive definite.
 Adding a very small number to the matrix’s diagonal often solves this problem.
 If NULL (the default), nug is chosen internally.
-smooths_only Logical; If TRUE only draws related to the computation of smooth terms will be
+* smooths_only Logical; If TRUE only draws related to the computation of smooth terms will be
 extracted.
-offset Logical; Indicates if offsets should be included in the predictions. Defaults to
-TRUE.
-new_objects A named list of objects containing new data, which cannot be passed via argument
+* offset Logical; Indicates if offsets should be included in the predictions. Defaults to TRUE.
+* new_objects A named list of objects containing new data, which cannot be passed via argument
 newdata. Currently, only required for objects passed to cor_sar and
 cor_fixed.
 * `` ... ``: Further arguments passed to validate_newdata.
@@ -102,12 +107,12 @@ An object of class 'brmsdraws' or 'mvbrmsdraws', depending on whether a univaria
 model is passed.
 fitted.brmsfit Extract Model Fitted #### Values of brmsfit Objects
 #### Description 
-Predict mean #### Values of the response distribution (i.e., the ’regression line’) for a fitted model. Can
-be performed for the data used to fit the model (posterior predictive checks) or for new data. By
-definition, these predictions have smaller variance than the response predictions performed by the
-predict method. This is because the measurement error is not incorporated. The estimated means
-of both methods should, however, be very similar.
-Usage
+Predict mean values of the response distribution (i.e., the ’regression line’) for a fitted model. Can
+be performed for the data used to fit the model (posterior predictive checks) or for new data. By definition, these predictions have smaller variance than the response predictions performed by the predict method. This is because the measurement error is not incorporated. The estimated means of both methods should, however, be very similar.
+
+#### Usage
+
+<pre><code>
 ## S3 method for class 'brmsfit'
 fitted(object, newdata = NULL, re_formula = NULL,
 scale = c("response", "linear"), resp = NULL, dpar = NULL,
@@ -118,7 +123,8 @@ posterior_linpred(object, transform = FALSE,
 newdata = NULL, re_formula = NULL, re.form = NULL, resp = NULL,
 dpar = NULL, nlpar = NULL, nsamples = NULL, subset = NULL,
 sort = FALSE, ...)
-fitted.brmsfit 61
+</code></pre>
+
 #### Arguments
 object An object of class brmsfit.
 newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
