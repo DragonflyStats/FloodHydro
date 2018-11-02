@@ -1,0 +1,47 @@
+
+stanvar User-defined variables passed to Stan
+#### Description 
+Prepare user-defined variables to be passed to one of Stan’s program blocks. This is primarily useful
+for defining more complex priors, for refitting models without recompilation despite changing
+priors, or for defining custom Stan functions.
+
+#### Usage
+<pre><code>
+stanvar(x = NULL, name = NULL, scode = NULL, block = "data")
+</code></pre>
+
+#### Arguments
+
+* x An R object containing data to be passed to Stan. Only required if block = 'data'
+and ignored otherwise.
+* name Optinal character string providing the desired variable name of the object in x.
+If NULL (the default) the variable name is directly infered from x.
+* scode Line of Stan code to define the variable in Stan language. If block = 'data',
+the Stan code is inferred based on the class of x by default.
+* block Name of one of Stan’s program blocks in which the variable should be defined.
+Can be 'data', 'tdata' (transformed data), 'parameters', 'tparameters'
+(transformed parameters), 'model', 'genquant' (generated quantities) or 'functions'.
+
+#### Value
+An object of class stanvars.
+154 StudentT
+#### Examples 
+```{r}
+bprior <- prior(normal(mean_intercept, 10), class = "Intercept")
+stanvars <- stanvar(5, name = "mean_intercept")
+make_stancode(count ~ Trt, epilepsy, prior = bprior,
+stanvars = stanvars)
+# define a multi-normal prior with known covariance matrix
+bprior <- prior(multi_normal(M, V), class = "b")
+stanvars <- stanvar(rep(0, 2), "M", scode = " vector[K] M;") +
+stanvar(diag(2), "V", scode = " matrix[K, K] V;")
+make_stancode(count ~ Trt + log_Base4_c, epilepsy,
+prior = bprior, stanvars = stanvars)
+# define a hierachical prior on the regression coefficients
+bprior <- set_prior("normal(0, tau)", class = "b") +
+set_prior("target += normal_lpdf(tau | 0, 10)", check = FALSE)
+stanvars <- stanvar(scode = "real<lower=0> tau;",
+block = "parameters")
+make_stancode(count ~ Trt + log_Base4_c, epilepsy,
+prior = bprior, stanvars = stanvars)
+```

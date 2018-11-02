@@ -1,0 +1,56 @@
+152 stanplot.brmsfit
+stanplot.brmsfit MCMC Plots Implemented in bayesplot
+#### Description 
+Convenient way to call MCMC plotting functions implemented in the bayesplot package.
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+stanplot(object, pars = NA, type = "intervals",
+exact_match = FALSE, ...)
+stanplot(object, ...)
+</code></pre>
+#### Arguments
+
+object An R object typically of class brmsfit
+pars Names of parameters to be plotted, as given by a character vector or regular expressions.
+By default, all parameters except for group-level and smooth effects
+are plotted. May be ignored for some plots.
+type The type of the plot. Supported types are (as names) hist, dens, hist_by_chain,
+dens_overlay, violin, intervals, areas, acf, acf_bar,trace, trace_highlight,
+scatter, rhat, rhat_hist, neff, neff_hist nuts_acceptance, nuts_divergence,
+nuts_stepsize, nuts_treedepth, and nuts_energy. For an overview on the
+various plot types see MCMC-overview.
+exact_match Indicates whether parameter names should be matched exactly or treated as regular
+expression. Default is FALSE.
+* ``...``: Additional arguments
+ passed to the plotting functions. See MCMC-overview for
+more #### Details.
+#### Details
+Also consider using the shinystan package available via method launch_shinystan in brms for
+flexible and interactive visual analysis.
+#### Value
+A ggplot object that can be further customized using the ggplot2 package.
+
+#### Examples 
+```{r}
+## Not run:
+model <- brm(count ~ log_Age_c + log_Base4_c * Trt
++ (1|patient) + (1|visit),
+data = epilepsy, family = "poisson")
+stanvar 153
+# plot posterior intervals
+stanplot(model)
+# only show population-level effects in the plots
+stanplot(model, pars = "^b_")
+# show histograms of the posterior distributions
+stanplot(model, type = "hist")
+# plot some diagnostics of the sampler
+stanplot(model, type = "neff")
+stanplot(model, type = "rhat")
+# plot some diagnostics specific to the NUTS sampler
+stanplot(model, type = "nuts_acceptance")
+stanplot(model, type = "nuts_divergence")
+## End(Not run)
+```
+

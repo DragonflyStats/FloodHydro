@@ -1,0 +1,25 @@
+162 waic.brmsfit
+VonMises The von Mises Distribution
+#### Description 
+Density, distribution function, and random generation for the von Mises distribution with location
+mu, and precision kappa.
+
+#### Usage
+<pre><code>
+dvon_mises(x, mu, kappa, log = FALSE)
+pvon_mises(q, mu, kappa, lower.tail = TRUE, log.p = FALSE,
+acc = 1e-20)
+rvon_mises(n, mu, kappa)
+</code></pre>
+#### Arguments
+
+x, q Vector of quantiles.
+mu Vector of locationvalues.
+kappa Vector of precisionvalues.
+log Logical; If TRUE,values are returned on the log scale.
+lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
+log.p Logical; If TRUE,values are returned on the log scale.
+acc Accuracy of numerical approximations.
+n Number of samples to draw from the distribution.
+#### Details
+See vignette("brms_families") for #### Details on the parameterization.

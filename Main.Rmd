@@ -17,7 +17,7 @@ A matrix with covariates as columns.
 See Also
 mm
 
-Examples
+#### Examples 
 ```{r}
 ## Not run:
 # simulate some data
@@ -33,11 +33,6 @@ mo 109
 ## End(Not run)
 ```
 
-
-
-
-
-
 MultiNormal The Multivariate Normal Distribution
 #### Description 
 Density function and random generation for the multivariate normal distribution with mean vector
@@ -50,7 +45,7 @@ rmulti_normal(n, mu, Sigma, check = FALSE)
 </code></pre>
 #### Arguments
 
-x Vector or matrix of quantiles. If x is a matrix, each row is taken to be a quantile.
+* ``x``: Vector or matrix of quantiles. If x is a matrix, each row is taken to be a quantile.
 mu Mean vector with length equal to the number of dimensions.
 Sigma Covariance matrix.
 log Logical; If TRUE,values are returned on the log scale.
@@ -72,9 +67,9 @@ rmulti_student_t(n, df, mu, Sigma, check = FALSE)
 </code></pre>
 #### Arguments
 
-x Vector or matrix of quantiles. If x is a matrix, each row is taken to be a quantile.
-df Vector of degrees of freedom.
-mu Location vector with length equal to the number of dimensions.
+* ``x``: Vector or matrix of quantiles. If x is a matrix, each row is taken to be a quantile.
+* ``df``: Vector of degrees of freedom.
+* `` mu ``:Location vector with length equal to the number of dimensions.
 Sigma Covariance matrix.
 log Logical; If TRUE,values are returned on the log scale.
 check Logical; Indicates whether several input checks should be performed. Defaults
@@ -108,14 +103,12 @@ An object of class mvbrmsformula, which is essentially a list containing all mod
 well as some additional information for multivariate models.
 See Also
 brmsformula, brmsformula-helpers
-Examples
+#### Examples 
 ```{r}
 bf1 <- bf(y1 ~ x + (1|g))
 bf2 <- bf(y2 ~ s(z))
 mvbf(bf1, bf2)
 ```
-
-
 
 nsamples.brmsfit Number of Posterior Samples
 #### Description 
@@ -136,18 +129,6 @@ incl_warmup A flag indicating whether to also count warmup / burn-in samples.
 #### Details
 Currently there are methods for brmsfit objects.
 
-
-
-
-
-
-
-
-
-
-
-
-
 pp_average.brmsfit Posterior predictive samples averaged across models
 #### Description 
 Compute posterior predictive samples averaged across models. Weighting can be done in various
@@ -166,44 +147,39 @@ pp_average(x, ...)
 #### Arguments
 
 x A fitted model object.
-... More fitted model objects or further </code></pre>
-#### Arguments
- passed to the underlying postprocessing
+... More fitted model objects or further arguments passed to the underlying postprocessing
 functions.
 weights Name of the criterion to compute weights from. Should be one of "loo",
 "waic", "kfold", "loo2" (current default), or "marglik". For the former three
-options, Akaike weights will be computed based on the information criterion
-#### Values returned by the respective methods. For "loo2", method loo_model_weights
-will be used to obtain weights. For "marglik", method post_prob will be used
-to compute weights based on log marginal likelihoodvalues (make sure to specify
-reasonable priors in this case). Alternatively, weights can be a numeric
+options, Akaike weights will be computed based on the information criterion values returned by the respective methods. For "loo2", method loo_model_weights
+will be used to obtain weights. For "marglik", method post_prob will be used to compute weights based on log marginal likelihoodvalues (make sure to specify reasonable priors in this case). Alternatively, weights can be a numeric
 vector of pre-specified weights.
-method Type of predictions to average. Should be one of "predict" (default), "fitted",
+* method Type of predictions to average. Should be one of "predict" (default), "fitted",
 or "residuals".
-nsamples Total number of posterior samples to use.
-summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
+* nsamples Total number of posterior samples to use.
+* summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
 of the rawvalues? Default is TRUE.
 probs The percentiles to be computed by the quantile function. Only used if summary
 is TRUE.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
+* robust If FALSE (the default) the mean is used as the measure of central tendency and
 the standard deviation as the measure of variability. If TRUE, the median and the
 median absolute deviation (MAD) are applied instead. Only used if summary is
 TRUE.
-model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
+* model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
 will use the passed values as model names.
-control Optional list of further </code></pre>
-#### Arguments
- passed to the function specified in weights.
-seed A single numericvalue passed to set.seed to make results reproducible.
+control Optional list of further arguments passed to the function specified in weights.
+* seed A single numericvalue passed to set.seed to make results reproducible.
+
 #### Details
 Weights are computed with the model_weights method.
+
 #### Value 
 Same as the output of the method specified in argument method.
 pp_check.brmsfit 127
 See Also
 model_weights, posterior_average
 
-Examples
+#### Examples 
 ```{r}
 ## Not run:
 # model with 'treat' as predictor
@@ -220,10 +196,6 @@ pp_average(fit1, fit2, method = "fitted", newdata = df)
 ## End(Not run)
 ```
 
-
-
-
-
 134 print.brmsprior
 print.brmsfit Print a summary for a fitted model represented by a brmsfit object
 #### Description 
@@ -239,8 +211,7 @@ print(x, digits = 2, ...)
 x An object of class brmsfit
 digits The number of significant digits for printing out the summary; defaults to 2. The
 effective sample size is always rounded to integers.
-... Additional </code></pre>
-#### Arguments
+* ``...``: Additional arguments
  that would be passed to method summary of brmsfit.
 Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
@@ -260,10 +231,6 @@ show_df Logical; Print priors as a single data.frame (TRUE) or as a sequence of 
 statements (FALSE)?
 ... Currently ignored.
 
-
-
-
-
 restructure Restructure Old brmsfit Objects
 #### Description 
 Restructure old brmsfit objects to work with the latest brms version. This function is called
@@ -277,12 +244,11 @@ restructure(x, rstr_summary = FALSE)
 </code></pre>
 #### Arguments
 
-x An object of class brmsfit.
+* ``x``: An object of class brmsfit.
 rstr_summary Logical; If TRUE, the cached summary stored by rstan is restructured as well.
 #### Value
 A brmsfit object compatible with the latest version of brms.
 0
-
 
 set_prior Prior Definitions for brms Models
 #### Description 
@@ -298,181 +264,20 @@ prior_string(prior, ...)
 </code></pre>
 #### Arguments
 
-prior A character string defining a distribution in Stan language
+* prior A character string defining a distribution in Stan language
 class The parameter class. Defaults to "b" (i.e. population-level effects). See ’#### Details’
 for other valid parameter classes.
-coef Name of the (population- or group-level) parameter.
-group Grouping factor of group-level parameters.
-resp Name of the response variable / category. Only used in multivariate models.
-dpar Name of a distributional parameter. Only used in distributional models.
-144 set_prior
-nlpar Name of a non-linear parameter. Only used in non-linear models.
-lb Lower bound for parameter restriction. Currently only allowed for classes "b",
+* coef Name of the (population- or group-level) parameter.
+* group Grouping factor of group-level parameters.
+* resp Name of the response variable / category. Only used in multivariate models.
+* dpar Name of a distributional parameter. Only used in distributional models.
+* nlpar Name of a non-linear parameter. Only used in non-linear models.
+* lb Lower bound for parameter restriction. Currently only allowed for classes "b",
 "ar", "ma", and "arr". Defaults to NULL, that is no restriction.
-ub Upper bound for parameter restriction. Currently only allowed for classes "b",
+* ub Upper bound for parameter restriction. Currently only allowed for classes "b",
 "ar", "ma", and "arr". Defaults to NULL, that is no restriction.
-check Logical; Indicates whether priors should be checked for validity (as far as possible).
-Defaults to TRUE. If FALSE, prior is passed to the Stan code as is, and all
-other </code></pre>
-#### Arguments
- are ignored.
-... </code></pre>
-#### Arguments
- passed to set_prior.
-#### Details
-set_prior is used to define prior distributions for parameters in brms models. The functions
-prior, prior_, and prior_string are aliases of set_prior each allowing for a different kind
-of argument specification. prior allows specify  arguments
- as expression without quotation
-marks using non-standard evaluation. prior_ allows specify  arguments
- as one-sided formulas
-or wrapped in quote. prior_string allows specify  arguments
- as strings just as set_prior
-itself.
-Below, we explain its 
-#### Usage
-<pre><code> and list some common prior distributions for parameters. A complete
-overview on possible prior distributions is given in the Stan Reference Manual available at http:
-//mc-stan.org/.
-To combine multiple priors, use c(...) or the + operator (see ’Examples’). brms does not check if
-the priors are written in correct Stan language. Instead, Stan will check their syntactical correctness
-when the model is parsed to C++ and returns an error if they are not. This, however, does not imply
-that priors are always meaningful if they are accepted by Stan. Although brms trys to find common
-problems (e.g., setting bounded priors on unbounded parameters), there is no guarantee that the
-defined priors are reasonable for the model. Below, we list the types of parameters in brms models,
-for which the user can specify prior distributions.
-1. Population-level (’fixed’) effects
-Every Population-level effect has its own regression parameter represents the name of the corresponding
-population-level effect. Suppose, for instance, that y is predicted by x1 and x2 (i.e.,
-y ~ x1 + x2 in formula syntax). Then, x1 and x2 have regression parameters b_x1 and b_x2
-respectively. The default prior for population-level effects (including monotonic and category
-specific effects) is an improper flat prior over the reals. Other common options are normal priors
-or student-t priors. If we want to have a normal prior with mean 0 and standard deviation
-5 for x1, and a unit student-t prior with 10 degrees of freedom for x2, we can specify this via
-set_prior("normal(0,5)", class = "b", coef = "x1") and
-set_prior("student_t(10,0,1)", class = "b", coef = "x2"). To put the same prior on all
-population-level effects at once, we may write as a shortcut set_prior("<prior>", class = "b").
-This also leads to faster sampling, because priors can be vectorized in this case. Both ways of defining
-priors can be combined using for instance set_prior("normal(0,2)", class = "b") and
-set_prior("normal(0,10)", class = "b", coef = "x1") at the same time. This will set
-a normal(0,10) prior on the effect of x1 and a normal(0,2) prior on all other population-level
-effects. However, this will break vectorization and may slow down the sampling procedure a bit.
-In case of the default intercept parameterization (discussed in the ’#### Details’ section of brmsformula),
-general priors on class "b" will not affect the intercept. Instead, the intercept has its own parameter
-set_prior 145
-class named "Intercept" and priors can thus be specified via set_prior("<prior>", class = "Intercept").
-Setting a prior on the intercept will not break vectorization of the other population-level effects.
-Note that technically, this prior is set on an intercept that results when internally centering all
-population-level predictors around zero to improve sampling efficiency. On this centered intercept,
-specifying a prior is actually much easier and intuitive than on the original intercept, since
-the former represents the expected responsevalue when all predictors are at their means. To treat
-the intercept as an ordinary population-level effect and avoid the centering parameterization, use
-0 + intercept on the right-hand side of the model formula.
-A special shrinkage prior to be applied on population-level effects is the horseshoe prior. See
-horseshoe for #### Details. Another shrinkage prior is the so-called lasso prior. See lasso for #### Details.
-In non-linear models, population-level effects are defined separately for each non-linear parameter.
-Accordingly, it is necessary to specify the non-linear parameter in set_prior so that priors we can
-be assigned correctly. If, for instance, alpha is the parameter and x the predictor for which we want
-to define the prior, we can write set_prior("<prior>", coef = "x", nlpar = "alpha"). As
-a shortcut we can use set_prior("<prior>", nlpar = "alpha") to set the same prior on all
-population-level effects of alpha at once.
-If desired, population-level effects can be restricted to fall only within a certain interval using the
-lb and ub </code></pre>
-#### Arguments
- of set_prior. This is often required when defining priors that are not defined
-everywhere on the real line, such as uniform or gamma priors. When defining a uniform(2,4)
-prior, you should write set_prior("uniform(2,4)", lb = 2, ub = 4). When using a prior that
-is defined on the positive reals only (such as a gamma prior) set lb = 0. In most situations, it is
-not useful to restrict population-level parameters through bounded priors (non-linear models are an
-important exception), but if you really want to this is the way to go.
-2. Standard deviations of group-level (’random’) effects
-Each group-level effect of each grouping factor has a standard deviation named sd_<group>_<coef>.
-Consider, for instance, the formula y ~ x1 + x2 + (1 + x1 | g). We see that the intercept
-as well as x1 are group-level effects nested in the grouping factor g. The corresponding standard
-deviation parameters are named as sd_g_Intercept and sd_g_x1 respectively. These parameters
-are restricted to be non-negative and, by default, have a half student-t prior with 3 degrees of freedom
-and a scale parameter that depends on the standard deviation of the response after applying the
-link function. Minimally, the scale parameter is 10. This prior is used (a) to be only very weakly
-informative in order to influence results as few as possible, while (b) providing at least some regularization
-to considerably improve convergence and sampling efficiency. To define a prior distribution
-only for standard deviations of a specific grouping factor, use
-set_prior("<prior>", class = "sd", group = "<group>"). To define a prior distribution
-only for a specific standard deviation of a specific grouping factor, you may write
-set_prior("<prior>", class = "sd", group = "<group>", coef = "<coef>"). Recommendations
-on useful prior distributions for standard deviations are given in Gelman (2006), but
-note that he is no longer recommending uniform priors, anymore.
-When defining priors on group-level parameters in non-linear models, please make sure to specify
-the corresponding non-linear parameter through the nlpar argument in the same way as for
-population-level effects.
-3. Correlations of group-level (’random’) effects
-If there is more than one group-level effect per grouping factor, the correlations between those effects
-have to be estimated. The prior "lkj_corr_cholesky(eta)" or in short "lkj(eta)" with
-146 set_prior
-eta > 0 is essentially the only prior for (Cholesky factors) of correlation matrices. If eta = 1
-(the default) all correlations matrices are equally likely a priori. If eta > 1, extreme correlations
-become less likely, whereas 0 < eta < 1 results in higher probabilities for extreme correlations.
-Correlation matrix parameters in brms models are named as cor_<group>, (e.g., cor_g
-if g is the grouping factor). To set the same prior on every correlation matrix, use for instance
-set_prior("lkj(2)", class = "cor"). Internally, the priors are transformed to be put on the
-Cholesky factors of the correlation matrices to improve efficiency and numerical stability. The corresponding
-parameter class of the Cholesky factors is L, but it is not recommended to specify priors
-for this parameter class directly.
-4. Splines
-Splines are implemented in brms using the ’random effects’ formulation as explained in gamm).
-Thus, each spline has its corresponding standard deviations modeling the variability within this
-term. In brms, this parameter class is called sds and priors can be specified via set_prior("<prior>", class = "sds", coef The default prior is the same as for standard deviations of group-level effects.
-5. Gaussian processes
-Gaussian processes as currently implemented in brms have two parameters, the standard deviation
-parameter sdgp, and characteristic length-scale parameter lscale (see gp for more details). The
-default prior of sdgp is the same as for standard deviations of group-level effects. The default prior
-of lscale is an informative inverse-gamma prior specifically tuned to the covariates of the Gaussian
-process (for more details see https://betanalpha.github.io/assets/case_studies/gp_
-part3/part3.html). This tuned prior may be overly informative in some cases, so please consider
-other priors as well to make sure inference is robust to the prior specification. If tuning fails, a
-half-normal prior is used instead.
-6. Autocorrelation parameters
-The autocorrelation parameters currently implemented are named ar (autoregression), ma (moving
-average), arr (autoregression of the response), car (spatial conditional autoregression), as well as
-lagsar and errorsar (Spatial simultaneous autoregression).
-Priors can be defined by set_prior("<prior>", class = "ar") for ar and similar for other
-autocorrelation parameters. By default, ar and ma are bounded between -1 and 1, car, lagsar, and
-errorsar are bounded between 0, and 1, and arr is unbounded (you may change this by using the
-</code></pre>
-#### Arguments
- lb and ub). The default prior is flat over the definition area.
-7. Distance parameters of monotonic effects
-As explained in the #### Details section of brm, monotonic effects make use of a special parameter vector
-to estimate the ’normalized distances’ between consecutive predictor categories. This is realized in
-Stan using the simplex parameter type. This class is named "simo" (short for simplex monotonic)
-in brms. The only valid prior for simplex parameters is the dirichlet prior, which accepts a vector
-of length K - 1 (K = number of predictor categories) as input defining the ’concentration’ of the
-distribution. Explaining the dirichlet prior is beyond the scope of this documentation, but we want
-to describe how to define this prior syntactically correct. If a predictor x with K categories is modeled
-as monotonic, we can define a prior on its corresponding simplex via
-prior(dirichlet(<vector>), class = simo, coef = mox1). The 1 in the end of coef indicates
-that this is the first simplex in this term. If interactions between multiple monotonic variables
-are modeled, multiple simplexes per term are required. For <vector>, we can put in any R expression
-defining a vector of length K - 1. The default is a uniform prior (i.e. <vector> = rep(1, K-1))
-over all simplexes of the respective dimension.
-set_prior 147
-8. Parameters for specific families
-Some families need additional parameters to be estimated. Families gaussian, student, skew_normal,
-lognormal, and gen_extreme_#### Value need the parameter sigma to account for the residual standard
-deviation. By default, sigma has a half student-t prior that scales in the same way as the group-level
-standard deviations. Further, family student needs the parameter nu representing the degrees of
-freedom of students-t distribution. By default, nu has prior "gamma(2, 0.1)" and a fixed lower
-bound of 1. Families gamma, weibull, inverse.gaussian, and negbinomial need a shape parameter
-that has a "gamma(0.01, 0.01)" prior by default. For families cumulative, cratio, sratio,
-and acat, and only if threshold = "equidistant", the parameter delta is used to model the
-distance between two adjacent thresholds. By default, delta has an improper flat prior over the
-reals. The von_mises family needs the parameter kappa, representing the concentration parameter.
-By default, kappa has prior "gamma(2, 0.01)".
-Every family specific parameter has its own prior class, so that set_prior("<prior>", class = "<parameter>")
-is the right way to go. All of these priors are chosen to be weakly informative, having only minimal
-influence on the estimations, while improving convergence and sampling efficiency.
-Often, it may not be immediately clear, which parameters are present in the model. To get a full list
-of parameters and parameter classes for which priors can be specified (depending on the model) use
-function get_prior.
+ *check Logical; Indicates whether priors should be checked for validity (as far as possible). Defaults to TRUE. If FALSE, prior is passed to the Stan code as is, and all other arguments are ignored.
+... arguments passed to set_prior.
 #### Value
 An object of class brmsprior to be used in the prior argument of brm.
 Functions
@@ -489,7 +294,8 @@ Gelman A. (2006). Prior distributions for variance parameters in hierarchical mo
 analysis, 1(3), 515 – 534.
 See Also
 get_prior
-Examples
+#### Examples 
+```{r}
 ## use alias functions
 (prior1 <- prior(cauchy(0, 1), class = sd))
 (prior2 <- prior_(~cauchy(0, 1), class = ~sd))
@@ -520,37 +326,7 @@ prior = set_prior("lasso(1)"))
 ## pass priors to Stan without checking
 prior <- prior_string("target += normal_lpdf(b[1] | 0, 1)", check = FALSE)
 make_stancode(count ~ Trt_c, data = epilepsy, prior = prior)
-Shifted_Lognormal The Shifted Log Normal Distribution
-#### Description 
-Density, distribution function, quantile function and random generation for the shifted log normal
-distribution with mean meanlog, standard deviation sdlog, and shift parameter shift.
-
-#### Usage
-<pre><code>
-dshifted_lnorm(x, meanlog = 0, sdlog = 1, shift = 0, log = FALSE)
-pshifted_lnorm(q, meanlog = 0, sdlog = 1, shift = 0,
-lower.tail = TRUE, log.p = FALSE)
-qshifted_lnorm(p, meanlog = 0, sdlog = 1, shift = 0,
-lower.tail = TRUE, log.p = FALSE)
-rshifted_lnorm(n, meanlog = 0, sdlog = 1, shift = 0)
-SkewNormal 149
-</code></pre>
-#### Arguments
-
-x, q Vector of quantiles.
-meanlog Vector of means.
-sdlog Vector of standard deviations.
-shift Vector of shifts.
-log Logical; If TRUE,values are returned on the log scale.
-lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-log.p Logical; If TRUE,values are returned on the log scale.
-p Vector of probabilities.
-n Number of samples to draw from the distribution.
-#### Details
-See vignette("brms_families") for #### Details on the parameterization.
-
-
-
+```
 
 stancode.brmsfit Extract Stan model code
 #### Description 
@@ -599,123 +375,10 @@ cor_fixed.
 internal Logical, indicates if the data should be prepared for internal use in other postprocessing
 methods.
 control A named list currently for internal 
-#### Usage
-<pre><code> only.
-... More </code></pre>
-#### Arguments
- passed to make_standata.
+usage only.
+... More Arguments passed to make_standata.
 #### Value
 A named list containing the data originally passed to Stan.
-152 stanplot.brmsfit
-stanplot.brmsfit MCMC Plots Implemented in bayesplot
-#### Description 
-Convenient way to call MCMC plotting functions implemented in the bayesplot package.
-
-#### Usage
-<pre><code>
-## S3 method for class 'brmsfit'
-stanplot(object, pars = NA, type = "intervals",
-exact_match = FALSE, ...)
-stanplot(object, ...)
-</code></pre>
-#### Arguments
-
-object An R object typically of class brmsfit
-pars Names of parameters to be plotted, as given by a character vector or regular expressions.
-By default, all parameters except for group-level and smooth effects
-are plotted. May be ignored for some plots.
-type The type of the plot. Supported types are (as names) hist, dens, hist_by_chain,
-dens_overlay, violin, intervals, areas, acf, acf_bar,trace, trace_highlight,
-scatter, rhat, rhat_hist, neff, neff_hist nuts_acceptance, nuts_divergence,
-nuts_stepsize, nuts_treedepth, and nuts_energy. For an overview on the
-various plot types see MCMC-overview.
-exact_match Indicates whether parameter names should be matched exactly or treated as regular
-expression. Default is FALSE.
-... Additional </code></pre>
-#### Arguments
- passed to the plotting functions. See MCMC-overview for
-more #### Details.
-#### Details
-Also consider using the shinystan package available via method launch_shinystan in brms for
-flexible and interactive visual analysis.
-#### Value
-A ggplot object that can be further customized using the ggplot2 package.
-
-Examples
-```{r}
-## Not run:
-model <- brm(count ~ log_Age_c + log_Base4_c * Trt
-+ (1|patient) + (1|visit),
-data = epilepsy, family = "poisson")
-stanvar 153
-# plot posterior intervals
-stanplot(model)
-# only show population-level effects in the plots
-stanplot(model, pars = "^b_")
-# show histograms of the posterior distributions
-stanplot(model, type = "hist")
-# plot some diagnostics of the sampler
-stanplot(model, type = "neff")
-stanplot(model, type = "rhat")
-# plot some diagnostics specific to the NUTS sampler
-stanplot(model, type = "nuts_acceptance")
-stanplot(model, type = "nuts_divergence")
-## End(Not run)
-```
-
-
-
-stanvar User-defined variables passed to Stan
-#### Description 
-Prepare user-defined variables to be passed to one of Stan’s program blocks. This is primarily useful
-for defining more complex priors, for refitting models without recompilation despite changing
-priors, or for defining custom Stan functions.
-
-#### Usage
-<pre><code>
-stanvar(x = NULL, name = NULL, scode = NULL, block = "data")
-</code></pre>
-#### Arguments
-
-x An R object containing data to be passed to Stan. Only required if block = 'data'
-and ignored otherwise.
-name Optinal character string providing the desired variable name of the object in x.
-If NULL (the default) the variable name is directly infered from x.
-scode Line of Stan code to define the variable in Stan language. If block = 'data',
-the Stan code is inferred based on the class of x by default.
-block Name of one of Stan’s program blocks in which the variable should be defined.
-Can be 'data', 'tdata' (transformed data), 'parameters', 'tparameters'
-(transformed parameters), 'model', 'genquant' (generated quantities) or 'functions'.
-#### Value
-An object of class stanvars.
-154 StudentT
-Examples
-bprior <- prior(normal(mean_intercept, 10), class = "Intercept")
-stanvars <- stanvar(5, name = "mean_intercept")
-make_stancode(count ~ Trt, epilepsy, prior = bprior,
-stanvars = stanvars)
-# define a multi-normal prior with known covariance matrix
-bprior <- prior(multi_normal(M, V), class = "b")
-stanvars <- stanvar(rep(0, 2), "M", scode = " vector[K] M;") +
-stanvar(diag(2), "V", scode = " matrix[K, K] V;")
-make_stancode(count ~ Trt + log_Base4_c, epilepsy,
-prior = bprior, stanvars = stanvars)
-# define a hierachical prior on the regression coefficients
-bprior <- set_prior("normal(0, tau)", class = "b") +
-set_prior("target += normal_lpdf(tau | 0, 10)", check = FALSE)
-stanvars <- stanvar(scode = "real<lower=0> tau;",
-block = "parameters")
-make_stancode(count ~ Trt + log_Base4_c, epilepsy,
-prior = bprior, stanvars = stanvars)
-
-
-
-
-
-
-
-
-
 
 summary.brmsfit Create a summary of a fitted model represented by a brmsfit object
 #### Description 
@@ -765,7 +428,7 @@ I recommend using the "viridisC" color scheme (see examples).
 #### Value
 A theme object used in ggplot2 graphics.
 
-Examples
+#### Examples 
 ```{r}
 ## Not run:
 # change default ggplot theme
@@ -782,8 +445,6 @@ pp_check(fit)
 stanplot(fit, type = "hex", pars = c("b_Intercept", "b_Trt1"))
 ## End(Not run)
 ```
-
-
 
 theme_default 157
 theme_default Default bayesplot Theme for ggplot2 Graphics
@@ -825,7 +486,7 @@ between model frame and formula. This error can be avoided by supplying your ori
 again via argument newdata.
 158 update_adterms
 
-Examples
+#### Examples 
 ```{r}
 ## Not run:
 fit1 <- brm(time | cens(censored) ~ age * sex + disease + (1|patient),
@@ -845,7 +506,6 @@ prior = set_prior("normal(0,5)"))
 summary(fit4)
 ## End(Not run)
 ```
-
 
 validate_newdata Validate New Data
 #### Description 
@@ -880,8 +540,6 @@ variables in the model.
 #### Value
 A validated 'data.frame' based on newdata.
 
-
-
 vcov.brmsfit 161
 vcov.brmsfit Covariance and Correlation Matrix of Population-Level Effects
 #### Description 
@@ -905,7 +563,7 @@ posterior samples.
 #### Value
 covariance or correlation matrix of population-level parameters
 
-Examples
+#### Examples 
 ```{r}
 ## Not run:
 fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c + (1+Trt_c|visit),
@@ -915,32 +573,6 @@ vcov(fit)
 ```
 
 
-
-162 waic.brmsfit
-VonMises The von Mises Distribution
-#### Description 
-Density, distribution function, and random generation for the von Mises distribution with location
-mu, and precision kappa.
-
-#### Usage
-<pre><code>
-dvon_mises(x, mu, kappa, log = FALSE)
-pvon_mises(q, mu, kappa, lower.tail = TRUE, log.p = FALSE,
-acc = 1e-20)
-rvon_mises(n, mu, kappa)
-</code></pre>
-#### Arguments
-
-x, q Vector of quantiles.
-mu Vector of locationvalues.
-kappa Vector of precisionvalues.
-log Logical; If TRUE,values are returned on the log scale.
-lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-log.p Logical; If TRUE,values are returned on the log scale.
-acc Accuracy of numerical approximations.
-n Number of samples to draw from the distribution.
-#### Details
-See vignette("brms_families") for #### Details on the parameterization.
 waic.brmsfit Compute the WAIC
 #### Description 
 Compute the widely applicable information criterion (WAIC) based on the posterior likelihood
@@ -956,9 +588,7 @@ waic.brmsfit 163
 #### Arguments
 
 x A fitted model object.
-... More fitted model objects or further </code></pre>
-#### Arguments
- passed to the underlying postprocessing
+... More fitted model objects or further arguments passed to the underlying postprocessing
 functions.
 compare A flag indicating if the information criteria of the models should be compared
 to each other via compare_ic.
@@ -991,7 +621,7 @@ Watanabe, S. (2010). Asymptotic equivalence of Bayes cross validation and widely
 information criterion in singular learning theory. The Journal of Machine Learning Research, 11,
 3571-3594.
 
-Examples
+#### Examples 
 ```{r}
 ## Not run:
 # model with population-level effects only
@@ -1009,35 +639,6 @@ waic(fit1, fit2)
 
 
 
-Wiener The Wiener Diffusion Model Distribution
-#### Description 
-Density function and random generation for theWiener diffusion model distribution with boundary
-separation alpha, non-decision time tau, bias beta and drift rate delta.
-
-#### Usage
-<pre><code>
-dwiener(x, alpha, tau, beta, delta, resp = 1, log = FALSE)
-rwiener(n, alpha, tau, beta, delta, types = c("q", "resp"))
-</code></pre>
-#### Arguments
-
-x Vector of quantiles.
-alpha Boundary separation parameter.
-tau Non-decision time parameter.
-beta Bias parameter.
-delta Drift rate parameter.
-resp Response: "upper" or "lower". If no character vector, it is coerced to logical
-where TRUE indicates "upper" and FALSE indicates "lower".
-log Logical; If TRUE,values are returned on the log scale.
-n Number of samples to draw from the distribution.
-types Which types of responses to return? By default, return both the response times
-"q" and the dichotomous responses "resp". If either "q" or "resp", return only
-one of the two types.
-#### Details
-These are wrappers around functions of the RWiener package. See vignette("brms_families")
-for #### Details on the parameterization.
-See Also
-wienerdist
 ZeroInflated 165
 ZeroInflated Zero-Inflated Distributions
 #### Description 

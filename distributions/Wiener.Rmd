@@ -1,0 +1,30 @@
+
+Wiener The Wiener Diffusion Model Distribution
+#### Description 
+Density function and random generation for theWiener diffusion model distribution with boundary
+separation alpha, non-decision time tau, bias beta and drift rate delta.
+
+#### Usage
+<pre><code>
+dwiener(x, alpha, tau, beta, delta, resp = 1, log = FALSE)
+rwiener(n, alpha, tau, beta, delta, types = c("q", "resp"))
+</code></pre>
+#### Arguments
+
+x Vector of quantiles.
+alpha Boundary separation parameter.
+tau Non-decision time parameter.
+beta Bias parameter.
+delta Drift rate parameter.
+resp Response: "upper" or "lower". If no character vector, it is coerced to logical
+where TRUE indicates "upper" and FALSE indicates "lower".
+log Logical; If TRUE,values are returned on the log scale.
+n Number of samples to draw from the distribution.
+types Which types of responses to return? By default, return both the response times
+"q" and the dichotomous responses "resp". If either "q" or "resp", return only
+one of the two types.
+#### Details
+These are wrappers around functions of the RWiener package. See vignette("brms_families")
+for #### Details on the parameterization.
+See Also
+wienerdist
