@@ -1,14 +1,18 @@
 fixef.brmsfit Extract Population-Level Estimates
 #### Description 
 Extract the population-level (’fixed’) effects from a brmsfit object.
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 fixef(object, summary = TRUE, robust = FALSE,
 probs = c(0.025, 0.975), pars = NULL, ...)
+</code></pre>
 #### Arguments
+
 object An object of class brmsfit.
 summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw #### Values? Default is TRUE.
+of the raw values? Default is TRUE.
 robust If FALSE (the default) the mean is used as the measure of central tendency and
 the standard deviation as the measure of variability. If TRUE, the median and the
 median absolute deviation (MAD) are applied instead. Only used if summary is
@@ -18,13 +22,15 @@ probs The percentiles to be computed by the quantile function. Only used if summ
 is TRUE.
 pars Optional names of coefficients to extract. By default, all coefficients are extracted.
 ... Currently ignored.
-#### Value
+value
 If summary is TRUE, a matrix with one row per population-level effect and one column per calculated
 estimate. If summary is FALSE, a matrix with one row per posterior sample and one column per
 population-level effect.
 Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
-Examples
+
+#### Examples 
+```{r}
 ## Not run:
 fit <- brm(time | cens(censored) ~ age + sex + disease,
 data = kidney, family = "exponential")
@@ -36,43 +42,51 @@ Frechet The Frechet Distribution
 #### Description 
 Density, distribution function, quantile function and random generation for the Frechet distribution
 with location loc, scale scale, and shape shape.
-Usage
+
+#### Usage
+<pre><code>
 dfrechet(x, loc = 0, scale = 1, shape = 1, log = FALSE)
 pfrechet(q, loc = 0, scale = 1, shape = 1, lower.tail = TRUE,
 log.p = FALSE)
 qfrechet(p, loc = 0, scale = 1, shape = 1, lower.tail = TRUE,
 log.p = FALSE)
 rfrechet(n, loc = 0, scale = 1, shape = 1)
-64 GenExtreme#### Value
+64 GenExtremevalue
+</code></pre>
 #### Arguments
+
 x, q Vector of quantiles.
 loc Vector of locations.
 scale Vector of scales.
 shape Vector of shapes.
-log Logical; If TRUE, #### Values are returned on the log scale.
+log Logical; If TRUE, values are returned on the log scale.
 lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-log.p Logical; If TRUE, #### Values are returned on the log scale.
+log.p Logical; If TRUE, values are returned on the log scale.
 p Vector of probabilities.
 n Number of samples to draw from the distribution.
 #### Details
 See vignette("brms_families") for #### Details on the parameterization.
-GenExtreme#### Value The Generalized Extreme #### Value Distribution
+GenExtremeValue The Generalized Extreme value Distribution
 #### Description 
-Density, distribution function, and random generation for the generalized extreme #### Value distribution
+Density, distribution function, and random generation for the generalized extreme value distribution
 with location mu, scale sigma and shape xi.
-Usage
-dgen_extreme_#### Value(x, mu = 0, sigma = 1, xi = 0, log = FALSE)
-pgen_extreme_#### Value(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE,
+
+#### Usage
+<pre><code>
+dgen_extreme_value(x, mu = 0, sigma = 1, xi = 0, log = FALSE)
+pgen_extreme_value(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE,
 log.p = FALSE)
-rgen_extreme_#### Value(n, mu = 0, sigma = 1, xi = 0)
+rgen_extreme_value(n, mu = 0, sigma = 1, xi = 0)
+</code></pre>
 #### Arguments
+
 x, q Vector of quantiles.
 mu Vector of locations.
 sigma Vector of scales.
 xi Vector of shapes.
-log Logical; If TRUE, #### Values are returned on the log scale.
+log Logical; If TRUE, values are returned on the log scale.
 lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-log.p Logical; If TRUE, #### Values are returned on the log scale.
+log.p Logical; If TRUE, values are returned on the log scale.
 n Number of samples to draw from the distribution.
 #### Details
 See vignette("brms_families") for #### Details on the parameterization.
@@ -81,13 +95,17 @@ get_prior Overview on Priors for brms Models
 #### Description 
 Get information on all parameters (and parameter classes) for which priors may be specified including
 default priors.
-Usage
+
+#### Usage
+<pre><code>
 get_prior(formula, data, family = gaussian(), autocor = NULL,
 internal = FALSE)
+</code></pre>
 #### Arguments
-formula An object of class formula, brmsformula, or mvbrmsformula (or one that can
+
+* ``formula``: An object of class formula, brmsformula, or mvbrmsformula (or one that can
 be coerced to that classes): A symbolic #### Description  of the model to be fitted.
-The #### Details of model specification are explained in brmsformula.
+The details of model specification are explained in brmsformula.
 data An object of class data.frame (or one that can be coerced to that class) containing
 data of all variables used in the model.
 * `` family`` A description  of the response distribution and link function to be used in the
@@ -104,14 +122,16 @@ to no correlations. In multivariate models, autocor might also be a
 list of autocorrelation structures.
 internal A flag indicating if the names of additional internal parameters should be displayed.
 Setting priors on these parameters is not recommended
-#### Value
+value
 A data.frame with columns prior, class, coef, and group and several rows, each providing information
 on a parameter (or parameter class) on which priors can be specified. The prior column is
 empty except for internal default priors.
 See Also
 set_prior
 66 gp
-Examples
+
+#### Examples 
+```{r}
 ## get all parameters and parameters classes to define priors on
 (prior <- get_prior(count ~ log_Age_c + log_Base4_c * Trt_c
 + (1|patient) + (1|visit),
@@ -125,22 +145,30 @@ make_stancode(count ~ log_Age_c + log_Base4_c * Trt_c
 + (1|patient) + (1|visit),
 data = epilepsy, family = poisson(),
 prior = prior)
+```
+
 gp Set up Gaussian process terms in brms
 #### Description 
-Function used to set up a Gaussian process term in brms. The function does not evaluate its #### Arguments
-– it exists purely to help set up a model with Gaussian process terms.
-Usage
-gp(..., by = NA, cov = "exp_quad", gr = FALSE, scale = TRUE)
+Function used to set up a Gaussian process term in brms. The function does not evaluate its </code></pre>
 #### Arguments
+
+– it exists purely to help set up a model with Gaussian process terms.
+
+#### Usage
+<pre><code>
+gp(..., by = NA, cov = "exp_quad", gr = FALSE, scale = TRUE)
+</code></pre>
+#### Arguments
+
 ... One or more predictors for the Gaussian process.
 by A numeric or factor variable of the same length as each predictor. In the numeric
-vector case, the elements multiply the #### Values returned by the Gaussian process.
+vector case, the elements multiply the values returned by the Gaussian process.
 In the factor variable case, a separate Gaussian process is fitted for each factor
 level.
 cov Name of the covariance kernel. By default, the exponentiated-quadratic kernel
 "exp_quad" is used.
 gr Logical; Indicates if auto-grouping should be used (defaults to FALSE). If enabled,
-observations sharing the same predictor #### Values will be represented by
+observations sharing the same predictor values will be represented by
 the same latent variable in the Gaussian process. This will improve sampling
 efficiency drastically if the number of unique predictor combinations is small
 relative to the number of observations.
@@ -167,12 +195,16 @@ and lscale is characteristic length-scale parameter. The latter practically meas
 two points xi and xj have to be to influence each other substantially.
 In the current implementation, "exp_quad" is the only supported covariance kernel. More options
 will follow in the future.
-#### Value
-An object of class 'gpterm', which is a list of #### Arguments to be interpreted by the formula parsing
+value
+An object of class 'gpterm', which is a list of </code></pre>
+#### Arguments
+ to be interpreted by the formula parsing
 functions of brms.
 See Also
 brmsformula
-Examples
+
+#### Examples 
+```{r}
 ## Not run:
 # simulate data using the mgcv package
 dat <- mgcv::gamSim(1, n = 30, scale = 2)
@@ -201,43 +233,21 @@ fit4 <- brm(y ~ gp(x2, by = fac), dat2, chains = 2)
 summary(fit4)
 plot(marginal_effects(fit4), points = TRUE)
 ## End(Not run)
-gr Set up basic grouping terms in brms
-#### Description 
-Function used to set up a basic grouping term in brms. The function does not evaluate its #### Arguments
-– it exists purely to help set up a model with grouping terms. gr is called implicitly inside the
-package and there is usually no need to call it directly.
-Usage
-gr(..., by = NULL, dist = "gaussian")
-#### Arguments
-... One or more terms containing grouping factors.
-by An optional factor variable, specifying sub-populations of the groups. For each
-level of the by variable, a separate variance-covariance matrix will be fitted.
-Levels of the grouping factor must be nested in levels of the by variable.
-dist Name of the distribution of the group-level effects. Currently "gaussian" is the
-only option.
-See Also
-brmsformula
-horseshoe 69
-Examples
-## Not run:
-# model using basic lme4-style formula
-fit1 <- brm(count ~ Trt + (1|patient), data = epilepsy)
-summary(fit1)
-# equivalent model using 'gr' which is called anyway internally
-fit2 <- brm(count ~ Trt + (1|gr(patient)), data = epilepsy)
-summary(fit2)
-# include Trt as a by variable
-fit3 <- brm(count ~ Trt + (1|gr(patient, by = Trt)), data = epilepsy)
-summary(fit3)
-## End(Not run)
+
 horseshoe Set up a horseshoe prior in brms
 #### Description 
 Function used to set up a horseshoe prior for population-level effects in brms. The function does
-not evaluate its #### Arguments – it exists purely to help set up the model.
-Usage
+not evaluate its </code></pre>
+#### Arguments
+ – it exists purely to help set up the model.
+
+#### Usage
+<pre><code>
 horseshoe(df = 1, scale_global = 1, df_global = 1, scale_slab = 2,
 df_slab = 4, par_ratio = NULL, autoscale = TRUE)
+</code></pre>
 #### Arguments
+
 df Degrees of freedom of student-t prior of the local shrinkage parameters. Defaults
 to 1.
 scale_global Scale of the student-t prior of the global shrinkage parameter. Defaults to 1.
@@ -265,7 +275,7 @@ The horseshoe prior can be applied on all population-level effects at once (excl
 intercept) by using set_prior("horseshoe(1)"). The 1 implies that the student-t prior of the local
 shrinkage parameters has 1 degrees of freedom. This may, however, lead to an increased number
 of divergent transition in Stan. Accordingly, increasing the degrees of freedom to slightly higher
-#### Values (e.g., 3) may often be a better option, although the prior no longer resembles a horseshoe in
+values (e.g., 3) may often be a better option, although the prior no longer resembles a horseshoe in
 this case. Further, the scale of the global shrinkage parameter plays an important role in amount
 of shrinkage applied. It defaults to 1, but this may result in too few shrinkage (Piironen & Vehtari,
 2016). It is thus possible to change the scale using argument scale_global of the horseshoe
@@ -279,10 +289,12 @@ by Piironen and Vehtari (2017), an additional regularization is applied that onl
 coefficients. The amount of regularization can be controlled via scale_slab and df_slab. To
 make sure that shrinkage can equally affect all coefficients, predictors should be one the same
 scale. Generally, models with horseshoe priors a more likely than other models to have divergent
-transitions so that increasing adapt_delta from 0.8 to #### Values closer to 1 will often be necessary.
+transitions so that increasing adapt_delta from 0.8 to values closer to 1 will often be necessary.
 See the documentation of brm for instructions on how to increase adapt_delta.
-#### Value
-A character string obtained by match.call() with additional #### Arguments.
+value
+A character string obtained by match.call() with additional </code></pre>
+#### Arguments
+.
 References
 Carvalho, C. M., Polson, N. G., & Scott, J. G. (2009). Handling sparsity via the horseshoe. In
 International Conference on Artificial Intelligence and Statistics (pp. 73-80).
@@ -293,39 +305,17 @@ other shrinkage priors. https://arxiv.org/abs/1707.01694
 See Also
 set_prior
 Hurdle 71
-Examples
+
+#### Examples 
+```{r}
 set_prior(horseshoe(df = 3, par_ratio = 0.1))
-Hurdle Hurdle Distributions
-#### Description 
-Density and distribution functions for hurdle distributions.
-Usage
-dhurdle_poisson(x, lambda, hu, log = FALSE)
-phurdle_poisson(q, lambda, hu, lower.tail = TRUE, log.p = FALSE)
-dhurdle_negbinomial(x, mu, shape, hu, log = FALSE)
-phurdle_negbinomial(q, mu, shape, hu, lower.tail = TRUE, log.p = FALSE)
-dhurdle_gamma(x, shape, scale, hu, log = FALSE)
-phurdle_gamma(q, shape, scale, hu, lower.tail = TRUE, log.p = FALSE)
-dhurdle_lognormal(x, mu, sigma, hu, log = FALSE)
-phurdle_lognormal(q, mu, sigma, hu, lower.tail = TRUE, log.p = FALSE)
-#### Arguments
-x Vector of quantiles.
-hu hurdle propability
-log Logical; If TRUE, #### Values are returned on the log scale.
-q Vector of quantiles.
-lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
-log.p Logical; If TRUE, #### Values are returned on the log scale.
-mu, lambda location parameter
-shape shape parameter
-sigma, scale scale parameter
-#### Details
-The density of a hurdle distribution can be specified as follows. If x = 0 set f(x) = . Else set
-f(x) = (1 􀀀 )  g(x)=(1 􀀀 G(0)) where g(x) and G(x) are the density and distribution function
-of the non-hurdle part, respectively.
-72 hypothesis.brmsfit
+
 hypothesis.brmsfit Non-Linear Hypothesis Testing
 #### Description 
 Perform non-linear hypothesis testing for all model parameters.
-Usage
+
+#### Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 hypothesis(x, hypothesis, class = "b", group = "",
 scope = c("standard", "ranef", "coef"), alpha = 0.05, seed = NULL,
@@ -333,7 +323,9 @@ scope = c("standard", "ranef", "coef"), alpha = 0.05, seed = NULL,
 hypothesis(x, ...)
 ## Default S3 method:
 hypothesis(x, hypothesis, alpha = 0.05, ...)
+</code></pre>
 #### Arguments
+
 x An R object. If it is no brmsfit object, it must be coercible to a data.frame.
 hypothesis A character vector specifying one or more non-linear hypothesis concerning
 parameters of the model.
@@ -349,18 +341,18 @@ use the full parameter names (subject to the restriction given by class). If
 given in "group", based on the output of coef.brmsfit and ranef.brmsfit,
 respectively.
 alpha The alpha-level of the tests (default is 0.05; see ’#### Details’ for more information).
-seed A single numeric #### Value passed to set.seed to make results reproducible.
+seed A single numeric value passed to set.seed to make results reproducible.
 ... Currently ignored.
 #### Details
 Among others, hypothesis computes an evidence ratio (Evid.Ratio) for each hypothesis. For a
 directed hypothesis, this is just the posterior probability (Post.Prob) under the hypothesis against
 its alternative. That is, when the hypothesis if of the form a > b, the evidence ratio is the ratio of the
-posterior probability of a > b and the posterior probability of a < b. In this example, #### Values greater
+posterior probability of a > b and the posterior probability of a < b. In this example, values greater
 hypothesis.brmsfit 73
 than one indicate that the evidence in favor of a > b is larger than evidence in favor of a < b. For
 an undirected (point) hypothesis, the evidence ratio is a Bayes factor between the hypothesis and its
 alternative computed via the Savage-Dickey density ratio method. That is the posterior density at
-the point of interest divided by the prior density at that point. #### Values greater than one indicate that
+the point of interest divided by the prior density at that point. values greater than one indicate that
 evidence in favor of the point hypothesis has increased after seeing the data. In order to calculate
 this Bayes factor, all parameters related to the hypothesis must have proper priors and argument
 sample_prior of function brm must be set to TRUE. When interpreting Bayes factors, make sure
@@ -368,17 +360,19 @@ that your priors are reasonable and carefully chosen, as the result will depend 
 In particular, avoid using default priors.
 The argument alpha specifies the size of the credible interval (i.e., Bayesian confidence interval).
 For instance, if alpha = 0.05 (5%), the credible interval will contain 1 - alpha = 0.95 (95%) of
-the posterior #### Values. Hence, alpha * 100% of the posterior #### Values will lie outside of the credible
+the posterior values. Hence, alpha * 100% of the posterior values will lie outside of the credible
 interval. Although this allows testing of hypotheses in a similar manner as in the frequentist nullhypothesis
 testing framework, we strongly argue against using arbitrary cutoffs (e.g., p < .05) to
 determine the ’existence’ of an effect.
-#### Value
+value
 A brmshypothesis object.
 Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
 See Also
 brmshypothesis
-Examples
+
+#### Examples 
+```{r}
 ## Not run:
 ## define priors
 prior <- c(set_prior("normal(0,2)", class = "b"),
