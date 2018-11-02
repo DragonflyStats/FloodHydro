@@ -1,0 +1,28 @@
+
+validate_newdata Validate New Data
+#### Description 
+Validate new data passed to post-processing methods of brms. Unless you are a package developer,
+you will rarely need to call validate_newdata directly.
+
+#### Usage
+<pre><code>
+validate_newdata(newdata, object, re_formula = NULL,
+allow_new_levels = FALSE, resp = NULL, check_response = TRUE,
+incl_autocor = TRUE, all_group_vars = NULL, ...)
+</code></pre>
+#### Arguments
+
+* newdata A data.frame containing new data to be validated.
+* object A brmsfit object.
+* re_formula formula containing group-level effects to be considered in the prediction. If NULL (default), include all group-level effects; if NA, include no group-level effects.
+* allow_new_levels A flag indicating if new levels of group-level effects are allowed (defaults to FALSE). Only relevant if newdata is provided.
+* `` resp``: Optional names of response variables. If specified, predictions are performed only for the specified response variables.
+* check_response Logical; Indicates if response variables should be checked as well. Defaults to TRUE.
+* incl_autocor A flag indicating if ARMA autocorrelation parameters should be included in the predictions. Defaults to TRUE. Setting it to FALSE will not affect other correlation structures such as cor_bsts, or cor_fixed.
+* all_group_vars Optional names of grouping variables to be validated. Defaults to all grouping variables in the model.
+* ... Currently ignored.
+
+#### Value
+
+A validated 'data.frame' based on newdata.
+

@@ -1,0 +1,50 @@
+update.brmsfit Update brms models
+
+#### Description 
+
+This method allows to update an existing brmsfit object
+
+#### Usage
+
+<pre><code>
+## S3 method for class 'brmsfit'
+update(object, formula., newdata = NULL,
+recompile = NULL, ...)
+</code></pre>
+
+#### Arguments
+
+* object An object of class brmsfit.
+* formula. Changes to the formula; for details see update.formula and brmsformula.
+* newdata Optional data.frame to update the model with new data.
+* recompile Logical, indicating whether the Stan model should be recompiled. If NULL (the default), update tries to figure out internally, if recompilation is necessary. Setting it to FALSE will cause all Stan code changing arguments to be ignored.
+* ... Other arguments passed to brm.
+
+#### Details
+Sometimes, when updating the model formula, it may happen that R complains about a mismatch
+between model frame and formula. This error can be avoided by supplying your original data
+again via argument newdata.
+
+
+#### Examples 
+
+```{r}
+## Not run:
+fit1 <- brm(time | cens(censored) ~ age * sex + disease + (1|patient),
+data = kidney, family = gaussian("log"))
+summary(fit1)
+## remove effects of 'disease'
+fit2 <- update(fit1, formula. = ~ . - disease)
+summary(fit2)
+## remove the group specific term of 'patient' and
+## change the data (just take a subset in this example)
+fit3 <- update(fit1, formula. = ~ . - (1|patient),
+newdata = kidney[1:38, ])
+summary(fit3)
+## use another family and add population-level priors
+fit4 <- update(fit1, family = weibull(), inits = "0",
+prior = set_prior("normal(0,5)"))
+summary(fit4)
+## End(Not run)
+```
+

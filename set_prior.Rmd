@@ -1,0 +1,99 @@
+
+set_prior Prior Definitions for brms Models
+#### Description 
+Define priors for specific parameters or classes of parameters
+
+#### Usage
+<pre><code>
+set_prior(prior, class = "b", coef = "", group = "", resp = "",
+dpar = "", nlpar = "", lb = NA, ub = NA, check = TRUE)
+prior(prior, ...)
+prior_(prior, ...)
+prior_string(prior, ...)
+</code></pre>
+#### Arguments
+
+* prior A character string defining a distribution in Stan language
+* ``class``: The parameter class. Defaults to "b" (i.e. population-level effects). See ’ Details’ for other valid parameter classes.
+* coef Name of the (population- or group-level) parameter.
+* group Grouping factor of group-level parameters.
+* resp Name of the response variable / category. Only used in multivariate models.
+* dpar Name of a distributional parameter. Only used in distributional models.
+* nlpar Name of a non-linear parameter. Only used in non-linear models.
+* lb Lower bound for parameter restriction. Currently only allowed for classes "b",
+"ar", "ma", and "arr". Defaults to NULL, that is no restriction.
+* ub Upper bound for parameter restriction. Currently only allowed for classes "b",
+"ar", "ma", and "arr". Defaults to NULL, that is no restriction.
+ *check Logical; Indicates whether priors should be checked for validity (as far as possible). Defaults to TRUE. If FALSE, prior is passed to the Stan code as is, and all other arguments are ignored.
+... arguments passed to set_prior.
+#### Value
+An object of class brmsprior to be used in the prior argument of brm.
+
+#### Functions
+* prior: Alias of set_prior allowing to specify arguments as expressions without quotation marks.
+* prior_: Alias of set_prior allowing to specify arguments as as one-sided formulas or wrapped in quote.
+* prior_string: Alias of set_prior allowing to specify arguments as strings.
+
+#### Examples 
+```{r}
+## use alias functions
+(prior1 <- prior(cauchy(0, 1), class = sd))
+(prior2 <- prior_(~cauchy(0, 1), class = ~sd))
+(prior3 <- prior_string("cauchy(0, 1)", class = "sd"))
+identical(prior1, prior2)
+identical(prior1, prior3)
+```
+
+
+```{r}
+## check which parameters can have priors
+get_prior(rating ~ treat + period + carry + (1|subject),
+data = inhaler, family = cumulative())
+
+```
+
+
+```{r}
+## define some priors
+prior <- c(prior_string("normal(0,10)", class = "b"),
+prior(normal(1,2), class = b, coef = treat),
+prior_(~cauchy(0,2), class = ~sd,
+group = ~subject, coef = ~Intercept))
+```
+
+
+```{r}
+## verify that the priors indeed found their way into Stan's model code
+make_stancode(rating ~ treat + period + carry + (1|subject),
+data = inhaler, family = cumulative(),
+prior = prior)
+```
+
+
+```{r}
+## use the horseshoe prior to model sparsity in population-level effects
+make_stancode(count ~ log_Age_c + log_Base4_c * Trt_c,
+data = epilepsy, family = poisson(),
+prior = set_prior("horseshoe(3)"))
+```
+
+
+```{r}
+## alternatively use the lasso prior
+make_stancode(count ~ log_Age_c + log_Base4_c * Trt_c,
+data = epilepsy, family = poisson(),
+prior = set_prior("lasso(1)"))
+```
+
+
+```{r}
+## pass priors to Stan without checking
+prior <- prior_string("target += normal_lpdf(b[1] | 0, 1)", check = FALSE)
+make_stancode(count ~ Trt_c, data = epilepsy, prior = prior)
+```
+
+#### References
+Gelman A. (2006). Prior distributions for variance parameters in hierarchical models. Bayesian
+analysis, 1(3), 515 – 534.
+See Also
+get_prior
