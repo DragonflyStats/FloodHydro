@@ -38,4 +38,4 @@ fixef(fit)
 # extract only some coefficients
 fixef(fit, pars = c("age", "sex"))
 ## End(Not run)
-
+```
