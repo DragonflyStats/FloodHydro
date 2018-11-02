@@ -1,0 +1,135 @@
+brmsformula Set up a model formula for use in brms
+#### Description 
+Set up a model formula for use in the brms package allowing to define (potentially non-linear)
+additive multilevel models for all parameters of the assumed response distribution.
+Usage
+<pre><code>
+brmsformula(formula, ..., flist = NULL, family = NULL,
+autocor = NULL, nl = NULL, loop = NULL, cmc = NULL)
+</code></pre>
+
+#### Arguments
+
+* formula An object of class formula (or one that can be coerced to that class): a symbolic
+description  of the model to be fitted. The #### Details of model specification are given
+in ’Details’.
+* ... Additional formula objects to specify predictors of non-linear and distributional
+parameters. Formulas can either be named directly or contain names
+on their left-hand side. The following are distributional parameters of specific
+families (all other parameters are treated as non-linear parameters): sigma
+(residual standard deviation or scale of the gaussian, student, skew_normal,
+lognormal exgaussian, and asym_laplace families); shape (shape parameter
+of the Gamma, weibull, negbinomial, and related zero-inflated / hurdle
+families); nu (degrees of freedom parameter of the student and frechet families);
+phi (precision parameter of the beta and zero_inflated_beta families);
+kappa (precision parameter of the von_mises family); beta (mean parameter
+of the exponential component of the exgaussian family); quantile (quantile
+parameter of the asym_laplace family); zi (zero-inflation probability); hu
+(hurdle probability); zoi (zero-one-inflation probability); coi (conditional oneinflation
+probability); disc (discrimination) for ordinal models; bs, ndt, and
+bias (boundary separation, non-decision time, and initial bias of the wiener
+diffusion model). By default, distributional parameters are modeled on the log
+* scale if they can be positive only or on the logit scale if the can only be within
+the unit interval. See ’#### Details’ for more explanation.
+* flist Optional list of formulas, which are treated in the same way as formulas passed
+via the ... argument.
+* family Same argument as in brm. If family is specified in brmsformula, it will overwrite the value specified in brm.
+* autocor Same argument as in brm. If autocor is specified in brmsformula, it will overwrite the value specified in brm.
+* nl Logical; Indicates whether formula should be treated as specifying a non-linear model. 
+By default, formula is treated as an ordinary linear model formula.
+loop Logical; Only used in non-linear models. Indicates if the computation of the
+non-linear formula should be done inside (TRUE) or outside (FALSE) a loop over
+observations. Defaults to TRUE.
+cmc Logical; Indicates whether automatic cell-mean coding should be enabled when
+removing the intercept by adding 0 to the right-hand of model formulas. Defaults
+to TRUE to mirror the behavior of standard R formula parsing.
+
+
+brmsformula 33
+#### Value
+An object of class brmsformula, which is essentially a list containing all model formulas as well
+as some additional information.
+See Also
+mvbrmsformula, brmsformula-helpers
+
+Examples
+```{r}
+# multilevel model with smoothing terms
+brmsformula(y ~ x1*x2 + s(z) + (1+x1|1) + (1|g2))
+# additionally predict 'sigma'
+brmsformula(y ~ x1*x2 + s(z) + (1+x1|1) + (1|g2),
+sigma ~ x1 + (1|g2))
+```
+
+```{r}
+# use the shorter alias 'bf'
+(formula1 <- brmsformula(y ~ x + (x|g)))
+(formula2 <- bf(y ~ x + (x|g)))
+# will be TRUE
+identical(formula1, formula2)
+# incorporate censoring
+bf(y | cens(censor_variable) ~ predictors)
+```
+
+```{r}
+# define a simple non-linear model
+bf(y ~ a1 - a2^x, a1 + a2 ~ 1, nl = TRUE)
+# predict a1 and a2 differently
+bf(y ~ a1 - a2^x, a1 ~ 1, a2 ~ x + (x|g), nl = TRUE)
+# correlated group-level effects across parameters
+bf(y ~ a1 - a2^x, a1 ~ 1 + (1|2|g), a2 ~ x + (x|2|g), nl = TRUE)
+# define a multivariate model
+bf(cbind(y1, y2) ~ x * z + (1|g))
+```
+
+```{r}
+# define a zero-inflated model
+# also predicting the zero-inflation part
+bf(y ~ x * z + (1+x|ID1|g), zi ~ x + (1|ID1|g))
+# specify a predictor as monotonic
+bf(y ~ mo(x) + more_predictors)
+# for ordinal models only
+```
+
+```{r}
+# specify a predictor as category specific
+bf(y ~ cs(x) + more_predictors)
+# add a category specific group-level intercept
+bf(y ~ cs(x) + (cs(1)|g))
+# specify parameter 'disc'
+bf(y ~ person + item, disc ~ item)
+```
+
+```{r}
+# specify variables containing measurement error
+bf(y ~ me(x, sdx))
+# specify predictors on all parameters of the wiener diffusion model
+# the main formula models the drift rate 'delta'
+bf(rt | dec(decision) ~ x, bs ~ x, ndt ~ x, bias ~ x)
+# fix the bias parameter to 0.5
+bf(rt | dec(decision) ~ x, bias = 0.5)
+# specify different predictors for different mixture components
+mix <- mixture(gaussian, gaussian)
+bf(y ~ 1, mu1 ~ x, mu2 ~ z, family = mix)
+```
+
+```{r}
+# fix both residual standard deviations to the same #### Value
+bf(y ~ x, sigma2 = "sigma1", family = mix)
+# use the '+' operator to specify models
+bf(y ~ 1) +
+nlf(sigma ~ a * exp(b * x), a ~ x) +
+lf(b ~ z + (1|g), dpar = "sigma") +
+gaussian()
+```
+
+```{r}
+# specify a multivariate model using the '+' operator
+bf(y1 ~ x + (1|g)) +
+gaussian() + cor_ar(~1|g) +
+bf(y2 ~ z) + poisson()
+# model missing values in predictors
+bf(bmi ~ age * mi(chl)) +
+bf(chl | mi() ~ age) +
+set_rescor(FALSE)
+```
