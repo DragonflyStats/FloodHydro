@@ -1,0 +1,26 @@
+GenExtremeValue The Generalized Extreme value Distribution
+#### Description 
+Density, distribution function, and random generation for the generalized extreme value distribution
+with location mu, scale sigma and shape xi.
+
+#### Usage
+<pre><code>
+dgen_extreme_value(x, mu = 0, sigma = 1, xi = 0, log = FALSE)
+pgen_extreme_value(q, mu = 0, sigma = 1, xi = 0, lower.tail = TRUE,
+log.p = FALSE)
+rgen_extreme_value(n, mu = 0, sigma = 1, xi = 0)
+</code></pre>
+#### Arguments
+
+x, q Vector of quantiles.
+mu Vector of locations.
+sigma Vector of scales.
+xi Vector of shapes.
+log Logical; If TRUE, values are returned on the log scale.
+lower.tail Logical; If TRUE (default), return P(X <= x). Else, return P(X > x) .
+log.p Logical; If TRUE, values are returned on the log scale.
+n Number of samples to draw from the distribution.
+#### Details
+See vignette("brms_families") for #### Details on the parameterization.
+get_prior 65
+
