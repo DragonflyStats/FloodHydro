@@ -54,61 +54,8 @@ to FALSE to improve efficiency.
 n Number of samples to draw from the distribution.
 #### Details
 See the Stan user’s manual http://mc-stan.org/documentation/ for #### Details on the parameterization
-112 mvbrmsformula
-MultiStudentT The Multivariate Student-t Distribution
-#### Description 
-Density function and random generation for the multivariate Student-t distribution with location
-vector mu, covariance matrix Sigma, and degrees of freedom df.
 
-#### Usage
-<pre><code>
-dmulti_student_t(x, df, mu, Sigma, log = FALSE, check = FALSE)
-rmulti_student_t(n, df, mu, Sigma, check = FALSE)
-</code></pre>
-#### Arguments
 
-* ``x``: Vector or matrix of quantiles. If x is a matrix, each row is taken to be a quantile.
-* ``df``: Vector of degrees of freedom.
-* `` mu ``:Location vector with length equal to the number of dimensions.
-Sigma Covariance matrix.
-log Logical; If TRUE,values are returned on the log scale.
-check Logical; Indicates whether several input checks should be performed. Defaults
-to FALSE to improve efficiency.
-n Number of samples to draw from the distribution.
-#### Details
-See the Stan user’s manual http://mc-stan.org/documentation/ for #### Details on the parameterization
-mvbrmsformula Set up a multivariate model formula for use in brms
-#### Description 
-Set up a multivariate model formula for use in the brms package allowing to define (potentially
-non-linear) additive multilevel models for all parameters of the assumed response distributions.
-
-#### Usage
-<pre><code>
-mvbrmsformula(..., flist = NULL, rescor = NULL)
-ngrps.brmsfit 113
-</code></pre>
-#### Arguments
-
-... Objects of class formula or brmsformula, each specifying a univariate model.
-See brmsformula for #### Details on how to specify univariate models.
-flist Optional list of formulas, which are treated in the same way as formulas passed
-via the ... argument.
-rescor Logical; Indicates if residual correlation between the response variables should
-be modeled. Currently, this is only possible in multivariate gaussian and student
-models. If NULL (the default), rescor is internally set to TRUE when possible.
-#### Details
-See vignette("brms_multivariate") for a case study.
-#### Value
-An object of class mvbrmsformula, which is essentially a list containing all model formulas as
-well as some additional information for multivariate models.
-See Also
-brmsformula, brmsformula-helpers
-#### Examples 
-```{r}
-bf1 <- bf(y1 ~ x + (1|g))
-bf2 <- bf(y2 ~ s(z))
-mvbf(bf1, bf2)
-```
 
 nsamples.brmsfit Number of Posterior Samples
 #### Description 
@@ -128,73 +75,6 @@ incl_warmup A flag indicating whether to also count warmup / burn-in samples.
 * `` ... ``: Further arguments passed to or from other methods.
 #### Details
 Currently there are methods for brmsfit objects.
-
-pp_average.brmsfit Posterior predictive samples averaged across models
-#### Description 
-Compute posterior predictive samples averaged across models. Weighting can be done in various
-ways, for instance using Akaike weights based on information criteria or marginal likelihoods.
-126 pp_average.brmsfit
-
-#### Usage
-<pre><code>
-## S3 method for class 'brmsfit'
-pp_average(x, ..., weights = "loo2",
-method = c("predict", "fitted", "residuals"), nsamples = NULL,
-summary = TRUE, probs = c(0.025, 0.975), robust = FALSE,
-model_names = NULL, control = list(), seed = NULL)
-pp_average(x, ...)
-</code></pre>
-#### Arguments
-
-x A fitted model object.
-... More fitted model objects or further arguments passed to the underlying postprocessing
-functions.
-weights Name of the criterion to compute weights from. Should be one of "loo",
-"waic", "kfold", "loo2" (current default), or "marglik". For the former three
-options, Akaike weights will be computed based on the information criterion values returned by the respective methods. For "loo2", method loo_model_weights
-will be used to obtain weights. For "marglik", method post_prob will be used to compute weights based on log marginal likelihoodvalues (make sure to specify reasonable priors in this case). Alternatively, weights can be a numeric
-vector of pre-specified weights.
-* method Type of predictions to average. Should be one of "predict" (default), "fitted",
-or "residuals".
-* nsamples Total number of posterior samples to use.
-* summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the rawvalues? Default is TRUE.
-probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-* robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
-TRUE.
-* model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
-will use the passed values as model names.
-control Optional list of further arguments passed to the function specified in weights.
-* seed A single numericvalue passed to set.seed to make results reproducible.
-
-#### Details
-Weights are computed with the model_weights method.
-
-#### Value 
-Same as the output of the method specified in argument method.
-pp_check.brmsfit 127
-See Also
-model_weights, posterior_average
-
-#### Examples 
-```{r}
-## Not run:
-# model with 'treat' as predictor
-fit1 <- brm(rating ~ treat + period + carry, data = inhaler)
-summary(fit1)
-# model without 'treat' as predictor
-fit2 <- brm(rating ~ period + carry, data = inhaler)
-summary(fit2)
-# compute model-averaged predictedvalues
-(df <- unique(inhaler[, c("treat", "period", "carry")]))
-pp_average(fit1, fit2, newdata = df)
-# compute model-averaged fittedvalues
-pp_average(fit1, fit2, method = "fitted", newdata = df)
-## End(Not run)
-```
 
 134 print.brmsprior
 print.brmsfit Print a summary for a fitted model represented by a brmsfit object

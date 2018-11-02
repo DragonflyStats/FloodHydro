@@ -1,0 +1,34 @@
+
+cs Category Specific Predictors in brms Models
+
+#### Description 
+Category Specific Predictors in brms Models
+
+#### Usage
+<pre><code>
+cs(expr)
+<code></pre>
+
+#### Arguments
+expr Expression containing predictors, for which category specific effects should be
+estimated. For evaluation, R formula syntax is applied.
+
+#### Details
+For detailed documentation see help(brmsformula) as well as vignette("brms_overview").
+This function is almost solely useful when called in formulas passed to the brms package.
+
+
+#### Examples
+
+```{r}
+## Not run:
+fit <- brm(rating ~ period + carry + cs(treat),
+data = inhaler, family = sratio("cloglog"),
+prior = set_prior("normal(0,5)"), chains = 2)
+summary(fit)
+plot(fit, ask = FALSE)
+## End(Not run)
+```
+See Also
+brmsformula
+custom_family 53

@@ -1,0 +1,40 @@
+
+cor_sar Spatial simultaneous autoregressive (SAR) structures
+#### Description 
+These functions are constructors for the cor_sar class implementing spatial simultaneous autoregressive
+structures. The lagsar structure implements SAR of the response values:
+y = Wy +  + e
+The errorsar structure implements SAR of the residuals:
+y =  + u; u = Wu + e
+In the above equations,  is the predictor term and e are independent normally or t-distributed
+residuals.
+Usage
+cor_sar(W, type = c("lag", "error"))
+cor_lagsar(W)
+cor_errorsar(W)
+#### Arguments
+W An object specifying the spatial weighting matrix. Can be either the spatial
+weight matrix itself or an object of class listw or nb, from which the spatial
+weighting matrix can be computed.
+type Type of the SAR structure. Either "lag" (for SAR of the response #### Values) or
+"error" (for SAR of the residuals).
+#### Details
+Currently, only families gaussian and student support SAR structures.
+#### Value
+An object of class cor_sar to be used in calls to brm.
+52 cs
+Examples
+## Not run:
+data(oldcol, package = "spdep")
+fit1 <- brm(CRIME ~ INC + HOVAL, data = COL.OLD,
+autocor = cor_lagsar(COL.nb),
+chains = 2, cores = 2)
+summary(fit1)
+plot(fit1)
+fit2 <- brm(CRIME ~ INC + HOVAL, data = COL.OLD,
+autocor = cor_errorsar(COL.nb),
+chains = 2, cores = 2)
+summary(fit2)
+plot(fit2)
+## End(Not run)
+

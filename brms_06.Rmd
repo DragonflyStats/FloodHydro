@@ -11,141 +11,20 @@ cor_fixed(V)
 #### Arguments
 V Known covariance matrix of the response variable. If a vector is passed, it will
 be used as diagonal entries (variances) and covariances will be set to zero.
-50 cor_ma
+
 #### Value
 An object of class cor_fixed.
-Examples
+
+#### Examples
+
+```{r}
 ## Not run:
 dat <- data.frame(y = rnorm(3))
 V <- cbind(c(0.5, 0.3, 0.2), c(0.3, 1, 0.1), c(0.2, 0.1, 0.2))
 fit <- brm(y~1, data = dat, autocor = cor_fixed(V))
 ## End(Not run)
-cor_ma MA(q) correlation structure
-#### Description 
-This function is a constructor for the cor_arma class, allowing for moving average terms only.
-Usage
-
-<pre><code>
-cor_ma(formula = ~1, q = 1, cov = FALSE)
-</code></pre>
-
-#### Arguments
-* formula A one sided formula of the form ~ t, or ~ t | g, specifying a time covariate
-t and, optionally, a grouping factor g. A covariate for this correlation structure
-must be integer #### Valued. When a grouping factor is present in formula, the
-correlation structure is assumed to apply only to observations within the same
-grouping level; observations with different grouping levels are assumed to be
-uncorrelated. Defaults to ~ 1, which corresponds to using the order of the
-observations in the data as a covariate, and no groups.
-* q A non-negative integer specifying the moving average (MA) order of the ARMA
-structure. Default is 1.
-cov A flag indicating whether ARMA effects should be estimated by means of residual
-covariance matrices (currently only possible for stationary ARMA effects of
-order 1). If FALSE (the default) a regression formulation is used that is considerably
-faster and allows for ARMA effects of order higher than 1 but cannot
-handle user defined standard errors.
-#### Value
-An object of class cor_arma containing solely moving average terms.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-cor_sar 51
-See Also
-cor_arma
-
-Examples
-
-cor_ma(~visit|patient, q = 2)
-
-cor_sar Spatial simultaneous autoregressive (SAR) structures
-#### Description 
-These functions are constructors for the cor_sar class implementing spatial simultaneous autoregressive
-structures. The lagsar structure implements SAR of the response values:
-y = Wy +  + e
-The errorsar structure implements SAR of the residuals:
-y =  + u; u = Wu + e
-In the above equations,  is the predictor term and e are independent normally or t-distributed
-residuals.
-Usage
-cor_sar(W, type = c("lag", "error"))
-cor_lagsar(W)
-cor_errorsar(W)
-#### Arguments
-W An object specifying the spatial weighting matrix. Can be either the spatial
-weight matrix itself or an object of class listw or nb, from which the spatial
-weighting matrix can be computed.
-type Type of the SAR structure. Either "lag" (for SAR of the response #### Values) or
-"error" (for SAR of the residuals).
-#### Details
-Currently, only families gaussian and student support SAR structures.
-#### Value
-An object of class cor_sar to be used in calls to brm.
-52 cs
-Examples
-## Not run:
-data(oldcol, package = "spdep")
-fit1 <- brm(CRIME ~ INC + HOVAL, data = COL.OLD,
-autocor = cor_lagsar(COL.nb),
-chains = 2, cores = 2)
-summary(fit1)
-plot(fit1)
-fit2 <- brm(CRIME ~ INC + HOVAL, data = COL.OLD,
-autocor = cor_errorsar(COL.nb),
-chains = 2, cores = 2)
-summary(fit2)
-plot(fit2)
-## End(Not run)
+```
 
 
 
 
-cs Category Specific Predictors in brms Models
-
-#### Description 
-Category Specific Predictors in brms Models
-Usage
-cs(expr)
-#### Arguments
-expr Expression containing predictors, for which category specific effects should be
-estimated. For evaluation, R formula syntax is applied.
-#### Details
-For detailed documentation see help(brmsformula) as well as vignette("brms_overview").
-This function is almost solely useful when called in formulas passed to the brms package.
-See Also
-brmsformula
-custom_family 53
-Examples
-## Not run:
-fit <- brm(rating ~ period + carry + cs(treat),
-data = inhaler, family = sratio("cloglog"),
-prior = set_prior("normal(0,5)"), chains = 2)
-summary(fit)
-plot(fit, ask = FALSE)
-## End(Not run)
-
-density_ratio Compute Density Ratios
-#### Description 
-Compute the ratio of two densities at given points based on samples of the corresponding distributions.
-Usage
-density_ratio(x, y = NULL, point = 0, n = 4096, ...)
-#### Arguments
-x Vector of samples from the first distribution, usually the posterior distribution of
-the quantity of interest.
-y Optional vector of samples from the second distribution, usually the prior distribution
-of the quantity of interest. If NULL (the default), only the density of x will
-be evaluated.
-point Numeric #### Values at which to evaluate and compare the densities. Defaults to 0.
-n Single numeric #### Value. Influences the accuracy of the density estimation. See
-density for #### Details.
-* `` ... ``: Further arguments passed to density.
-#### Details
-In order to achieve sufficient accuracy in the density estimation, more samples than usual are required.
-That is you may need an effective sample size of 10,000 or more to reliably estimate the
-densities.
-56 epilepsy
-#### Value
-A vector of length equal to length(point). If y is provided, the density ratio of x against y is
-returned. Else, only the density of x is returned.
-Examples
-x <- rnorm(10000)
-y <- rnorm(10000, mean = 1)
-density_ratio(x, y, point = c(0, 1))
