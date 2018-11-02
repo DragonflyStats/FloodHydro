@@ -1,0 +1,8 @@
+expp1 Exponential function plus one.
+#### Description 
+Computes exp(x) + 1.
+Usage
+expp1(x)
+#### Arguments
+x A numeric or complex vector.
+
