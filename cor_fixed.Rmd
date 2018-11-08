@@ -1,5 +1,7 @@
-cor_fixed Fixed user-defined covariance matrices
+## ``cor_fixed`` Fixed user-defined covariance matrices
+
 #### Description 
+
 Define a fixed covariance matrix of the response variable for instance to model multivariate effect
 sizes in meta-analysis.
 
@@ -9,8 +11,7 @@ cor_fixed(V)
 </code></pre>
 
 #### Arguments
-V Known covariance matrix of the response variable. If a vector is passed, it will
-be used as diagonal entries (variances) and covariances will be set to zero.
+* V Known covariance matrix of the response variable. If a vector is passed, it will be used as diagonal entries (variances) and covariances will be set to zero.
 
 #### Value
 An object of class cor_fixed.
