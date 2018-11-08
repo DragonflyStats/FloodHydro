@@ -1,0 +1,18 @@
+
+cor_brms Correlation structure classes for the brms package
+#### Description 
+Classes of correlation structures available in the brms package. cor_brms is not a correlation
+structure itself, but the class common to all correlation structures implemented in brms.
+cor_bsts 47
+Available correlation structures
+cor_arma autoregressive-moving average (ARMA) structure, with arbitrary orders for the autoregressive
+and moving average components
+cor_ar autoregressive (AR) structure of arbitrary order
+cor_ma moving average (MA) structure of arbitrary order
+cor_arr response autoregressive (ARR) structure
+cor_car Spatial conditional autoregressive (CAR) structure
+cor_sar Spatial simultaneous autoregressive (SAR) structure
+cor_bsts Bayesian structural time series (BSTS) structure
+cor_fixed fixed user-defined covariance structure
+See Also
+cor_arma, cor_ar, cor_ma, cor_arr, cor_car, cor_sar, cor_bsts, cor_fixed
