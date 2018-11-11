@@ -1,0 +1,80 @@
+
+
+inv_logit_scaled Scaled inverse logit-link
+#### Description 
+Computes inv_logit(x) * (ub - lb) + lb
+Usage
+<pre><code>
+inv_logit_scaled(x, lb = 0, ub = 1)
+</code></pre>
+
+#### Arguments
+* x A numeric or complex vector.
+* lb Lower bound defaulting to 0.
+* ub Upper bound defaulting to 1.
+
+#### Value
+A numeric or complex vector between lb and ub.
+
+is.brmsfit Checks if argument is a brmsfit object
+#### Description 
+Checks if argument is a brmsfit object
+Usage
+<pre><code>
+is.brmsfit(x)
+</code></pre>
+#### Arguments
+x An R object
+
+
+
+is.brmsfit_multiple Checks if argument is a brmsfit_multiple object
+#### Description 
+Checks if argument is a brmsfit_multiple object
+Usage
+is.brmsfit_multiple(x)
+#### Arguments
+x An R object
+is.brmsformula Checks if argument is a brmsformula object
+#### Description 
+Checks if argument is a brmsformula object
+
+#### Usage
+is.brmsformula(x)
+#### Arguments
+x An R object
+is.brmsprior Checks if argument is a brmsprior object
+#### Description 
+Checks if argument is a brmsprior object
+Usage
+is.brmsprior(x)
+#### Arguments
+x An R object
+78 is.cor_brms
+is.brmsterms Checks if argument is a brmsterms object
+#### Description 
+Checks if argument is a brmsterms object
+Usage
+is.brmsterms(x)
+#### Arguments
+x An R object
+See Also
+parse_bf
+
+## is.cor_brms Check if argument is a correlation structure
+#### Description 
+Check if argument is one of the correlation structures used in brms.
+Usage
+
+<pre><code>
+is.cor_brms(x)
+is.cor_arma(x)
+is.cor_sar(x)
+is.cor_car(x)
+is.cor_fixed(x)
+is.cor_bsts(x)
+</code></pre>
+
+#### Arguments
+x An R object.
+is.mvbrmsformula 79
