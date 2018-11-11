@@ -1,0 +1,41 @@
+  kidney Infections in kidney patients
+  #### Description 
+  This dataset, originally discussed in McGilchrist and Aisbett (1991), describes the first and second
+  (possibly right censored) recurrence time of infection in kidney patients using portable dialysis
+  equipment. In addition, information on the risk variables age, sex and disease type is provided.
+
+####  Usage
+<pre><code>
+kidney
+</code></pre>
+
+#### Format
+  A dataframe of 76 observations containing information on the following 7 variables.
+
+* time The time to first or second recurrence of the infection, or the time of censoring
+* recur A factor of levels 1 or 2 indicating if the infection recurred for the first or second time for this patient
+* censored Either 0 or 1, where 0 indicates no censoring of recurrence time and 1 indicates right censoring
+* patient The patient number
+* age The age of the patient
+* sex The sex of the patient
+* disease A factor of levels other, GN, AN, and PKD specifying the type of disease
+
+####  Source
+  McGilchrist, C. A., & Aisbett, C. W. (1991). Regression with frailty in survival analysis. Biometrics,
+  47(2), 461-466.
+  lasso 83
+  
+  #### Examples
+  ## Not run:
+  ## performing surivival analysis using the "weibull" family
+  fit1 <- brm(time | cens(censored) ~ age + sex + disease,
+              data = kidney, family = weibull, inits = "0")
+  summary(fit1)
+  plot(fit1)
+  ## adding random intercepts over patients
+  fit2 <- brm(time | cens(censored) ~ age + sex + disease + (1|patient),
+              data = kidney, family = weibull(), inits = "0",
+              prior = set_prior("cauchy(0,2)", class = "sd"))
+  summary(fit2)
+  plot(fit2)
+  ## End(Not run)
