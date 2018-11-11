@@ -1,0 +1,120 @@
+Interface to shinystan
+  #### Description 
+  Provide an interface to shinystan for models fitted with brms
+  Usage
+  ## S3 method for class 'brmsfit'
+  launch_shinystan(object,
+                   rstudio = getOption("shinystan.rstudio"), ...)
+  #### Arguments
+  object A fitted model object typically of class brmsfit.
+  rstudio Only relevant for RStudio users. The default (rstudio=FALSE) is to launch the
+  app in the default web browser rather than RStudio’s pop-up Viewer. Users can
+  change the default to TRUE by setting the global option
+  options(shinystan.rstudio = TRUE).
+  ... Optional #### Arguments to pass to runApp
+  #### Value
+  An S4 shinystan object
+  See Also
+  launch_shinystan
+  logit_scaled 85
+  Examples
+  ## Not run:
+  fit <- brm(rating ~ treat + period + carry + (1|subject),
+             data = inhaler, family = "gaussian")
+  launch_shinystan(fit)
+  ## End(Not run)
+  logit_scaled Scaled logit-link
+  #### Description 
+  Computes logit((x - lb) / (ub - lb))
+  Usage
+  logit_scaled(x, lb = 0, ub = 1)
+  #### Arguments
+  x A numeric or complex vector.
+  lb Lower bound defaulting to 0.
+  ub Upper bound defaulting to 1.
+  #### Value
+  A numeric or complex vector.
+  logm1 Logarithm with a minus one offset.
+  #### Description 
+  Computes log(x - 1).
+  Usage
+  logm1(x, base = exp(1))
+  #### Arguments
+  x A numeric or complex vector.
+  base A positive or complex number: the base with respect to which logarithms are
+  computed. Defaults to e = exp(1).
+  86 log_lik.brmsfit
+  log_lik.brmsfit Compute the Pointwise Log-Likelihood
+  #### Description 
+  Compute the Pointwise Log-Likelihood
+  Usage
+  ## S3 method for class 'brmsfit'
+  log_lik(object, newdata = NULL, re_formula = NULL,
+          resp = NULL, nsamples = NULL, subset = NULL, pointwise = FALSE,
+          combine = TRUE, ...)
+  #### Arguments
+  object A fitted model object of class brmsfit.
+  newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
+  original data of the model is used.
+  re_formula formula containing group-level effects to be considered in the prediction. If
+  NULL (default), include all group-level effects; if NA, include no group-level effects.
+  * `` resp``: Optional names of response variables. If specified, predictions are performed
+  only for the specified response variables.
+  nsamples Positive integer indicating how many posterior samples should be used. If NULL
+  (the default) all samples are used. Ignored if subset is not NULL.
+  subset A numeric vector specifying the posterior samples to be used. If NULL (the
+                                                                                default), all samples are used.
+  pointwise A flag indicating whether to compute the full log-likelihood matrix at once (the
+                                                                                         default), or just return the likelihood function along with all data and samples
+  required to compute the log-likelihood separately for each observation. The
+  latter option is rarely useful when calling log_lik directly, but rather when
+  computing waic or loo.
+  * ``combine ``:  Only relevant in multivariate models. Indicates if the log-likelihoods of the submodels
+  should be combined per observation (i.e. added together; the default) or
+  if the log-likelihoods should be returned separately.
+  * `` ... ``: Further arguments passed to extract_draws that control several aspects of data
+  validation and prediction.
+  #### Value
+  Usually, an S x N matrix containing the pointwise log-likelihood samples, where S is the number
+  of samples and N is the number of observations in the data. For multivariate models and if
+  combine is FALSE, an S x N x R array is returned, where R is the number of response variables. If
+  pointwise = TRUE, the output is a function with a draws attribute containing all relevant data and
+  posterior samples.
+  log_posterior.brmsfit 87
+  log_posterior.brmsfit Extract Diagnostic Quantities of brms Models
+  #### Description 
+  Extract quantities that can be used to diagnose sampling behavior of the algorithms applied by Stan
+  at the back-end of brms.
+  Usage
+  ## S3 method for class 'brmsfit'
+  log_posterior(object, ...)
+  ## S3 method for class 'brmsfit'
+  nuts_params(object, pars = NULL, ...)
+  ## S3 method for class 'brmsfit'
+  rhat(object, pars = NULL, ...)
+  ## S3 method for class 'brmsfit'
+  neff_ratio(object, pars = NULL, ...)
+  #### Arguments
+  object A brmsfit object.
+  ... #### Arguments passed to individual methods.
+  pars An optional character vector of parameter names. For nuts_params these will
+  be NUTS sampler parameter names rather than model parameters. If pars is
+  omitted all parameters are included.
+  #### Details
+  for more details see bayesplot-extractors.
+  #### Value
+  The exact form of the output depends on the method.
+  Examples
+  ## Not run:
+  fit <- brm(time ~ age * sex, data = kidney)
+  lp <- log_posterior(fit)
+  head(lp)
+  np <- nuts_params(fit)
+  str(np)
+  88 loo.brmsfit
+  # extract the number of divergence transitions
+  sum(subset(np, Parameter == "divergent__")$#### Value)
+        head(rhat(fit))
+      head(neff_ratio(fit))
+      ## End(Not run)
+      
