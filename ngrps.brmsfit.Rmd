@@ -1,6 +1,5 @@
-
-
 ngrps.brmsfit Number of levels
+
 #### Description 
 Extract the number of levels of one or more grouping factors.
 
@@ -10,10 +9,10 @@ Extract the number of levels of one or more grouping factors.
 ngrps(object, ...)
 ngrps(object, ...)
 </code></pre>
-#### Arguments
 
-object An R object.
-... Currently ignored.
-114 pairs.brmsfit
+#### Arguments
+* object An R object.
+* ... Currently ignored.
+
 #### Value
 A named list containing the number of levels per grouping factor.
