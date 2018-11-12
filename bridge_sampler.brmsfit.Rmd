@@ -1,0 +1,62 @@
+
+bridge_sampler.brmsfit
+Log Marginal Likelihood via Bridge Sampling
+#### Description 
+Computes log marginal likelihood via bridge sampling, which can be used in the computation of
+bayes factors and posterior model probabilities. The brmsfit method is just a thin wrapper around
+the corresponding method for stanfit objects.
+
+#### Usage
+<pre><code>
+## S3 method for class 'brmsfit'
+bridge_sampler(samples, ...)
+</code></pre>
+
+#### Arguments
+
+samples A brmsfit object.
+... Additional arguments passed to bridge_sampler.stanfit.
+
+#### Details
+Computing the marginal likelihood requires samples of all variables defined in Stan’s parameters
+block to be saved. Otherwise bridge_sampler cannot be computed. Thus, please set save_all_pars = TRUE
+in the call to brm, if you are planning to apply bridge_sampler to your models.
+The computation of marginal likelihoods based on bridge sampling requires a lot more posterior
+samples than usual. A good conservative rule of thump is perhaps 10-fold more samples (read:
+the default of 4000 samples may not be enough in many cases). If not enough posterior samples
+are provided, the bridge sampling algorithm tends to be unstable leading to considerably different
+results each time it is run. We thus recommend running bridge_sampler multiple times to check
+the stability of the results.
+More details are provided under bridgesampling:bridge_sampler.
+See Also
+bayes_factor, post_prob
+#### Examples 
+```{r}
+
+```{r}
+## Not run:
+# model with the treatment effect
+fit1 <- brm(
+count ~ log_Age_c + log_Base4_c + Trt_c,
+data = epilepsy, family = negbinomial(),
+prior = prior(normal(0, 1), class = b),
+save_all_pars = TRUE
+)
+
+summary(fit1)
+bridge_sampler(fit1)
+```
+
+```{r}
+# model without the treatment effect
+fit2 <- brm(
+count ~ log_Age_c + log_Base4_c,
+data = epilepsy, family = negbinomial(),
+prior = prior(normal(0, 1), class = b),
+save_all_pars = TRUE
+)
+summary(fit2)
+bridge_sampler(fit2)
+## End(Not run)
+```
+
