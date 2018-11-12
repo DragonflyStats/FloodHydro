@@ -19,63 +19,45 @@ sort = FALSE, ...)
 </code></pre>
 
 #### Arguments
-object An object of class brmsfit.
-newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
-original data of the model is used.
-re_formula formula containing group-level effects to be considered in the prediction. If
-NULL (default), include all group-level effects; if NA, include no group-level effects.
-scale Either "response" or "linear". If "response" results are returned on the scale
-of the response variable. If "linear" fitted #### Values are returned on the scale of
-the linear predictor.
-* `` resp``: Optional names of response variables. If specified, predictions are performed
-only for the specified response variables.
-dpar Optional name of a predicted distributional parameter. If specified, fitted #### Values
-of this parameters are returned.
-nlpar Optional name of a predicted non-linear parameter. If specified, fitted #### Values of
-this parameters are returned.
-nsamples Positive integer indicating how many posterior samples should be used. If NULL
-(the default) all samples are used. Ignored if subset is not NULL.
-subset A numeric vector specifying the posterior samples to be used. If NULL (the
-default), all samples are used.
-sort Logical. Only relevant for time series models. Indicating whether to return
-predicted #### Values in the original order (FALSE; default) or in the order of the time
-series (TRUE).
-summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw #### Values? Default is TRUE.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
+* object An object of class brmsfit.
+* newdata An optional data.frame for which to evaluate predictions. If NULL (default), the original data of the model is used.
+* re_formula formula containing group-level effects to be considered in the prediction. If NULL (default), include all group-level effects; if NA, include no group-level effects.
+* scale Either "response" or "linear". If "response" results are returned on the scale of the response variable. If "linear" fitted #### Values are returned on the scale of the linear predictor.
+* `` resp``: Optional names of response variables. If specified, predictions are performed only for the specified response variables.
+* dpar Optional name of a predicted distributional parameter. If specified, fitted values of this parameters are returned.
+* nlpar Optional name of a predicted non-linear parameter. If specified, fitted values of this parameters are returned.
+* nsamples Positive integer indicating how many posterior samples should be used. If NULL (the default) all samples are used. Ignored if subset is not NULL.
+* subset A numeric vector specifying the posterior samples to be used. If NULL (the default), all samples are used.
+* sort Logical. Only relevant for time series models. Indicating whether to return predicted values in the original order (FALSE; default) or in the order of the time series (TRUE).
+* summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead of the raw values? Default is TRUE.
+robust If FALSE (the default) the mean is used as the measure of central tendency and the standard deviation as the measure of variability. If TRUE, the median and the median absolute deviation (MAD) are applied instead. Only used if summary is
 TRUE.
-probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-* `` ... ``: Further arguments passed to extract_draws that control several aspects of data
-validation and prediction.
-transform Logical; alias of scale. If TRUE, scale is set to "response". If FALSE, scale is
-set to "linear". Only implemented for compatibility with the posterior_linpred
+* probs The percentiles to be computed by the quantile function. Only used if summary is TRUE.
+* `` ... ``: Further arguments passed to extract_draws that control several aspects of data validation and prediction.
+* transform Logical; alias of scale. If TRUE, scale is set to "response". If FALSE, scale is set to "linear". Only implemented for compatibility with the posterior_linpred
 generic.
 re.form Alias of re_formula.
 #### Details
-NA #### Values within factors in newdata, are interpreted as if all dummy variables of this factor are zero.
-This allows, for instance, to make predictions of the grand mean when using sum coding.
-Method posterior_linpred.brmsfit is an alias of fitted.brmsfit with scale = "linear"
-and summary = FALSE.
-62 fixef.brmsfit
+NA values within factors in newdata, are interpreted as if all dummy variables of this factor are zero.
+This allows, for instance, to make predictions of the grand mean when using sum coding. Method posterior_linpred.brmsfit is an alias of fitted.brmsfit with scale = "linear" and summary = FALSE.
+
 #### Value
-Fitted #### Values extracted from object. The output depends on the family: If summary = TRUE it is a
+Fitted values extracted from object. The output depends on the family: If summary = TRUE it is a
 N x E x C array for categorical and ordinal models and a N x E matrix else. If summary = FALSE
 it is a S x N x C array for categorical and ordinal models and a S x N matrix else. N is the number
 of observations, S is the number of samples, C is the number of categories, and E is equal to
 length(probs) + 2. In multivariate models, the output is an array of 3 dimensions, where the
 third dimension indicates the response variables.
-Examples
+
+#### Examples
 ## Not run:
 ## fit a model
 fit <- brm(rating ~ treat + period + carry + (1|subject),
 data = inhaler)
-## extract fitted #### Values
-fitted_#### Values <- fitted(fit)
-head(fitted_#### Values)
+## extract fitted vValues
+fitted_values <- fitted(fit)
+head(fitted_values)
 ## plot fitted means against actual response
-dat <- as.data.frame(cbind(Y = standata(fit)$Y, fitted_#### Values))
+dat <- as.data.frame(cbind(Y = standata(fit)$Y, fitted_values))
 ggplot(dat) + geom_point(aes(x = Estimate, y = Y))
 ## End(Not run)
