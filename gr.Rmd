@@ -10,17 +10,13 @@ package and there is usually no need to call it directly.
 <pre><code>
 gr(..., by = NULL, dist = "gaussian")
 </code></pre>
-#### Arguments
 
-... One or more terms containing grouping factors.
-by An optional factor variable, specifying sub-populations of the groups. For each
-level of the by variable, a separate variance-covariance matrix will be fitted.
-Levels of the grouping factor must be nested in levels of the by variable.
-dist Name of the distribution of the group-level effects. Currently "gaussian" is the
-only option.
-See Also
-brmsformula
-horseshoe 69
+#### Arguments
+* ... One or more terms containing grouping factors.
+* by An optional factor variable, specifying sub-populations of the groups. For each level of the by variable, a separate variance-covariance matrix will be fitted. Levels of the grouping factor must be nested in levels of the by variable.
+* dist Name of the distribution of the group-level effects. Currently "gaussian" is the only option.
+
+
 
 #### Examples 
 ```{r}
@@ -36,3 +32,5 @@ fit3 <- brm(count ~ Trt + (1|gr(patient, by = Trt)), data = epilepsy)
 summary(fit3)
 ## End(Not run)
 ```
+#### See Also
+brmsformula
