@@ -2,9 +2,7 @@ VarCorr.brmsfit
 ## VarCorr.brmsfit Extract Variance and Correlation Components
 
 #### Description 
-This function calculates the estimated standard deviations, correlations and covariances of the
-group-level terms in a multilevel model of class brmsfit. For linear models, the residual standard
-deviations, correlations and covariances are also returned.
+This function calculates the estimated standard deviations, correlations and covariances of the group-level terms in a multilevel model of class brmsfit. For linear models, the residual standard deviations, correlations and covariances are also returned.
 
 #### Usage
 <pre><code>
@@ -14,24 +12,19 @@ robust = FALSE, probs = c(0.025, 0.975), ...)
 </code></pre>
 
 #### Arguments
-* x An object of class brmsfit.
-* sigma Ignored (included for compatibility with VarCorr).
-* summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the rawvalues? Default is TRUE.
-* robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
-TRUE.
-* probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-* ... Currently ignored.
+* x : An object of class brmsfit.
+* sigma : Ignored (included for compatibility with VarCorr).
+* summary : Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead of the rawvalues? Default is TRUE.
+* robust : If FALSE (the default) the mean is used as the measure of central tendency and the standard deviation as the measure of variability. If TRUE, the median and the median absolute deviation (MAD) are applied instead. Only used if summary is TRUE.
+* probs: The percentiles to be computed by the quantile function. Only used if summary is TRUE.
+* ... : Currently ignored.
 
 #### Value
 A list of lists (one per grouping factor), each with three elements: a matrix containing the standard
 deviations, an array containing the correlation matrix, and an array containing the covariance matrix
 with variances on the diagonal.
 
-Examples
+#### Examples
 ```{r}
 ## Not run:
 fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c + (1+Trt_c|visit),
@@ -39,5 +32,5 @@ data = epilepsy, family = gaussian(), chains = 2)
 VarCorr(fit)
 ## End(Not run)
 ```
-Author(s)
+#### Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
