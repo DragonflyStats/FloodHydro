@@ -1,4 +1,5 @@
 pairs.brmsfit Create a matrix of output plots from a brmsfit object
+
 #### Description 
 A pairs method that is customized for MCMC output.
 
@@ -6,23 +7,19 @@ A pairs method that is customized for MCMC output.
 <pre><code>
 ## S3 method for class 'brmsfit'
 pairs(x, pars = NA, exact_match = FALSE, ...)
-parnames 115
 </code></pre>
-#### Arguments
 
-x An object of class brmsfit
-pars Names of parameters for which posterior samples should be returned, as given
-by a character vector or regular expressions. By default, all posterior samples of
-all parameters are extracted.
-exact_match Indicates whether parameter names should be matched exactly or treated as regular
-expression. Default is FALSE.
-... Further </code></pre>
 #### Arguments
- to be passed to mcmc_pairs.
+* x An object of class brmsfit
+* pars Names of parameters for which posterior samples should be returned, as given by a character vector or regular expressions. By default, all posterior samples of all parameters are extracted.
+* exact_match Indicates whether parameter names should be matched exactly or treated as regular expression. Default is FALSE.
+* ... Further arguments  to be passed to mcmc_pairs.
+
 #### Details
-For a detailed #### Description  see mcmc_pairs.
 
-Examples
+For a detailed Description  see mcmc_pairs.
+
+####  Examples
 ```{r}
 ## Not run:
 fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c
