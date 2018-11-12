@@ -12,17 +12,10 @@ mixture(..., flist = NULL, nmix = 1, order = NULL)
 #### Arguments
 
 * ... One or more objects providing a #### Description  of the response distributions to be
-combined in the mixture model. These can be family functions, calls to family
-functions or character strings naming the families. For #### Details of supported
-families see brmsfamily.
-* flist Optional list of objects, which are treated in the same way as objects passed via
-the ... argument.
-* nmix Optional numeric vector specifying the number of times each family is repeated.
-If specified, it must have the same length as the number of families passed via
-... and flist.
-* order Ordering constraint to identify mixture components. If 'mu' or TRUE, populationlevel
-intercepts of the mean parameters are ordered. If 'none' or FALSE, no ordering constraint is applied. If NULL (the default), order is set to 'mu' if all families are the same and 'none' otherwise. Other ordering constraints may be
-implemented in the future.
+combined in the mixture model. These can be family functions, calls to family functions or character strings naming the families. For details of supported families see brmsfamily.
+* flist Optional list of objects, which are treated in the same way as objects passed via the ... argument.
+* nmix Optional numeric vector specifying the number of times each family is repeated. If specified, it must have the same length as the number of families passed via ... and flist.
+* order Ordering constraint to identify mixture components. If 'mu' or TRUE, populationlevel intercepts of the mean parameters are ordered. If 'none' or FALSE, no ordering constraint is applied. If NULL (the default), order is set to 'mu' if all families are the same and 'none' otherwise. Other ordering constraints may be implemented in the future.
 
 #### Details
 Most families supported by brms can be used to form mixtures. The response variable has to be
@@ -36,7 +29,8 @@ call to brm to allow chains to initialize properly.
 for more details on the specification of mixture models, see brmsformula.
 #### Value
 An object of class mixfamily.
-Examples
+
+#### Examples
 ```{r}
 ## Not run:
 ## simulate some data
@@ -52,7 +46,9 @@ prior <- c(
 prior(normal(0, 7), Intercept, dpar = mu1),
 prior(normal(5, 7), Intercept, dpar = mu2)
 )
+```
 
+```{r}
 fit1 <- brm(bf(y ~ x + z), dat, family = mix,
 prior = prior, chains = 2)
 summary(fit1)
