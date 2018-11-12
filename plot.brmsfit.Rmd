@@ -1,44 +1,36 @@
+## plot.brmsfit Trace and Density Plots for MCMC Samples
 
-
-plot.brmsfit Trace and Density Plots for MCMC Samples
 #### Description 
 Trace and Density Plots for MCMC Samples
 
 #### Usage
+
 <pre><code>
 ## S3 method for class 'brmsfit'
 plot(x, pars = NA, combo = c("dens", "trace"),
 N = 5, exact_match = FALSE, theme = NULL, plot = TRUE,
 ask = TRUE, newpage = TRUE, ...)
 </code></pre>
+
 #### Arguments
 
-x An object of class brmsfit.
-pars Names of the parameters to plot, as given by a character vector or a regular
-expression. By default, all parameters except for group-level and smooth effects
-are plotted.
-combo A character vector with at least two elements. Each element of combo corresponds
-to a column in the resulting graphic and should be the name of one of
-the available MCMC functions (omitting the mcmc_ prefix).
-N The number of parameters plotted per page.
-exact_match Indicates whether parameter names should be matched exactly or treated as regular
-expression. Default is FALSE.
-118 posterior_average.brmsfit
-theme A theme object modifying the appearance of the plots. For some basic themes
-see ggtheme and theme_default.
-plot logical; indicates if plots should be plotted directly in the active graphic device.
-Defaults to TRUE.
-ask logical; indicates if the user is prompted before a new page is plotted. Only used
-if plot is TRUE.
-newpage logical; indicates if the first set of plots should be plotted to a new page. Only
-used if plot is TRUE.
+* x An object of class brmsfit.
+* pars Names of the parameters to plot, as given by a character vector or a regular expression. By default, all parameters except for group-level and smooth effects are plotted.
+* combo A character vector with at least two elements. Each element of combo corresponds to a column in the resulting graphic and should be the name of one of the available MCMC functions (omitting the mcmc_ prefix).
+* N The number of parameters plotted per page.
+* exact_match Indicates whether parameter names should be matched exactly or treated as regular expression. Default is FALSE.
+* theme A theme object modifying the appearance of the plots. For some basic themesmsee ggtheme and theme_default.
+* plot logical; indicates if plots should be plotted directly in the active graphic device. Defaults to TRUE.
+* ask logical; indicates if the user is prompted before a new page is plotted. Only used if plot is TRUE.
+* newpage logical; indicates if the first set of plots should be plotted to a new page. Only used if plot is TRUE.
 * `` ... ``: Further arguments passed to mcmc_combo.
 #### Value
 An invisible list of gtable objects.
+
 Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
 
-Examples
+#### Examples
 ```{r}
 ## Not run:
 fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c
