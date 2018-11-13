@@ -1,0 +1,17 @@
+## ``inv_logit_scaled`` Scaled inverse logit-link
+
+#### Description 
+Computes inv_logit(x) * (ub - lb) + lb
+
+#### Usage
+<pre><code>
+inv_logit_scaled(x, lb = 0, ub = 1)
+</code></pre>
+
+#### Arguments
+* ``x``: A numeric or complex vector.
+* ``lb``: Lower bound defaulting to 0.
+* ``ub``: Upper bound defaulting to 1.
+
+#### Value
+A numeric or complex vector between lb and ub.
