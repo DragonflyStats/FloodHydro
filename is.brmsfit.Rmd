@@ -1,0 +1,13 @@
+## ``is.brmsfit``: Checks if argument is a brmsfit object
+
+#### Description 
+Checks if argument is a brmsfit object
+
+#### Usage
+
+<pre><code>
+is.brmsfit(x)
+</code></pre>
+
+#### Arguments
+x An R object
