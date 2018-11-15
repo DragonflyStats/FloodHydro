@@ -2,6 +2,29 @@
 
 
 
+is.mvbrmsformula Checks if argument is a mvbrmsformula object
+#### Description 
+Checks if argument is a mvbrmsformula object
+
+#### Usage
+<pre><code>
+is.mvbrmsformula(x)
+</code></pre>
+#### Arguments
+x An R object
+
+
+is.mvbrmsterms Checks if argument is a mvbrmsterms object
+#### Description 
+Checks if argument is a mvbrmsterms object
+
+#### Usage
+is.mvbrmsterms(x)
+#### Arguments
+* x An R object
+See Also
+parse_bf
+80 kfold.brmsfit
 
 ## ``is.brmsfit_multiple`` Checks if argument is a brmsfit_multiple object
 #### Description 
