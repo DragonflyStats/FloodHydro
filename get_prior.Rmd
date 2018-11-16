@@ -1,7 +1,5 @@
+## get_prior Overview on Priors for brms Models
 
-
-
-get_prior Overview on Priors for brms Models
 #### Description 
 Get information on all parameters (and parameter classes) for which priors may be specified including
 default priors.
@@ -14,24 +12,14 @@ internal = FALSE)
 #### Arguments
 
 * ``formula``: An object of class formula, brmsformula, or mvbrmsformula (or one that can
-be coerced to that classes): A symbolic #### Description  of the model to be fitted.
-The details of model specification are explained in brmsformula.
-data An object of class data.frame (or one that can be coerced to that class) containing
+be coerced to that classes): A symbolic #### Description  of the model to be fitted. The details of model specification are explained in brmsformula. 
+* data An object of class data.frame (or one that can be coerced to that class) containing
 data of all variables used in the model.
-* `` family`` A description  of the response distribution and link function to be used in the
-model. This can be a family function, a call to a family function or a character
-string naming the family. Every family function has a link argument allowing to
-specify the link function to be applied on the response variable. If not specified,
-default links are used. For details of supported families see brmsfamily. By
-default, a linear gaussian model is applied. In multivariate models, family
-might also be a list of families.
-* ``autocor`` An optional cor_brms object describing the correlation structure within the response
-variable (i.e., the ’autocorrelation’). See the documentation of cor_brms
-for a description  of the available correlation structures. Defaults to NULL, corresponding
-to no correlations. In multivariate models, autocor might also be a
-list of autocorrelation structures.
-internal A flag indicating if the names of additional internal parameters should be displayed.
-Setting priors on these parameters is not recommended
+* `` family`` A description  of the response distribution and link function to be used in the model. This can be a family function, a call to a family function or a character string naming the family. Every family function has a link argument allowing to
+specify the link function to be applied on the response variable. If not specified, default links are used. For details of supported families see brmsfamily. By default, a linear gaussian model is applied. In multivariate models, family might also be a list of families.
+* ``autocor`` An optional cor_brms object describing the correlation structure within the response variable (i.e., the ’autocorrelation’). See the documentation of cor_brms for a description  of the available correlation structures. Defaults to NULL, corresponding
+to no correlations. In multivariate models, autocor might also be a list of autocorrelation structures.
+* internal A flag indicating if the names of additional internal parameters should be displayed. Setting priors on these parameters is not recommended
 
 
 #### Examples 
@@ -40,21 +28,23 @@ Setting priors on these parameters is not recommended
 (prior <- get_prior(count ~ log_Age_c + log_Base4_c * Trt_c
 + (1|patient) + (1|visit),
 data = epilepsy, family = poisson()))
+
 ## define a prior on all population-level effects a once
 prior$prior[1] <- "normal(0,10)"
+
 ## define a specific prior on the population-level effect of Trt_c
 prior$prior[5] <- "student_t(10, 0, 5)"
+
 ## verify that the priors indeed found their way into Stan's model code
 make_stancode(count ~ log_Age_c + log_Base4_c * Trt_c
-+ (1|patient) + (1|visit),
-data = epilepsy, family = poisson(),
-prior = prior)
+  + (1|patient) + (1|visit),
+  data = epilepsy, family = poisson(),
+   prior = prior)
 ```
 
-value
-A data.frame with columns prior, class, coef, and group and several rows, each providing information
-on a parameter (or parameter class) on which priors can be specified. The prior column is
-empty except for internal default priors.
-See Also
+#### value
+A data.frame with columns prior, class, coef, and group and several rows, each providing information on a parameter (or parameter class) on which priors can be specified. The prior column is empty except for internal default priors.
+
+#### See Also
 set_prior
-66 gp
+
