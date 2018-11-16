@@ -5,9 +5,7 @@ Perform non-linear hypothesis testing for all model parameters.
 #### Usage
 <pre><code>
 ## S3 method for class 'brmsfit'
-hypothesis(x, hypothesis, class = "b", group = "",
-scope = c("standard", "ranef", "coef"), alpha = 0.05, seed = NULL,
-...)
+hypothesis(x, hypothesis, class = "b", group = "", scope = c("standard", "ranef", "coef"), alpha = 0.05, seed = NULL, ...)
 hypothesis(x, ...)
 ## Default S3 method:
 hypothesis(x, hypothesis, alpha = 0.05, ...)
@@ -25,36 +23,17 @@ full name (see also parnames)
 * seed A single numeric value passed to set.seed to make results reproducible.
 * ... Currently ignored.
 
-#### Details
-Among others, hypothesis computes an evidence ratio (Evid.Ratio) for each hypothesis. For a
-directed hypothesis, this is just the posterior probability (Post.Prob) under the hypothesis against
-its alternative. That is, when the hypothesis if of the form a > b, the evidence ratio is the ratio of the
-posterior probability of a > b and the posterior probability of a < b. In this example, values greater
-than one indicate that the evidence in favor of a > b is larger than evidence in favor of a < b. For
-an undirected (point) hypothesis, the evidence ratio is a Bayes factor between the hypothesis and its
-alternative computed via the Savage-Dickey density ratio method. That is the posterior density at
-the point of interest divided by the prior density at that point. values greater than one indicate that
-evidence in favor of the point hypothesis has increased after seeing the data. In order to calculate
-this Bayes factor, all parameters related to the hypothesis must have proper priors and argument
-sample_prior of function brm must be set to TRUE. When interpreting Bayes factors, make sure
-that your priors are reasonable and carefully chosen, as the result will depend heavily on the priors.
-In particular, avoid using default priors.
-The argument alpha specifies the size of the credible interval (i.e., Bayesian confidence interval).
-For instance, if alpha = 0.05 (5%), the credible interval will contain 1 - alpha = 0.95 (95%) of
-the posterior values. Hence, alpha * 100% of the posterior values will lie outside of the credible
-interval. Although this allows testing of hypotheses in a similar manner as in the frequentist nullhypothesis
-testing framework, we strongly argue against using arbitrary cutoffs (e.g., p < .05) to
-determine the ’existence’ of an effect.
-
-
-
 #### Examples 
+
 ```{r}
 ## Not run:
 ## define priors
 prior <- c(set_prior("normal(0,2)", class = "b"),
 set_prior("student_t(10,0,1)", class = "sigma"),
 set_prior("student_t(10,0,1)", class = "sd"))
+```
+
+```{r}
 ## fit a linear mixed effects models
 fit <- brm(time ~ age + sex + disease + (1 + age|patient),
 data = kidney, family = lognormal(),
@@ -67,6 +46,9 @@ control = list(adapt_delta = 0.95))
 (hyp1 <- hypothesis(fit, "sexfemale = age + diseasePKD"))
 plot(hyp1)
 hypothesis(fit, "exp(age) - 3 = 0", alpha = 0.01)
+```
+
+```{r}
 ## perform one-sided hypothesis testing
 hypothesis(fit, "diseasePKD + diseaseGN - 3 < 0")
 hypothesis(fit, "age < Intercept",
@@ -80,6 +62,9 @@ h <- paste("sd_patient__Intercept^2 / (sd_patient__Intercept^2 +",
 "sd_patient__age^2 + sigma^2) = 0")
 (hyp2 <- hypothesis(fit, h, class = NULL))
 plot(hyp2)
+```
+
+```{r}
 ## test more than one hypothesis at once
 h <- c("diseaseGN = diseaseAN", "2 * diseaseGN - diseasePKD = 0")
 (hyp3 <- hypothesis(fit, h))
@@ -97,6 +82,20 @@ hypothesis(dat, "b_age > 0")
 
 #### value
 A brmshypothesis object.
+
+#### Details
+Among others, hypothesis computes an evidence ratio (Evid.Ratio) for each hypothesis. For a directed hypothesis, this is just the posterior probability (Post.Prob) under the hypothesis against its alternative. That is, when the hypothesis if of the form a > b, the evidence ratio is the ratio of the posterior probability of a > b and the posterior probability of a < b. In this example, values greater than one indicate that the evidence in favor of a > b is larger than evidence in favor of a < b. For an undirected (point) hypothesis, the evidence ratio is a Bayes factor between the hypothesis and its alternative computed via the Savage-Dickey density ratio method. That is the posterior density at the point of interest divided by the prior density at that point. values greater than one indicate that evidence in favor of the point hypothesis has increased after seeing the data. In order to calculate
+this Bayes factor, all parameters related to the hypothesis must have proper priors and argument
+sample_prior of function brm must be set to TRUE. When interpreting Bayes factors, make sure that your priors are reasonable and carefully chosen, as the result will depend heavily on the priors.
+
+In particular, avoid using default priors. The argument alpha specifies the size of the credible interval (i.e., Bayesian confidence interval).
+
+For instance, if alpha = 0.05 (5%), the credible interval will contain 1 - alpha = 0.95 (95%) of the posterior values. Hence, alpha * 100% of the posterior values will lie outside of the credible interval. Although this allows testing of hypotheses in a similar manner as in the frequentist nullhypothesis testing framework, we strongly argue against using arbitrary cutoffs (e.g., p < .05) to
+determine the ’existence’ of an effect.
+
+
+
+
 
 #### Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
