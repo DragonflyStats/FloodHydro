@@ -1,5 +1,4 @@
-
-cs Category Specific Predictors in brms Models
+## cs Category Specific Predictors in brms Models
 
 #### Description 
 Category Specific Predictors in brms Models
@@ -10,12 +9,9 @@ cs(expr)
 <code></pre>
 
 #### Arguments
-expr Expression containing predictors, for which category specific effects should be
-estimated. For evaluation, R formula syntax is applied.
 
-#### Details
-For detailed documentation see help(brmsformula) as well as vignette("brms_overview").
-This function is almost solely useful when called in formulas passed to the brms package.
+* expr Expression containing predictors, for which category specific effects should be estimated. For evaluation, R formula syntax is applied.
+
 
 
 #### Examples
@@ -29,6 +25,11 @@ summary(fit)
 plot(fit, ask = FALSE)
 ## End(Not run)
 ```
-See Also
+
+#### Details
+For detailed documentation see help(brmsformula) as well as vignette("brms_overview").
+This function is almost solely useful when called in formulas passed to the brms package.
+
+#### See Also
 brmsformula
 custom_family 53
