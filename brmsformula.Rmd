@@ -1,8 +1,10 @@
 brmsformula Set up a model formula for use in brms
+
 #### Description 
 Set up a model formula for use in the brms package allowing to define (potentially non-linear)
 additive multilevel models for all parameters of the assumed response distribution.
-Usage
+
+#### Usage
 <pre><code>
 brmsformula(formula, ..., flist = NULL, family = NULL,
 autocor = NULL, nl = NULL, loop = NULL, cmc = NULL)
@@ -10,49 +12,22 @@ autocor = NULL, nl = NULL, loop = NULL, cmc = NULL)
 
 #### Arguments
 
-* formula An object of class formula (or one that can be coerced to that class): a symbolic
-description  of the model to be fitted. The #### Details of model specification are given
-in ’Details’.
-* ... Additional formula objects to specify predictors of non-linear and distributional
-parameters. Formulas can either be named directly or contain names
-on their left-hand side. The following are distributional parameters of specific
-families (all other parameters are treated as non-linear parameters): sigma
-(residual standard deviation or scale of the gaussian, student, skew_normal,
-lognormal exgaussian, and asym_laplace families); shape (shape parameter
-of the Gamma, weibull, negbinomial, and related zero-inflated / hurdle
-families); nu (degrees of freedom parameter of the student and frechet families);
-phi (precision parameter of the beta and zero_inflated_beta families);
-kappa (precision parameter of the von_mises family); beta (mean parameter
-of the exponential component of the exgaussian family); quantile (quantile
-parameter of the asym_laplace family); zi (zero-inflation probability); hu
-(hurdle probability); zoi (zero-one-inflation probability); coi (conditional oneinflation
-probability); disc (discrimination) for ordinal models; bs, ndt, and
-bias (boundary separation, non-decision time, and initial bias of the wiener
-diffusion model). By default, distributional parameters are modeled on the log
-* scale if they can be positive only or on the logit scale if the can only be within
-the unit interval. See ’#### Details’ for more explanation.
+* formula An object of class formula (or one that can be coerced to that class): a symbolic description  of the model to be fitted. The details of model specification are given in ’Details’.
+* ... Additional formula objects to specify predictors of non-linear and distributional parameters. Formulas can either be named directly or contain names on their left-hand side. The following are distributional parameters of specific
+families (all other parameters are treated as non-linear parameters): sigma (residual standard deviation or scale of the gaussian, student, skew_normal, lognormal exgaussian, and asym_laplace families); shape (shape parameter
+of the Gamma, weibull, negbinomial, and related zero-inflated / hurdle families); nu (degrees of freedom parameter of the student and frechet families); phi (precision parameter of the beta and zero_inflated_beta families);
+kappa (precision parameter of the von_mises family); beta (mean parameter of the exponential component of the exgaussian family); quantile (quantile parameter of the asym_laplace family); zi (zero-inflation probability); hu
+(hurdle probability); zoi (zero-one-inflation probability); coi (conditional oneinflation probability); disc (discrimination) for ordinal models; bs, ndt, and bias (boundary separation, non-decision time, and initial bias of the wiener diffusion model). By default, distributional parameters are modeled on the log scale if they can be positive only or on the logit scale if the can only be within the unit interval. See ’Details’ for more explanation.
 * flist Optional list of formulas, which are treated in the same way as formulas passed
 via the ... argument.
 * family Same argument as in brm. If family is specified in brmsformula, it will overwrite the value specified in brm.
 * autocor Same argument as in brm. If autocor is specified in brmsformula, it will overwrite the value specified in brm.
-* nl Logical; Indicates whether formula should be treated as specifying a non-linear model. 
-By default, formula is treated as an ordinary linear model formula.
-loop Logical; Only used in non-linear models. Indicates if the computation of the
-non-linear formula should be done inside (TRUE) or outside (FALSE) a loop over
-observations. Defaults to TRUE.
-cmc Logical; Indicates whether automatic cell-mean coding should be enabled when
-removing the intercept by adding 0 to the right-hand of model formulas. Defaults
-to TRUE to mirror the behavior of standard R formula parsing.
+* nl Logical; Indicates whether formula should be treated as specifying a non-linear model.  By default, formula is treated as an ordinary linear model formula.
+* loop Logical; Only used in non-linear models. Indicates if the computation of the non-linear formula should be done inside (TRUE) or outside (FALSE) a loop over observations. Defaults to TRUE.
+* cmc Logical; Indicates whether automatic cell-mean coding should be enabled when removing the intercept by adding 0 to the right-hand of model formulas. Defaults to TRUE to mirror the behavior of standard R formula parsing.
 
 
-brmsformula 33
-#### Value
-An object of class brmsformula, which is essentially a list containing all model formulas as well
-as some additional information.
-See Also
-mvbrmsformula, brmsformula-helpers
-
-Examples
+#### Examples
 ```{r}
 # multilevel model with smoothing terms
 brmsformula(y ~ x1*x2 + s(z) + (1+x1|1) + (1|g2))
@@ -133,3 +108,10 @@ bf(bmi ~ age * mi(chl)) +
 bf(chl | mi() ~ age) +
 set_rescor(FALSE)
 ```
+
+
+#### Value
+An object of class brmsformula, which is essentially a list containing all model formulas as well
+as some additional information.
+See Also
+mvbrmsformula, brmsformula-helpers
