@@ -2,23 +2,20 @@
 
 posterior_table Table Creation for Posterior Samples
 #### Description 
-Create a table for unique #### Values of posterior samples. This is usually only useful when summarizing
-predictions of ordinal models.
+Create a table for unique values of posterior samples. This is usually only useful when summarizing predictions of ordinal models.
 
 #### Usage
 <pre><code>
 posterior_table(x, levels = NULL)
 </code></pre>
 #### Arguments
+* x A matrix of posterior samples where rows indicate samples and columns indicate parameters.
+* levels Optional values of possible posterior values. Defaults to all unique values in x.
 
-x A matrix of posterior samples where rows indicate samples and columns indicate
-parameters.
-levels Optional #### Values of possible posterior #### Values. Defaults to all unique #### Values in x.
-124 post_prob.brmsfit
 #### Value
-A matrix where rows indicate parameters and columns indicate the unique #### Values of posterior samples.
+A matrix where rows indicate parameters and columns indicate the unique values of posterior samples.
 
-Examples
+####  Examples
 ```{r}
 ## Not run:
 fit <- brm(rating ~ period + carry + treat,
