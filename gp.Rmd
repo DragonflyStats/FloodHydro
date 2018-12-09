@@ -12,12 +12,12 @@ gp(..., by = NA, cov = "exp_quad", gr = FALSE, scale = TRUE)
 </code></pre>
 
 #### Arguments
-* ... One or more predictors for the Gaussian process. 
-* by A numeric or factor variable of the same length as each predictor. In the numeric vector case, the elements multiply the values returned by the Gaussian process. In the factor variable case, a separate Gaussian process is fitted for each factor
+* ``...``: One or more predictors for the Gaussian process. 
+* ``by``: A numeric or factor variable of the same length as each predictor. In the numeric vector case, the elements multiply the values returned by the Gaussian process. In the factor variable case, a separate Gaussian process is fitted for each factor
 level.
-* cov Name of the covariance kernel. By default, the exponentiated-quadratic kernel "exp_quad" is used.
-* gr Logical; Indicates if auto-grouping should be used (defaults to FALSE). If enabled, observations sharing the same predictor values will be represented by the same latent variable in the Gaussian process. This will improve sampling efficiency drastically if the number of unique predictor combinations is small relative to the number of observations.
-* scale Logical; If TRUE (the default), predictors are scaled so that the maximum Euclidean distance between two points is 1. Since the default prior on lscale expects scaled predictors, it is recommended tomanually specify priors on lscale, if scale is set to FALSE.
+* ``cov``: Name of the covariance kernel. By default, the exponentiated-quadratic kernel "exp_quad" is used.
+* ``gr``: Logical; Indicates if auto-grouping should be used (defaults to FALSE). If enabled, observations sharing the same predictor values will be represented by the same latent variable in the Gaussian process. This will improve sampling efficiency drastically if the number of unique predictor combinations is small relative to the number of observations.
+* ``scale``: Logical; If TRUE (the default), predictors are scaled so that the maximum Euclidean distance between two points is 1. Since the default prior on lscale expects scaled predictors, it is recommended tomanually specify priors on lscale, if scale is set to FALSE.
 
 
 #### Examples 
@@ -42,7 +42,6 @@ summary(fit2)
 me2 <- marginal_effects(fit2, nsamples = 200, spaghetti = TRUE)
 plot(me2, ask = FALSE, points = TRUE)
 # fit a multivariate gaussian process model
-68 gr
 fit3 <- brm(y ~ gp(x1, x2), dat, chains = 2)
 summary(fit3)
 ```
@@ -65,8 +64,7 @@ plot(marginal_effects(fit4), points = TRUE)
 
 ```
 #### Details
-A Gaussian process is a stochastic process, which describes the relation between one or more predictors
-x = (x1; :::; xd) and a response f(x), where d is the number of predictors. A Gaussian process is the generalization of the multivariate normal distribution to an infinite number of dimensions.
+A Gaussian process is a stochastic process, which describes the relation between one or more predictors $x = (x1; :::; xd)$ and a response f(x), where d is the number of predictors. A Gaussian process is the generalization of the multivariate normal distribution to an infinite number of dimensions.
 Thus, it can be interpreted as a prior over functions. Any finite sample realized from this
 stochastic process is jointly multivariate normal, with a covariance matrix defined by the covariance
 kernel kp(x), where p is the vector of parameters of the Gaussian process:
