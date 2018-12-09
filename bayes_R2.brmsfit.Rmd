@@ -1,8 +1,8 @@
 
-bayes_R2.brmsfit Compute a Bayesian version of R-squared for regression models
+`` bayes_R2.brmsfit``  Compute a Bayesian version of R-squared for regression models
+
 #### Description 
 Compute a Bayesian version of R-squared for regression models
-bayes_R2.brmsfit 13
 
 #### Usage
 
@@ -14,23 +14,16 @@ robust = FALSE, probs = c(0.025, 0.975), ...)
 
 #### Arguments
 * ``object``: An object of class brmsfit.
-* `` resp``: Optional names of response variables. If specified, predictions are performed
+* ``resp``: Optional names of response variables. If specified, predictions are performed
 only for the specified response variables.
-* summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
+* ``summary`` : Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
 of the raw values? Default is TRUE.
-* robust If FALSE (the default) the mean is used as the measure of central tendency and the standard deviation as the measure of variability. If TRUE, the median and the median absolute deviation (MAD) are applied instead. Only used if summary is
+* `` robust`` : If FALSE (the default) the mean is used as the measure of central tendency and the standard deviation as the measure of variability. If TRUE, the median and the median absolute deviation (MAD) are applied instead. Only used if summary is
 TRUE.
-* probs The percentiles to be computed by the quantile function. Only used if summary is TRUE.
-* `` ... ``: Further arguments passed to fitted, which is used in the computation of the R-squared values.
+* ``probs`` : The percentiles to be computed by the quantile function. Only used if summary is TRUE.
+* ``... ``: Further arguments passed to fitted, which is used in the computation of the R-squared values.
 
-#### Details
-For an introduction to the approach, see https://github.com/jgabry/bayes_R2/blob/master/
-bayes_R2.pdf.
 
-#### Value
-
-If summary = TRUE a 1 x C matrix is returned (C = length(probs) + 2) containing summary
-statistics of Bayesian R-squared values. If summary = FALSE the posterior samples of the R-squared values are returned in a S x 1 matrix (S is the number of samples).
 
 #### Examples 
 
@@ -45,3 +38,11 @@ bayes_R2(fit, newdata = nd)
 ## End(Not run)
 
 ```
+#### Details
+For an introduction to the approach, see https://github.com/jgabry/bayes_R2/blob/master/
+bayes_R2.pdf.
+
+#### Value
+
+If summary = TRUE a 1 x C matrix is returned (C = length(probs) + 2) containing summary
+statistics of Bayesian R-squared values. If summary = FALSE the posterior samples of the R-squared values are returned in a S x 1 matrix (S is the number of samples).
