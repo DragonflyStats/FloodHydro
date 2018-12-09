@@ -1,6 +1,6 @@
 
+``mo`` Monotonic Predictors in brms Models
 
-mo Monotonic Predictors in brms Models
 #### Description 
 Monotonic Predictors in brms Models
 
@@ -8,16 +8,13 @@ Monotonic Predictors in brms Models
 <pre><code>
 mo(x)
 </code></pre>
+
 #### Arguments
 
-x An integer variable or an ordered factor to be modeled as monotonic.
-#### Details
-For detailed documentation see help(brmsformula) as well as vignette("brms_monotonic").
-This function is almost solely useful when called in formulas passed to the brms package.
-See Also
-brmsformula
+* ``x``: An integer variable or an ordered factor to be modeled as monotonic.
 
-Examples
+
+#### Examples
 ```{r}
 ## Not run:
 # generate some data
@@ -29,16 +26,30 @@ ls <- mean_ls[income] + rnorm(100, sd = 7)
 dat <- data.frame(income, ls)
 # fit a simple monotonic model
 fit1 <- brm(ls ~ mo(income), data = dat)
+```
+
+```{r}
 # summarise the model
 summary(fit1)
 plot(fit1, N = 6)
 plot(marginal_effects(fit1), points = TRUE)
+```
+
+```{r}
 # model interaction with other variables
 110 model_weights.brmsfit
 dat$x <- sample(c("a", "b", "c"), 100, TRUE)
 fit2 <- brm(ls ~ mo(income)*x, data = dat)
+```
+
+```{r}
 # summarise the model
 summary(fit2)
 plot(marginal_effects(fit2), points = TRUE)
 ## End(Not run)
 ```
+#### Details
+For detailed documentation see help(brmsformula) as well as vignette("brms_monotonic").
+This function is almost solely useful when called in formulas passed to the brms package.
+See Also
+brmsformula
