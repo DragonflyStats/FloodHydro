@@ -17,19 +17,16 @@ theme = NULL, ask = TRUE, plot = TRUE, ...)
 
 #### Arguments
 
-* x An R object usually of class brmsfit.
-* effects An optional character vector naming effects (main effects or interactions) for which to compute marginal plots. Interactions are specified by a : between
-variable names. If NULL (the default), plots are generated for all main effects
-and two-way interactions estimated in the model. When specifying effects
-manually, all two-way interactions may be plotted even if not originally modeled.
-* conditions An optional data.frame containing variable values to condition on. Each effect
+* ``x``: An R object usually of class brmsfit.
+* ``effects``: An optional character vector naming effects (main effects or interactions) for which to compute marginal plots. Interactions are specified by a : between variable names. If NULL (the default), plots are generated for all main effects
+and two-way interactions estimated in the model. When specifying effects manually, all two-way interactions may be plotted even if not originally modeled.
+* ``conditions``: An optional data.frame containing variable values to condition on. Each effect
 defined in effects will be plotted separately for each row of conditions. values in the cond__ column will be used as titles of the subplots. If cond__ is not given, the row names will be used for this purpose instead. It is recommended
 to only define a few rows in order to keep the plots clear. See make_conditions
 for an easy way to define conditions. If NULL (the default), numeric variables will be marginalized by using their means and factors will get their reference level assigned.
-* int_conditions An optional named list whose elements are numeric vectors of values of the second variables in two-way interactions. At these values, predictions are evaluated. The names of int_conditions have to match the variable names exactly.
-Additionally, the elements of the numeric vectors may be named themselves, in which case their names appear as labels for the conditions in the plots. Instead of vectors, functions returning vectors may be passed and are applied on the
-original values of the corresponding variable. If NULL (the default), predictions are evaluated at the mean and at mean + = 􀀀 sd.
-* re_formula A formula containing random effects to be considered in the marginal predictions. If NULL, include all random effects; if NA (default), include no random effects.
+* ``int_conditions``: An optional named list whose elements are numeric vectors of values of the second variables in two-way interactions. At these values, predictions are evaluated. The names of int_conditions have to match the variable names exactly.
+Additionally, the elements of the numeric vectors may be named themselves, in which case their names appear as labels for the conditions in the plots. Instead of vectors, functions returning vectors may be passed and are applied on the original values of the corresponding variable. If NULL (the default), predictions are evaluated at the mean and at mean + = 􀀀 sd.
+* ``re_formula``: A formula containing random effects to be considered in the marginal predictions. If NULL, include all random effects; if NA (default), include no random effects.
 * robust If TRUE (the default) the median is used as the measure of central tendency. If FALSE the mean is used instead.
 probs The quantiles to be used in the computation of credible intervals (defaults to 2.5 and 97.5 percent quantiles)
 * method Either "fitted" or "predict". If "fitted", plot marginal predictions of the regression curve. If "predict", plot marginal predictions of the responses.
@@ -41,10 +38,10 @@ argument stype of the related plotting method.
 categorical Logical. Indicates if effects of categorical or ordinal models should be shown in terms of probabilities of response categories. Defaults to FALSE.
 * ordinal Deprecated! Please use argument categorical. Logical. Indicates if effects in ordinal models should be visualized as a raster with the response categories on the y-axis. Defaults to FALSE.
 
-* transform A function or a character string naming a function to be applied on the predicted responses before summary statistics are computed. Only allowed if method = "predict".
-* resolution Number of support points used to generate the plots. Higher resolution leads to smoother plots. Defaults to 100. If surface is TRUE, this implies 10000 support points for interaction terms, so it might be necessary to reduce resolution
+* ``transform``: A function or a character string naming a function to be applied on the predicted responses before summary statistics are computed. Only allowed if method = "predict".
+* ``resolution``: Number of support points used to generate the plots. Higher resolution leads to smoother plots. Defaults to 100. If surface is TRUE, this implies 10000 support points for interaction terms, so it might be necessary to reduce resolution
 when only few RAM is available.
-* select_points Positive number. Only relevant if points or rug are set to TRUE: Actual data points of numeric variables that are too far away from the values specified in conditions can be excluded from the plot. #### Values are scaled into the unit interval
+* ``select_points:``: Positive number. Only relevant if points or rug are set to TRUE: Actual data points of numeric variables that are too far away from the values specified in conditions can be excluded from the plot. #### Values are scaled into the unit interval
 and then points more than select_points from the #### Values in conditions are excluded. By default, all points are used.
 too_far Positive number. For surface plots only: Grid points that are too far away from the actual data points can be excluded from the plot. too_far determines what is too far. The grid is scaled into the unit square and then grid points more than
 too_far from the predictor variables are excluded. By default, all grid points are used. Ignored for non-surface plots.
@@ -61,23 +58,12 @@ is used to determine, which points do match a condition.
 to geom_smooth.
 * cat_args Only used in plots of categorical predictors: A named list of arguments
  passed to geom_point.
-errorbar_args Only used in plots of categorical predictors: A named list of 
-#### Arguments
- passed
-to geom_errorbar.
-surface_args Only used in surface plots: A named list of 
-#### Arguments
- passed to geom_contour
+errorbar_args Only used in plots of categorical predictors: A named list of arguments passed to geom_errorbar.
+surface_args Only used in surface plots: A named list of arguments passed to geom_contour
 or geom_raster (depending on argument stype).
-spaghetti_args Only used in spaghetti plots: A named list of 
-#### Arguments
- passed to geom_smooth.
-point_args Only used if points = TRUE: A named list of 
-#### Arguments
- passed to geom_jitter.
-rug_args Only used if rug = TRUE: A named list of 
-#### Arguments
- passed to geom_rug.
+spaghetti_args Only used in spaghetti plots: A named list of arguments passed to geom_smooth.
+point_args Only used if points = TRUE: A named list of arguments passed to geom_jitter.
+rug_args Only used if rug = TRUE: A named list of arguments passed to geom_rug.
 100 marginal_effects.brmsfit
 theme A theme object modifying the appearance of the plots. For some basic themes
 see ggtheme and theme_default.
@@ -87,9 +73,9 @@ plot logical; indicates if plots should be plotted directly in the active graphi
 Defaults to TRUE.
 #### Details
 When creating marginal_effects for a particular predictor (or interaction of two predictors), one
-has to choose the #### Values of all other predictors to condition on. By default, the mean is used
+has to choose the values of all other predictors to condition on. By default, the mean is used
 for continuous variables and the reference category is used for factors, but you may change these
-#### Values via argument conditions. This also has an implication for the points argument: In the
+values via argument conditions. This also has an implication for the points argument: In the
 created plots, only those points will be shown that correspond to the factor levels actually used in
 the conditioning, in order not to create the false impression of bad model fit, where it is just due
 to conditioning on certain factor levels. Since we condition on rather than actually marginalizing
@@ -109,6 +95,7 @@ The corresponding plot method returns a named list of ggplot objects, which can 
 using the ggplot2 package.
 
 ### Examples
+```{r}
 ## Not run:
 fit <- brm(count ~ log_Age_c + log_Base4_c * Trt + (1 | patient),
 data = epilepsy, family = poisson())
@@ -119,31 +106,49 @@ me <- marginal_effects(fit, "log_Base4_c:Trt")
 plot(me, plot = FALSE)[[1]] +
 scale_color_grey() +
 scale_fill_grey()
+```
+
+```{r}
 ## only plot the marginal interaction effect of 'log_Base4_c:Trt'
 marginal_smooths.brmsfit 101
 ## for different #### Values for 'log_Age_c'
 conditions <- data.frame(log_Age_c = c(-0.3, 0, 0.3))
 plot(marginal_effects(fit, effects = "log_Base4_c:Trt",
 conditions = conditions))
+```
+
+```{r}
 ## also incorporate random effects variance over patients
 ## also add data points and a rug representation of predictor #### Values
 plot(marginal_effects(fit, effects = "log_Base4_c:Trt",
 conditions = conditions, re_formula = NULL),
 points = TRUE, rug = TRUE)
+```
+
+```{r}
 ## change handling of two-way interactions
 int_conditions <- list(
 log_Base4_c = setNames(c(-2, 1, 0), c("b", "c", "a"))
 )
+```
+
+```{r}
 marginal_effects(fit, effects = "Trt:log_Base4_c",
 int_conditions = int_conditions)
 marginal_effects(fit, effects = "Trt:log_Base4_c",
 int_conditions = list(log_Base4_c = quantile))
+```
+
+```{r}
 ## fit a model to illustrate how to plot 3-way interactions
 fit3way <- brm(count ~ log_Age_c * log_Base4_c * Trt, data = epilepsy)
 conditions <- make_conditions(fit3way, "log_Age_c")
 marginal_effects(
 fit3way, "log_Base4_c:Trt", conditions = conditions
 )
+```
+
+```{r}
 ## only include points close to the specified #### Values of log_Age_c
 me <- marginal_effects(
 fit3way, "log_Base4_c:Trt", conditions = conditions,
@@ -151,3 +156,4 @@ select_points = 0.1
 )
 plot(me, points = TRUE)
 ## End(Not run)
+```{r}
