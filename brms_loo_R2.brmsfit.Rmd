@@ -1,7 +1,5 @@
 ---
 title: "``loo_R2.brmsfit`` Compute a LOO-adjusted R-squared for regression models"
-author: "Kevin O Brien"
-date: "1 November 2018"
 output: html_document
 ---
 
