@@ -1,5 +1,14 @@
+---
+title: "``parnames``  Extract Parameter Names"
+output: html_document
+---
 
-parnames Extract Parameter Names
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+
 #### Description 
 Extract all parameter names of a given model.
 
@@ -15,9 +24,10 @@ x An R object
 Currently there are methods for brmsfit objects.
 #### Value
 A character vector containing the parameter names of the model.
-116 parse_bf
 Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
+
+
 parse_bf Parse Formulas of brms Models
 #### Description 
 Parse formulas objects for use in brms.
@@ -36,37 +46,18 @@ autocor = NULL, ...)
 </code></pre>
 #### Arguments
 
-formula An object of class formula, brmsformula, or mvbrmsformula (or one that can
-be coerced to that classes): A symbolic #### Description  of the model to be fitted.
-The #### Details of model specification are explained in brmsformula.
+* `` formula``  An object of class formula, brmsformula, or mvbrmsformula (or one that can be coerced to that classes): A symbolic #### Description  of the model to be fitted. The details of model specification are explained in brmsformula.
 * `` ... ``: Further arguments passed to or from other methods.
-* `` family`` A description  of the response distribution and link function to be used in the
-model. This can be a family function, a call to a family function or a character
-string naming the family. Every family function has a link argument allowing to
-specify the link function to be applied on the response variable. If not specified,
-default links are used. For #### Details of supported families see brmsfamily. By
-default, a linear gaussian model is applied. In multivariate models, family
-might also be a list of families.
-* ``autocor`` An optional cor_brms object describing the correlation structure within the response
-variable (i.e., the ’autocorrelation’). See the documentation of cor_brms
-for a #### Description  of the available correlation structures. Defaults to NULL, corresponding
-to no correlations. In multivariate models, autocor might also be a
-list of autocorrelation structures.
-check_response Logical; Indicates whether the left-hand side of formula (i.e. response variables
-and addition arguments
-) should be parsed. If FALSE, formula may also be onesided.
-plot.brmsfit 117
-resp_rhs_all Logical; Indicates whether to also include response variables on the right-hand
-side of formula .$allvars, where . represents the output of parse_bf.
-mv Indicates if the univariate model is part of a multivariate model.
+* `` family`` A description  of the response distribution and link function to be used in the model. This can be a family function, a call to a family function or a character string naming the family. Every family function has a link argument allowing to specify the link function to be applied on the response variable. If not specified, default links are used. For details of supported families see brmsfamily. By default, a linear gaussian model is applied. In multivariate models, family might also be a list of families.
+* ``autocor`` An optional cor_brms object describing the correlation structure within the response variable (i.e., the ’autocorrelation’). See the documentation of cor_brms for a description  of the available correlation structures. Defaults to NULL, corresponding to no correlations. In multivariate models, autocor might also be a list of autocorrelation structures.
+* `` check_response``  Logical; Indicates whether the left-hand side of formula (i.e. response variables and addition arguments) should be parsed. If FALSE, formula may also be onesided.
+* `` resp_rhs_all``  Logical; Indicates whether to also include response variables on the right-hand side of formula .$allvars, where . represents the output of parse_bf.
+* `` mv``  Indicates if the univariate model is part of a multivariate model.
+
 #### Details
-This is the main formula parsing function of brms. It should usually not be called directly, but
-is exported to allow package developers making use of the formula syntax implemented in brms.
-As long as no other packages depend on this functions, it may be changed without deprecation
-warnings, when new features make this necessary.
+This is the main formula parsing function of brms. It should usually not be called directly, but is exported to allow package developers making use of the formula syntax implemented in brms. As long as no other packages depend on this functions, it may be changed without deprecation warnings, when new features make this necessary.
+
 #### Value
-An object of class brmsterms or mvbrmsterms (for multivariate models), which is a list containing
-all required information initially stored in formula in an easier to use format, basically a list of
-formulas (not an abstract syntax tree).
+An object of class brmsterms or mvbrmsterms (for multivariate models), which is a list containing all required information initially stored in formula in an easier to use format, basically a list of formulas (not an abstract syntax tree).
 See Also
 brm, brmsformula, mvbrmsformula
