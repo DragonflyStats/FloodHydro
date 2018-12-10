@@ -10,7 +10,7 @@ cs(expr)
 
 #### Arguments
 
-* expr Expression containing predictors, for which category specific effects should be estimated. For evaluation, R formula syntax is applied.
+* ``expr``: Expression containing predictors, for which category specific effects should be estimated. For evaluation, R formula syntax is applied.
 
 
 
