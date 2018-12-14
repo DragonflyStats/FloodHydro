@@ -1,20 +1,21 @@
 
 restructure Restructure Old brmsfit Objects
+
 #### Description 
-Restructure old brmsfit objects to work with the latest brms version. This function is called
-internally when applying post-processing methods. However, in order to avoid unnecessary run
-time caused by the restructuring, I recommend explicitly calling restructure once per model after
-updating brms.
+
+Restructure old brmsfit objects to work with the latest brms version. This function is called internally when applying post-processing methods. However, in order to avoid unnecessary run time caused by the restructuring, I recommend explicitly calling restructure once per model after updating brms.
 
 #### Usage
+
 <pre><code>
 restructure(x, rstr_summary = FALSE)
 </code></pre>
+
 #### Arguments
 
 * ``x``: An object of class brmsfit.
-rstr_summary Logical; If TRUE, the cached summary stored by rstan is restructured as well.
+* rstr_summary Logical; If TRUE, the cached summary stored by rstan is restructured as well.
+
 #### Value
 A brmsfit object compatible with the latest version of brms.
-0
 
