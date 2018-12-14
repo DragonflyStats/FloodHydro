@@ -1,7 +1,4 @@
 
-
-
-posterior_samples.brmsfit 121
 posterior_samples.brmsfit
 Extract posterior samples
 #### Description 
@@ -31,8 +28,7 @@ posterior_samples(x, pars = NA, ...)
 * subset A numeric vector indicating the rows (i.e., posterior samples) to be returned. If NULL (the default), all posterior samples are returned.
 * as.matrix Should the output be a matrix instead of a data.frame? Defaults to FALSE.
 * as.array Should the output be an array instead of a data.frame? Defaults to FALSE.
-* ... For as.data.frame, as.matrix, and as.array: Further arguments to be passed
-to posterior_samples. row.names, optional
+* ... For as.data.frame, as.matrix, and as.array: Further arguments to be passed to posterior_samples. row.names, optional
 See as.data.frame.
 
 
@@ -50,11 +46,11 @@ head(samples2)
 ## End(Not run)
 ```
 #### Details
-Currently there are methods for brmsfit objects. as.data.frame.brmsfit, as.matrix.brmsfit,
-and as.array.brmsfit are basically aliases of posterior_samples.brmsfit and differ from
-each other only in type of the returned object.
+Currently there are methods for brmsfit objects. as.data.frame.brmsfit, as.matrix.brmsfit, and as.array.brmsfit are basically aliases of posterior_samples.brmsfit and differ from each other only in type of the returned object.
+
 #### Value
 A data frame (matrix or array) containing the posterior samples, with one column per parameter. In
 case an array is returned, it contains one additional dimension for the chains.
-Author(s)
+
+#### Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
