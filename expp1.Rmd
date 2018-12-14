@@ -2,7 +2,9 @@ expp1 Exponential function plus one.
 #### Description 
 Computes exp(x) + 1.
 Usage
+<pre><code>
 expp1(x)
+</code></pre>
 #### Arguments
 x A numeric or complex vector.
 
