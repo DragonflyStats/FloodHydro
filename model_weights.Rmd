@@ -19,11 +19,6 @@ model_weights(x, ...)
 to compute weights based on log marginal likelihoodvalues (make sure to specify reasonable priors in this case). Alternatively, weights can be a numeric vector of pre-specified weights.
 * model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise will use the passed values as model names.
 
-#### Value
-
-A numeric vector of weights for the models.
-
-MultiNormal 111
 
 #### Examples
 ```{r}
@@ -38,3 +33,9 @@ summary(fit2)
 # obtain Akaike weights based on the WAIC
 model_weights(fit1, fit2, weights = "waic")
 ```
+
+
+#### Value
+
+A numeric vector of weights for the models.
+
