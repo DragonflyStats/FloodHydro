@@ -5,13 +5,12 @@ Display smooth s and t2 terms of models fitted with brms.
 
 #### Usage
 <pre><code>
-  ## S3 method for class 'brmsfit'
-  marginal_smooths(x, smooths = NULL,
-                   int_conditions = NULL, probs = c(0.025, 0.975), spaghetti = FALSE,
-                   resolution = 100, too_far = 0, subset = NULL, nsamples = NULL,
-                   102 marginal_smooths.brmsfit
-                   ...)
+## S3 method for class 'brmsfit'
+marginal_smooths(x, smooths = NULL,
+     int_conditions = NULL, probs = c(0.025, 0.975), spaghetti = FALSE,
+     resolution = 100, too_far = 0, subset = NULL, nsamples = NULL,                   ...)
 marginal_smooths(x, ...)
+</code></pre>
 
 #### Arguments
 
@@ -24,21 +23,14 @@ Additionally, the elements of the numeric vectors may be named themselves, in wh
 of vectors, functions returning vectors may be passed and are applied on the original values of the corresponding variable. If NULL (the default), predictions are evaluated at the mean and at mean + = 􀀀 sd.
 * probs The quantiles to be used in the computation of credible intervals (defaults to 2.5 and 97.5 percent quantiles)
 * spaghetti Logical. Indicates if predictions should be visualized via spaghetti plots. Only applied for numeric predictors. If TRUE, it is recommended to set argument
-nsamples to a relatively small value (e.g. 100) in order to reduce computation time.
-resolution Number of support points used to generate the plots. Higher resolution leads to smoother plots. Defaults to 100. If surface is TRUE, this implies 10000 support points for interaction terms, so it might be necessary to reduce resolution
-when only few RAM is available.
-* too_far Positive number. For surface plots only: Grid points that are too far away from
-the actual data points can be excluded from the plot. too_far determines what is too far. The grid is scaled into the unit square and then grid points more than
-too_far from the predictor variables are excluded. By default, all grid points are used. Ignored for non-surface plots.
+* nsamples to a relatively small value (e.g. 100) in order to reduce computation time.
+* resolution Number of support points used to generate the plots. Higher resolution leads to smoother plots. Defaults to 100. If surface is TRUE, this implies 10000 support points for interaction terms, so it might be necessary to reduce resolution when only few RAM is available.
+* too_far Positive number. For surface plots only: Grid points that are too far away from the actual data points can be excluded from the plot. too_far determines what is too far. The grid is scaled into the unit square and then grid points more than
+* too_far from the predictor variables are excluded. By default, all grid points are used. Ignored for non-surface plots.
 subset A numeric vector specifying the posterior samples to be used. If NULL (the                                                                            default), all samples are used.
-nsamples Positive integer indicating how many posterior samples should be used. If NULL
-(the default) all samples are used. Ignored if subset is not NULL.
-... Currently ignored.
-#### Details
-Two-dimensional smooth terms will be visualized using either contour or raster plots.
-#### Value
-For the brmsfit method, an object of class brmsMarginalEffects. See marginal_effects for more details and documentation of the related plotting function.
-me
+* nsamples Positive integer indicating how many posterior samples should be used. If NULL (the default) all samples are used. Ignored if subset is not NULL.
+* ... Currently ignored.
+
 
 #### Examples
 ```{r}`
@@ -60,3 +52,8 @@ plot(ms, stype = "contour")
 plot(ms, stype = "raster")
 ## End(Not run)
 ```
+#### Details
+Two-dimensional smooth terms will be visualized using either contour or raster plots.
+#### Value
+For the brmsfit method, an object of class brmsMarginalEffects. See marginal_effects for more details and documentation of the related plotting function.
+me
