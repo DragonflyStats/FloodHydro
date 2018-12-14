@@ -1,3 +1,21 @@
+---
+
+title: "brms"
+
+output: html_document
+
+---
+
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+
+```
+
+
 
 `` bayes_R2.brmsfit``  Compute a Bayesian version of R-squared for regression models
 
