@@ -1,0 +1,40 @@
+---
+title: "``make_conditions`` Prepare Fully Crossed Conditions"
+output: html_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#### Description 
+This is a helper function to prepare fully crossed conditions primarily for use with the conditions
+argument of marginal_effects. Automatically creates labels for each row in the cond__ column.
+
+#### Usage
+<pre><code>
+make_conditions(x, vars, ...)
+</code></pre>
+  
+#### Arguments
+* x An R object from which to extract the variables that should be part of the conditions.
+* vars Names of the variables that should be part of the conditions.
+* ... arguments passed to rows2labels.
+
+#### Details
+For factor like variables, all levels are used as conditions. For numeric variables, mean + (-1:1) * SD
+are used as conditions.
+
+#### Value
+A data.frame where each row indicates a condition.
+See Also
+marginal_effects, rows2labels
+94 make_stancode
+Examples
+
+```{r}
+
+df <- data.frame(x = c("a", "b"), y = rnorm(10))
+make_conditions(df, vars = c("x", "y"))
+```
