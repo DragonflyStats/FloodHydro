@@ -16,25 +16,11 @@ model_names = NULL)
 x A fitted model object.
 ... More fitted model objects or further arguments
  passed to the underlying postprocessing functions.
-prior_prob Numeric vector with prior model probabilities. If omitted, a uniform prior is
-used (i.e., all models are equally likely a priori). The default NULL corresponds
-to equal prior model weights.
-model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
-will use the passed values as model names.
-#### Details
-Computing the marginal likelihood requires samples of all variables defined in Stan’s parameters
-block to be saved. Otherwise post_prob cannot be computed. Thus, please set save_all_pars = TRUE
-in the call to brm, if you are planning to apply post_prob to your models.
-The computation of model probabilities based on bridge sampling requires a lot more posterior
-samples than usual. A good conservative rule of thump is perhaps 10-fold more samples (read:
-pp_average.brmsfit 125
-the default of 4000 samples may not be enough in many cases). If not enough posterior samples
-are provided, the bridge sampling algorithm tends to be unstable leading to considerably different
-results each time it is run. We thus recommend running post_prob multiple times to check the
-stability of the results.
-More details are provided under bridgesampling:post_prob.
-See Also
-bridge_sampler, bayes_factor
+* prior_prob Numeric vector with prior model probabilities. If omitted, a uniform prior is
+used (i.e., all models are equally likely a priori). The default NULL corresponds to equal prior model weights.
+* model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise will use the passed values as model names.
+
+
 
 #### Examples
 ```{r}
@@ -61,3 +47,12 @@ post_prob(fit1, fit2)
 post_prob(fit1, fit2, prior_prob = c(0.8, 0.2))
 ## End(Not run)
 ```
+#### Details
+
+Computing the marginal likelihood requires samples of all variables defined in Stan’s parameters block to be saved. Otherwise post_prob cannot be computed. Thus, please set save_all_pars = TRUE in the call to brm, if you are planning to apply post_prob to your models.
+The computation of model probabilities based on bridge sampling requires a lot more posterior
+samples than usual. A good conservative rule of thump is perhaps 10-fold more samples (read:
+the default of 4000 samples may not be enough in many cases). If not enough posterior samples are provided, the bridge sampling algorithm tends to be unstable leading to considerably different results each time it is run. We thus recommend running post_prob multiple times to check the stability of the results.
+More details are provided under bridgesampling:post_prob.
+See Also
+bridge_sampler, bayes_factor
