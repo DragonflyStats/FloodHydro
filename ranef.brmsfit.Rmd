@@ -1,5 +1,4 @@
 
-ranef.brmsfit 137
 ranef.brmsfit Extract Group-Level Estimates
 #### Description 
 Extract the group-level (’random’) effects of each level from a brmsfit object.
@@ -12,28 +11,18 @@ probs = c(0.025, 0.975), pars = NULL, groups = NULL, ...)
 </code></pre>
 #### Arguments
 
-object An object of class brmsfit.
-summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw #### Values? Default is TRUE.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
+* object An object of class brmsfit.
+* summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
+of the raw values? Default is TRUE.
+* robust If FALSE (the default) the mean is used as the measure of central tendency and the standard deviation as the measure of variability. If TRUE, the median and the median absolute deviation (MAD) are applied instead. Only used if summary is
 TRUE.
-probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-pars Optional names of coefficients to extract. By default, all coefficients are extracted.
-groups Optional names of grouping variables for which to extract effects.
-... Currently ignored.
-#### Value
-If old is FALSE: A list of arrays (one per grouping factor). If summary is TRUE, names of the first
-dimension are the factor levels and names of the third dimension are the group-level effects. If
-summary is FALSE, names of the second dimension are the factor levels and names of the third
-dimension are the group-level effects.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-138 reloo
+* probs The percentiles to be computed by the quantile function. Only used if summary is TRUE.
+* pars Optional names of coefficients to extract. By default, all coefficients are extracted.
+* groups Optional names of grouping variables for which to extract effects.
+* ... Currently ignored.
 
-Examples
+#### Examples
+
 ```{r}
 ## Not run:
 fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c + (1+Trt_c|visit),
@@ -41,3 +30,9 @@ data = epilepsy, family = gaussian(), chains = 2)
 ranef(fit)
 ## End(Not run)
 ```
+#### Value
+If old is FALSE: A list of arrays (one per grouping factor). If summary is TRUE, names of the first dimension are the factor levels and names of the third dimension are the group-level effects. If summary is FALSE, names of the second dimension are the factor levels and names of the third dimension are the group-level effects.
+
+#### Author(s)
+Paul-Christian Buerkner <paul.buerkner@gmail.com>
+138 reloo
