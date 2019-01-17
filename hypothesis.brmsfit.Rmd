@@ -1,4 +1,6 @@
-hypothesis.brmsfit Non-Linear Hypothesis Testing
+## ``hypothesis.brmsfit`` 
+Non-Linear Hypothesis Testing
+
 #### Description 
 Perform non-linear hypothesis testing for all model parameters.
 
@@ -13,15 +15,15 @@ hypothesis(x, hypothesis, alpha = 0.05, ...)
 
 #### Arguments
 
-* x An R object. If it is no brmsfit object, it must be coercible to a data.frame.
-* hypothesis A character vector specifying one or more non-linear hypothesis concerning parameters of the model.
-* class A string specifying the class of parameters being tested. Default is "b" for population-level effects. Other typical options are "sd" or "cor". If class = NULL, all parameters can be tested against each other, but have to be specified with their
+* ``x``: An R object. If it is no brmsfit object, it must be coercible to a data.frame.
+* ``hypothesis``: A character vector specifying one or more non-linear hypothesis concerning parameters of the model.
+* ``class``: A string specifying the class of parameters being tested. Default is "b" for population-level effects. Other typical options are "sd" or "cor". If class = NULL, all parameters can be tested against each other, but have to be specified with their
 full name (see also parnames)
-* group Name of a grouping factor to evaluate only group-level effects parameters related to this grouping factor. Ignored if class is not "sd" or "cor".
-* scope Indicates where to look for the variables specified in hypothesis. If "standard", use the full parameter names (subject to the restriction given by class). If "coef" or "ranef" compute the hypothesis for all levels of the grouping factor given in "group", based on the output of coef.brmsfit and ranef.brmsfit, respectively.
-* alpha The alpha-level of the tests (default is 0.05; see ’#### Details’ for more information).
-* seed A single numeric value passed to set.seed to make results reproducible.
-* ... Currently ignored.
+* ``group``: Name of a grouping factor to evaluate only group-level effects parameters related to this grouping factor. Ignored if class is not "sd" or "cor".
+* ``scope``: Indicates where to look for the variables specified in hypothesis. If "standard", use the full parameter names (subject to the restriction given by class). If "coef" or "ranef" compute the hypothesis for all levels of the grouping factor given in "group", based on the output of coef.brmsfit and ranef.brmsfit, respectively.
+* ``alpha``: The alpha-level of the tests (default is 0.05; see 'details' for more information).
+* ``seed``: A single numeric value passed to set.seed to make results reproducible.
+* ``...``: Currently ignored.
 
 #### Examples 
 
@@ -84,9 +86,12 @@ hypothesis(dat, "b_age > 0")
 A brmshypothesis object.
 
 #### Details
-Among others, hypothesis computes an evidence ratio (Evid.Ratio) for each hypothesis. For a directed hypothesis, this is just the posterior probability (Post.Prob) under the hypothesis against its alternative. That is, when the hypothesis if of the form a > b, the evidence ratio is the ratio of the posterior probability of a > b and the posterior probability of a < b. In this example, values greater than one indicate that the evidence in favor of a > b is larger than evidence in favor of a < b. For an undirected (point) hypothesis, the evidence ratio is a Bayes factor between the hypothesis and its alternative computed via the Savage-Dickey density ratio method. That is the posterior density at the point of interest divided by the prior density at that point. values greater than one indicate that evidence in favor of the point hypothesis has increased after seeing the data. In order to calculate
-this Bayes factor, all parameters related to the hypothesis must have proper priors and argument
-sample_prior of function brm must be set to TRUE. When interpreting Bayes factors, make sure that your priors are reasonable and carefully chosen, as the result will depend heavily on the priors.
+Among others, hypothesis computes an evidence ratio (Evid.Ratio) for each hypothesis. For a directed hypothesis, this is just the posterior probability (Post.Prob) under the hypothesis against its alternative. That is, when the hypothesis if of the form a > b, the evidence ratio is the ratio of the posterior probability of a > b and the posterior probability of a < b. In this example, values greater than one indicate that the evidence in favor of a > b is larger than evidence in favor of a < b. 
+
+For an undirected (point) hypothesis, the evidence ratio is a Bayes factor between the hypothesis and its alternative computed via the Savage-Dickey density ratio method. That is the posterior density at the point of interest divided by the prior density at that point. values greater than one indicate that evidence in favor of the point hypothesis has increased after seeing the data. 
+
+In order to calculate this Bayes factor, all parameters related to the hypothesis must have proper priors and argument
+``sample_prior`` of function brm must be set to TRUE. When interpreting Bayes factors, make sure that your priors are reasonable and carefully chosen, as the result will depend heavily on the priors.
 
 In particular, avoid using default priors. The argument alpha specifies the size of the credible interval (i.e., Bayesian confidence interval).
 
