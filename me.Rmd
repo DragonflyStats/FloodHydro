@@ -1,7 +1,9 @@
-me Predictors with Measurement Error in brms Models
+## ``me``
+
+Predictors with Measurement Error in brms Models
+
 #### Description 
-Specify predictors with measurement error. This function is almost solely useful when called in
-formulas passed to the brms package.
+Specify predictors with measurement error. This function is almost solely useful when called in formulas passed to the brms package.
 
 #### Usage
 <pre><code>
@@ -9,18 +11,14 @@ me(x, sdx = NULL, gr = NULL)
 </code></pre>
 #### Arguments
 
-* x The variable measured with error.
-* sdx Known measurement error of x treated as standard deviation.
-* gr Optional grouping factor to specify which values of x correspond to the same value of the latent variable. If NULL (the default) each observation will have its own value of the latent variable.
-#### Details
-For detailed documentation see help(brmsformula).
-By default, latent noise-free variables are assumed to be correlated. To change that, add set_mecor(FALSE)
-to your model formula object (see examples).
+* ``x``: The variable measured with error.
+* ``sdx``: Known measurement error of x treated as standard deviation.
+* ``gr``: Optional grouping factor to specify which values of ``x`` correspond to the same value of the latent variable. If NULL (the default) each observation will have its own value of the latent variable.
+
 
 #### Examples
 
 ```{r}
-## Not run:
 # sample some data
 N <- 100
 dat <- data.frame(
@@ -33,7 +31,9 @@ dat <- data.frame(
 fit1 <- brm(y ~ me(x1, sdx) + me(x2, sdx), data = dat, save_mevars = TRUE)
 
 summary(fit1)
+```
 
+```{r]
 # turn off modeling of correlations
 
 bform <- bf(y ~ me(x1, sdx) + me(x2, sdx)) + set_mecor(FALSE)
@@ -42,9 +42,14 @@ fit2 <- brm(bform, data = dat, save_mevars = TRUE)
 
 summary(fit2)
 
-## End(Not run)
 ```
 
-See Also
+#### Details
+For detailed documentation see help(brmsformula).
+By default, latent noise-free variables are assumed to be correlated. To change that, add set_mecor(FALSE)
+to your model formula object (see examples).
+
+
+#### See Also
 brmsformula, brmsformula-helpers
 
