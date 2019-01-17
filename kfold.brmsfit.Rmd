@@ -1,9 +1,13 @@
 
-kfold.brmsfit K-Fold Cross-Validation
+``kfold.brmsfit`` 
+
+K-Fold Cross-Validation
+
 #### Description 
-Perform exact K-fold cross-validation by refitting the model K times each leaving out one-Kth of
-the original data.
-Usage
+
+Perform exact K-fold cross-validation by refitting the model K times each leaving out one-Kth of the original data.
+
+#### Usage
 <pre><code>
 ## S3 method for class 'brmsfit'
 kfold(x, ..., compare = TRUE, K = 10, Ksub = NULL,
@@ -13,24 +17,25 @@ kfold(x, ...)
 </code></pre>
 
 #### Arguments
-* x A fitted model object.
-* ... More fitted model objects or further #### Arguments passed to the underlying postprocessing functions.
-* compare A flag indicating if the information criteria of the models should be compared to each other via compare_ic.
-* K The number of subsets of equal (if possible) size into which the data will be partitioned for performing K-fold cross-validation. The model is refit K times, each time leaving out one of the K subsets. If K is equal to the total number of observations in the data then K-fold cross-validation is equivalent to exact leave-one-out cross-validation.
-* Ksub Optional number of subsets (of those subsets defined by K) to be evaluated. If NULL (the default), K-fold cross-validation will be performed on all subsets. If Ksub is a single integer, Ksub subsets (out of all K) subsets will be randomly
+* ``x``: A fitted model object.
+* ``...``: More fitted model objects or further #### Arguments passed to the underlying postprocessing functions.
+* ``compare`` A flag indicating if the information criteria of the models should be compared to each other via compare_ic.
+* ``K``: The number of subsets of equal (if possible) size into which the data will be partitioned for performing K-fold cross-validation. The model is refit K times, each time leaving out one of the K subsets. If K is equal to the total number of observations in the data then K-fold cross-validation is equivalent to exact leave-one-out cross-validation.
+* ``Ksub``: Optional number of subsets (of those subsets defined by K) to be evaluated. If NULL (the default), K-fold cross-validation will be performed on all subsets. If Ksub is a single integer, Ksub subsets (out of all K) subsets will be randomly
 chosen. If Ksub consists of multiple integers or a one-dimensional array (created via as.array) potentially of length one, the corresponding subsets will be used.
 This argument is primarily useful, if evaluation of all subsets is infeasible for some reason.
-* folds Determines how the subsets are being constructed. Possible values are NULL
+* ``folds``: Determines how the subsets are being constructed. Possible values are NULL
 (the default), "stratified", "balanced", or "loo". May also be a vector of length equal to the number of observations in the data. Alters the way group is handled. More information is provided in the ’Details’ section.
 * group Optional name of a grouping variable or factor in the model. What exactly is done with this variable depends on argument folds. More information is provided in the ’details’ section.
-* exact_loo Deprecated! Please use folds = "loo" instead.
+* ``exact_loo``: Deprecated! Please use folds = "loo" instead.
 * `` resp``: Optional names of response variables. If specified, predictions are performed only for the specified response variables.
 * model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise will use the passed values as model names.
-* save_fits If TRUE, a component fits is added to the returned object to store the crossvalidated
+* ``save_fits``: If TRUE, a component fits is added to the returned object to store the crossvalidated
 brmsfit objects and the indices of the omitted observations for each fold. Defaults to FALSE.
 
 
 #### Examples
+```{r}
 ## Not run:
 fit1 <- brm(count ~ log_Age_c + log_Base4_c * Trt +
               (1|patient) + (1|obs),
@@ -39,7 +44,7 @@ fit1 <- brm(count ~ log_Age_c + log_Base4_c * Trt +
 (loo1 <- loo(fit1))
 # perform 10-fold cross validation
 (kfold1 <- kfold(fit1, chains = 1)
- ## End(Not run)
+```
  
 #### Details
 The kfold function performs exact K-fold cross-validation. First the data are partitioned into K folds (i.e. subsets) of equal (or as close to equal as possible) size by default. Then the model is refit K times, each time leaving out one of the K subsets. IfK is equal to the total number of observations in the data then K-fold cross-validation is equivalent to exact leave-one-out cross-validation (to which loo is an efficient approximation). The compare_ic function is also compatible with the objects returned by kfold.
@@ -53,7 +58,7 @@ observations of one of the factor levels, while ignoring argument K.
 • If folds = "balanced" the subsets are balanced by group using loo::kfold_split_balanced.
 • If folds = "loo" exact leave-one-out cross-validation will be performed and K will be ignored.
 Further, if group is specified, all observations corresponding to the factor level of the
-currently predicted single #### Value are omitted. Thus, in this case, the predicted #### Values are only
+currently predicted single #### Value are omitted. Thus, in this case, the predicted values are only
 a subset of the omitted ones.
 • If folds is a numeric vector, it must contain one element per observation in the data. Each
 element of the vector is an integer in 1:K indicating to which of the K folds the corresponding
@@ -61,10 +66,10 @@ observation belongs. There are some convenience functions available in the loo p
 create integer vectors to use for this purpose (see the Examples section below and also the
                                                 kfold-helpers page).
 
-
- #### Value
+#### Value
 kfold returns an object that has a similar structure as the objects returned by the loo and waic
 methods.
-See Also
+
+#### See Also
 loo, reloo
 
