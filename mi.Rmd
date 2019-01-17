@@ -1,6 +1,7 @@
 
+## ``mi`` 
+Predictors with Missing values in brms Models
 
-mi Predictors with Missing values in brms Models
 #### Description 
 Predictors with Missing values in brms Models
 
@@ -11,17 +12,11 @@ Predictors with Missing values in brms Models
   
 #### Arguments
 
-x The variable containing missings.
+* ``x``: The variable containing missings.
 
-#### Details
-For detailed documentation see help(brmsformula).
-This function is almost solely useful when called in formulas passed to the brms package.
-See Also
-brmsformula
-mixture 105
+
 ### Examples
-```{r}`
-## Not run:
+```{r}
 data("nhanes", package = "mice")
 bform <- bf(bmi | mi() ~ age * mi(chl)) +
   bf(chl | mi() ~ age) + set_rescor(FALSE)
@@ -29,5 +24,10 @@ fit <- brm(bform, data = nhanes)
 summary(fit)
 plot(marginal_effects(fit, resp = "bmi"), ask = FALSE)
 LOO(fit, newdata = na.omit(fit$data))
-## End(Not run)
 ```
+#### Details
+For detailed documentation see help(brmsformula).
+This function is almost solely useful when called in formulas passed to the brms package.
+See Also
+brmsformula
+mixture 105
