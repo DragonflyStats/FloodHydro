@@ -1,5 +1,8 @@
-prior_samples.brmsfit 135
-prior_samples.brmsfit Extract prior samples
+
+## ``prior_samples.brmsfit`` 
+
+Extract prior samples
+
 #### Description 
 Extract prior samples of specified parameters
 
@@ -12,21 +15,13 @@ prior_samples(x, pars = NA, ...)
 
 #### Arguments
 
-* x An R object typically of class brmsfit
-* pars Names of parameters for which prior samples should be returned, as given by
-* a character vector or regular expressions. By default, all prior samples are extracted
-* ... Currently ignored
+* ``x``: An R object typically of class ``brmsfit``
+* ``pars``: Names of parameters for which prior samples should be returned, as given by a character vector or regular expressions. By default, all prior samples are extracted
+* ``...``: Currently ignored
 
-#### Details
-To make use of this function, the model must contain samples of prior distributions. This can be
-ensured by setting sample_prior = TRUE in function brm. Currently there are methods for brmsfit
-objects.
-#### Value
-A data frame containing the prior samples.
 
 #### Examples
 ```{r}
-## Not run:
 fit <- brm(rating ~ treat + period + carry + (1|subject),
 data = inhaler, family = "cumulative",
 prior = set_prior("normal(0,2)", class = "b"),
@@ -40,9 +35,14 @@ head(samples1)
 # extract prior samples for the population-level effects of 'treat'
 samples2 <- prior_samples(fit, "b_treat")
 head(samples2)
-## End(Not run)
 ```
 
+#### Details
+To make use of this function, the model must contain samples of prior distributions. This can be ensured by setting ``sample_prior = TRUE`` in function ``brm()``. Currently there are methods for ``brmsfit`` objects.
 
-Author(s)
+#### Value
+A data frame containing the prior samples.
+
+
+#### Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
