@@ -1,4 +1,6 @@
-## cs Category Specific Predictors in brms Models
+## ``cs`` 
+
+Category Specific Predictors in brms Models
 
 #### Description 
 Category Specific Predictors in brms Models
@@ -17,13 +19,12 @@ cs(expr)
 #### Examples
 
 ```{r}
-## Not run:
 fit <- brm(rating ~ period + carry + cs(treat),
 data = inhaler, family = sratio("cloglog"),
 prior = set_prior("normal(0,5)"), chains = 2)
 summary(fit)
 plot(fit, ask = FALSE)
-## End(Not run)
+
 ```
 
 #### Details
@@ -32,4 +33,3 @@ This function is almost solely useful when called in formulas passed to the brms
 
 #### See Also
 brmsformula
-custom_family 53
