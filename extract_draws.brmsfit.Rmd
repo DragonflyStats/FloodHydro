@@ -1,6 +1,15 @@
-extract_draws.brmsfit 59
+---
+title: "``extract_draws.brmsfit``"
+output: html_document
+---
 
-extract_draws.brmsfit Extract Data and Posterior Draws
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+
+## ``Extract Data and Posterior Draws``
 
 #### Description 
 This method helps in preparing brms models for certin post-processing tasks most notably various forms of predictions. Unless you are a package developer, you will rarely need to call extract_draws directly.
@@ -8,27 +17,25 @@ This method helps in preparing brms models for certin post-processing tasks most
 #### Usage
 <pre><code>
 ## S3 method for class 'brmsfit'
-extract_draws(x, newdata = NULL, re_formula = NULL, allow_new_levels = FALSE, sample_new_levels = "uncertainty",
-incl_autocor = TRUE, resp = NULL, nsamples = NULL, subset = NULL, nug = NULL, smooths_only = FALSE, offset = TRUE,
-new_objects = list(), ...)
+extract_draws(x, newdata = NULL, re_formula = NULL, allow_new_levels = FALSE, sample_new_levels = "uncertainty", incl_autocor = TRUE, resp = NULL, nsamples = NULL, subset = NULL, nug = NULL, smooths_only = FALSE, offset = TRUE, new_objects = list(), ...)
 extract_draws(x, ...)
 </code></pre>
 
 #### Arguments
 
-* x An R object typically of class 'brmsfit'.
-* newdata An optional data.frame for which to evaluate predictions. If NULL (default), the original data of the model is used.
-* re_formula formula containing group-level effects to be considered in the prediction. If NULL (default), include all group-level effects; if NA, include no group-level effects.
-* allow_new_levels: A flag indicating if new levels of group-level effects are allowed (defaults to FALSE). Only relevant if newdata is provided.
-* sample_new_levels Indicates how to sample new levels for grouping factors specified in re_formula.
-This argument is only relevant if newdata is provided and allow_new_levels is set to TRUE. If "uncertainty" (default), include group-level uncertainty in the predictions based on the variation of the existing levels. If "gaussian", sample new levels from the (multivariate) normal distribution implied by the group-level standard deviations and correlations. This options may be useful for conducting Bayesian power analysis. If "old_levels", directly sample new levels from the existing levels.
-* incl_autocor: A flag indicating if ARMA autocorrelation parameters should be included in the predictions. Defaults to TRUE. Setting it to FALSE will not affect other correlation structures such as cor_bsts, or cor_fixed.
+* ``x``: An R object typically of class 'brmsfit'.
+* ``newdata``: An optional data.frame for which to evaluate predictions. If NULL (default), the original data of the model is used.
+* ``re_formula``: formula containing group-level effects to be considered in the prediction. If NULL (default), include all group-level effects; if NA, include no group-level effects.
+* ``allow_new_levels``: A flag indicating if new levels of group-level effects are allowed (defaults to FALSE). Only relevant if newdata is provided.
+* ``sample_new_levels``: Indicates how to sample new levels for grouping factors specified in re_formula.
+This argument is only relevant if newdata is provided and allow_new_levels is set to TRUE. If "uncertainty" (default), include group-level uncertainty in the predictions based on the variation of the existing levels. If "gaussian", sample new levels from the (multivariate) normal distribution implied by the group-level standard deviations and correlations. This options may be useful for conducting Bayesian power analysis. If "``old_levels``", directly sample new levels from the existing levels.
+* ``incl_autocor``: A flag indicating if ARMA autocorrelation parameters should be included in the predictions. Defaults to TRUE. Setting it to FALSE will not affect other correlation structures such as cor_bsts, or cor_fixed.
 * `` resp``: Optional names of response variables. If specified, predictions are performed only for the specified response variables.
-* nsamples Positive integer indicating how many posterior samples should be used. If NULL (the default) all samples are used. Ignored if subset is not NULL.
+* ``nsamples``: Positive integer indicating how many posterior samples should be used. If NULL (the default) all samples are used. Ignored if subset is not NULL.
 * subset: A numeric vector specifying the posterior samples to be used. If NULL (the default), all samples are used.
 * nug:  Small positive number for Gaussian process terms only. For numerical reasons, the covariance matrix of a Gaussian process might not be positive definite. Adding a very small number to the matrix’s diagonal often solves this problem. If NULL (the default), nug is chosen internally.
-* smooths_only Logical; If TRUE only draws related to the computation of smooth terms will be extracted.
-* offset Logical; Indicates if offsets should be included in the predictions. Defaults to TRUE.
+* ``smooths_only``: Logical; If TRUE only draws related to the computation of smooth terms will be extracted.
+* ``offset``: Logical; Indicates if offsets should be included in the predictions. Defaults to TRUE.
 * new_objects A named list of objects containing new data, which cannot be passed via argument newdata. Currently, only required for objects passed to cor_sar and cor_fixed.
 * `` ... ``: Further arguments passed to validate_newdata.
 

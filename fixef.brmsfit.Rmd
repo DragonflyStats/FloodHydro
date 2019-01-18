@@ -1,4 +1,13 @@
-``fixef.brmsfit`` Extract Population-Level Estimates
+---
+title: "``fixef.brmsfit`` "
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+Extract Population-Level Estimates
 #### Description 
 Extract the population-level (’fixed’) effects from a brmsfit object.
 

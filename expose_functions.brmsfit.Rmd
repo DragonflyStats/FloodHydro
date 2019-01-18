@@ -9,11 +9,11 @@ knitr::opts_chunk$set(echo = TRUE)
 library(brms)
 library(ggplot2)
 ```
-expose_functions.brmsfit
+
 Expose user-defined Stan functions
 
 #### Description 
-Export user-defined Stan function and optionally vectorize them. for more details see expose_stan_functions.
+Export user-defined Stan function and optionally vectorize them. for more details see ``expose_stan_functions``.
 
 #### Usage
 <pre><code>
@@ -24,8 +24,8 @@ expose_functions(x, ...)
 </code></pre>
 
 #### Arguments
-* x An R object
-* vectorize Logical; Indicates if the exposed functions should be vectorized via Vectorize. Defaults to FALSE.
-* env Environment where the functions should be made available. Defaults to the global environment.
-* `` ... ``: Further arguments passed to expose_stan_functions.
+* ``x``: An R object
+* ``vectorize``: Logical; Indicates if the exposed functions should be vectorized via Vectorize. Defaults to FALSE.
+* ``env``: Environment where the functions should be made available. Defaults to the global environment.
+* `` ... ``: Further arguments passed to ``expose_stan_functions``.
 

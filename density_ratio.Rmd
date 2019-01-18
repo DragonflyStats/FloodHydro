@@ -1,5 +1,15 @@
-## ``density_ratio`` 
-Compute Density Ratios
+---
+title: "``density_ratio`` : compute Density Ratios"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+library(ggplot2)
+```
+
 #### Description 
 Compute the ratio of two densities at given points based on samples of the corresponding distributions.
 

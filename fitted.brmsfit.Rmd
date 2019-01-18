@@ -1,7 +1,17 @@
+---
+title: "brms"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 fitted.brmsfit Extract Model Fitted values of brmsfit Objects
+
 #### Description 
-Predict mean values of the response distribution (i.e., the ’regression line’) for a fitted model. Can
-be performed for the data used to fit the model (posterior predictive checks) or for new data. By definition, these predictions have smaller variance than the response predictions performed by the predict method. This is because the measurement error is not incorporated. The estimated means of both methods should, however, be very similar.
+Predict mean values of the response distribution (i.e., the ’regression line’) for a fitted model. Can be performed for the data used to fit the model (posterior predictive checks) or for new data. By definition, these predictions have smaller variance than the response predictions performed by the predict method. This is because the measurement error is not incorporated. The estimated means of both methods should, however, be very similar.
 
 #### Usage
 
@@ -59,5 +69,6 @@ ggplot(dat) + geom_point(aes(x = Estimate, y = Y))
 NA values within factors in newdata, are interpreted as if all dummy variables of this factor are zero. This allows, for instance, to make predictions of the grand mean when using sum coding. Method posterior_linpred.brmsfit is an alias of fitted.brmsfit with scale = "linear" and summary = FALSE.
 
 #### Value
-Fitted values extracted from object. The output depends on the family: If summary = TRUE it is a N x E x C array for categorical and ordinal models and a N x E matrix else. If summary = FALSE it is a S x N x C array for categorical and ordinal models and a S x N matrix else. N is the number of observations, S is the number of samples, C is the number of categories, and E is equal to
-length(probs) + 2. In multivariate models, the output is an array of 3 dimensions, where the third dimension indicates the response variables.
+Fitted values extracted from object. The output depends on the family: If summary = TRUE it is a N x E x C array for categorical and ordinal models and a N x E matrix else. If summary = FALSE it is a S x N x C array for categorical and ordinal models and a S x N matrix else. 
+* N is the number of observations, S is the number of samples, C is the number of categories, and E is equal to length(probs) + 2. 
+* In multivariate models, the output is an array of 3 dimensions, where the third dimension indicates the response variables.

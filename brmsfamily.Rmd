@@ -1,4 +1,12 @@
+---
+title: "brms"
+output: html_document
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
 brmsfamily Special Family Functions for brms Models
 #### Description 
 Family objects provide a convenient way to specify the #### Details of the models used by many model fitting functions. The family functions presented here are for use with brms only and will **not** work with other model fitting functions such as glm or glmer. However, the standard family functions as described in family will work with brms. You can also specify custom families for use in brms with the custom_family function.

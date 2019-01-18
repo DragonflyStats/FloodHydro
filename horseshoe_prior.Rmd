@@ -1,5 +1,14 @@
+---
+title: "``horseshoe ``"
+output: html_document
+---
 
-horseshoe Set up a horseshoe prior in brms
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+Set up a horseshoe prior in brms
 #### Description 
 Function used to set up a horseshoe prior for population-level effects in brms. The function does
 not evaluate its Arguments
@@ -13,9 +22,9 @@ df_slab = 4, par_ratio = NULL, autoscale = TRUE)
 #### Arguments
 
 * df Degrees of freedom of student-t prior of the local shrinkage parameters. Defaults to 1.
-* scale_global Scale of the student-t prior of the global shrinkage parameter. Defaults to 1.
+* ``scale_global`` Scale of the student-t prior of the global shrinkage parameter. Defaults to 1.
 In linear models, scale_global will internally be multiplied by the residual standard deviation parameter sigma.
-* df_global Degrees of freedom of student-t prior of the global shrinkage parameter. Defaults to 1.
+* ``df_global``: Degrees of freedom of student-t prior of the global shrinkage parameter. Defaults to 1.
 * scale_slab Scale of the student-t prior of the regularization parameter. Defaults to 2.
 * df_slab Degrees of freedom of the student-t prior of the regularization parameter. Defaults to 4.
 * par_ratio Ratio of the expected number of non-zero coefficients to the expected number of zero coefficients. If specified, scale_global is ignored and internally computed as par_ratio / sqrt(N), where N is the total number of observations in the

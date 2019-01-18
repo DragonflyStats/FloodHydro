@@ -1,7 +1,16 @@
-control_params.brmsfit Extract Control Parameters of the NUTS Sampler
+---
+title: "``control_params.brmsfit ``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+Extract Control Parameters of the NUTS Sampler
 
 #### Description 
-Extract control parameters of the NUTS sampler such as adapt_delta or max_treedepth.
+Extract control parameters of the NUTS sampler such as ``adapt_delta`` or ``max_treedepth``.
 
 
 #### Usage
@@ -13,10 +22,10 @@ control_params(x, ...)
 </code></pre>
 
 #### Arguments
-* x An R object
-* pars Optional names of the control parameters to be returned. If NULL (the default) all control parameters are returned. See stan for more details.
-* ... Currently ignored.
+* ``x``: An R object
+* ``pars``: Optional names of the control parameters to be returned. If NULL (the default) all control parameters are returned. See stan for more details.
+* ``...``: Currently ignored.
 
 #### Value
-A named list with control parameter #### Values.
+A named list with control parameter values.
 
