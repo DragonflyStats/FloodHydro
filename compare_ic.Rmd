@@ -1,0 +1,42 @@
+## ``compare_ic`` 
+
+Compare Information Criteria of Different Models
+#### Description 
+Compare information criteria of different models fitted with WAIC or loo.
+
+#### Usage
+
+<pre><code>
+compare_ic(..., x = NULL, ic = c("loo", "waic", "kfold"))
+</code></pre>
+
+#### Arguments
+... At least two objects returned by WAIC or loo. Alternatively, brmsfit objects
+with information criteria precomputed via add_ic may be passed, as well.
+x A list containing the same types of objects as can be passed via ....
+ic The name of the information criterion to be extracted from brmsfit objects.
+Ignored if information criterion objects are only passed directly.
+
+
+#### Examples
+```{r}
+## Not run:
+# model with population-level effects only
+fit1 <- brm(rating ~ treat + period + carry,
+data = inhaler, family = "gaussian")
+waic1 <- WAIC(fit1)
+# model with an additional varying intercept for subjects
+fit2 <- brm(rating ~ treat + period + carry + (1|subject),
+data = inhaler, family = "gaussian")
+waic2 <- WAIC(fit2)
+# compare both models
+compare_ic(waic1, waic2)
+## End(Not run)
+```
+
+#### Details
+for more details see compare.
+#### Value
+An object of class iclist.
+See Also
+WAIC, loo, add_ic, compare
