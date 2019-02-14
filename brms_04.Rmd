@@ -15,9 +15,7 @@ formula Non-linear formula for a distributional parameter. The name of the distr
 parameter can either be specified on the left-hand side of formula or via
 argument dpar.
 ... Additional formula objects to specify predictors of non-linear and distributional
-parameters. Formulas can either be named directly or contain names
-on their left-hand side. The following are distributional parameters of specific
-families (all other parameters are treated as non-linear parameters): sigma
+parameters. Formulas can either be named directly or contain names on their left-hand side. The following are distributional parameters of specific families (all other parameters are treated as non-linear parameters): sigma
 (residual standard deviation or scale of the gaussian, student, skew_normal,
 lognormal exgaussian, and asym_laplace families); shape (shape parameter
 of the Gamma, weibull, negbinomial, and related zero-inflated / hurdle
@@ -26,31 +24,18 @@ phi (precision parameter of the beta and zero_inflated_beta families);
 kappa (precision parameter of the von_mises family); beta (mean parameter
 of the exponential component of the exgaussian family); quantile (quantile
 parameter of the asym_laplace family); zi (zero-inflation probability); hu
-(hurdle probability); zoi (zero-one-inflation probability); coi (conditional oneinflation
-probability); disc (discrimination) for ordinal models; bs, ndt, and
-bias (boundary separation, non-decision time, and initial bias of the wiener
-diffusion model). By default, distributional parameters are modeled on the log
-scale if they can be positive only or on the logit scale if the can only be within
-the unit interval. See ’#### Details’ for more explanation.
-flist Optional list of formulas, which are treated in the same way as formulas passed
-via the ... argument.
-dpar Optional character string specifying the distributional parameter to which the
-formulas passed via ... and flist belong.
-resp Optional character string specifying the response variable to which the formulas
-passed via ... and flist belong. Only relevant in multivariate models.
-loop Logical; Only used in non-linear models. Indicates if the computation of the
-non-linear formula should be done inside (TRUE) or outside (FALSE) a loop over
-observations. Defaults to TRUE.
-cmc Logical; Indicates whether automatic cell-mean coding should be enabled when
+(hurdle probability); zoi (zero-one-inflation probability); coi (conditional oneinflation probability); disc (discrimination) for ordinal models; bs, ndt, and bias (boundary separation, non-decision time, and initial bias of the wiener
+diffusion model). By default, distributional parameters are modeled on the log scale if they can be positive only or on the logit scale if the can only be within the unit interval. See ’Details’ for more explanation.
+* flist Optional list of formulas, which are treated in the same way as formulas passed via the ... argument.
+* dpar Optional character string specifying the distributional parameter to which the formulas passed via ... and flist belong.
+* resp Optional character string specifying the response variable to which the formulas passed via ... and flist belong. Only relevant in multivariate models.
+* loop Logical; Only used in non-linear models. Indicates if the computation of the non-linear formula should be done inside (TRUE) or outside (FALSE) a loop over observations. Defaults to TRUE.
+* cmc Logical; Indicates whether automatic cell-mean coding should be enabled when
 removing the intercept by adding 0 to the right-hand of model formulas. Defaults
 to TRUE to mirror the behavior of standard R formula parsing.
-nl Logical; Indicates whether formula should be treated as specifying a non-linear
-model. By default, formula is treated as an ordinary linear model formula.
-rescor Logical; Indicates if residual correlation between the response variables should
-be modeled. Currently this is only possible in multivariate gaussian and student
-models. Only relevant in multivariate models.
-mecor Logical; Indicates if correlations between latent variables defined by me terms
-should be modeled. Defaults to TRUE.
+* nl Logical; Indicates whether formula should be treated as specifying a non-linear model. By default, formula is treated as an ordinary linear model formula.
+* rescor Logical; Indicates if residual correlation between the response variables should be modeled. Currently this is only possible in multivariate gaussian and student models. Only relevant in multivariate models.
+* mecor Logical; Indicates if correlations between latent variables defined by me terms should be modeled. Defaults to TRUE.
 36 brmshypothesis
 #### Value
 For lf and nlf a list that can be passed to brmsformula or added to an existing brmsformula
@@ -58,7 +43,9 @@ or mvbrmsformula object. For set_nl and set_rescor a logical #### Value that can
 existing brmsformula or mvbrmsformula object.
 See Also
 brmsformula, mvbrmsformula
-Examples
+
+#### Examples
+```{r}
 # add more formulas to the model
 bf(y ~ 1) +
 nlf(sigma ~ a * exp(b * x)) +
@@ -72,90 +59,4 @@ set_nl(TRUE)
 bf(y1 ~ x + (1|g)) +
 bf(y2 ~ z) +
 set_rescor(TRUE)
-
-40 coef.brmsfit
-coef.brmsfit Extract Model Coefficients
-#### Description 
-Extract model coefficients, which are the sum of population-level effects and corresponding grouplevel
-effects
-Usage
-## S3 method for class 'brmsfit'
-coef(object, summary = TRUE, robust = FALSE,
-probs = c(0.025, 0.975), ...)
-#### Arguments
-object An object of class brmsfit.
-summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw #### Values? Default is TRUE.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
-TRUE.
-probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-* `` ... ``: Further arguments passed to fixef.brmsfit and ranef.brmsfit.
-#### Value
-If old is FALSE: A list of arrays (one per grouping factor). If summary is TRUE, names of the first
-dimension are the factor levels and names of the third dimension are the group-level effects. If
-summary is FALSE, names of the second dimension are the factor levels and names of the third
-dimension are the group-level effects.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-Examples
-## Not run:
-fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c + (1+Trt_c|visit),
-data = epilepsy, family = gaussian(), chains = 2)
-## extract population and group-level coefficients separately
-fixef(fit)
-ranef(fit)
-## extract combined coefficients
-combine_models 41
-coef(fit)
-## End(Not run)
-combine_models Combine Models fitted with brms
-#### Description 
-Combine multiple brmsfit objects, which fitted the same model. This is usefuly for instance when
-having manually run models in parallel.
-Usage
-combine_models(..., mlist = NULL, check_data = TRUE)
-#### Arguments
-... One or more brmsfit objects.
-mlist Optional list of one or more brmsfit objects.
-check_data Logical; indicates if the data should be checked for being the same across models
-(defaults to TRUE). Setting it to FALSE may be useful for instance when combining
-models fitted on multiple imputed data sets.
-#### Details
-This function just takes the first model and replaces its stanfit object (slot fit) by the combined
-stanfit objects of all models.
-#### Value
-A brmsfit object.
-compare_ic Compare Information Criteria of Different Models
-#### Description 
-Compare information criteria of different models fitted with WAIC or loo.
-Usage
-compare_ic(..., x = NULL, ic = c("loo", "waic", "kfold"))
-42 control_params.brmsfit
-#### Arguments
-... At least two objects returned by WAIC or loo. Alternatively, brmsfit objects
-with information criteria precomputed via add_ic may be passed, as well.
-x A list containing the same types of objects as can be passed via ....
-ic The name of the information criterion to be extracted from brmsfit objects.
-Ignored if information criterion objects are only passed directly.
-#### Details
-for more details see compare.
-#### Value
-An object of class iclist.
-See Also
-WAIC, loo, add_ic, compare
-Examples
-## Not run:
-# model with population-level effects only
-fit1 <- brm(rating ~ treat + period + carry,
-data = inhaler, family = "gaussian")
-waic1 <- WAIC(fit1)
-# model with an additional varying intercept for subjects
-fit2 <- brm(rating ~ treat + period + carry + (1|subject),
-data = inhaler, family = "gaussian")
-waic2 <- WAIC(fit2)
-# compare both models
-compare_ic(waic1, waic2)
-## End(Not run)
+```
