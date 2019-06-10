@@ -1,5 +1,5 @@
 ---
-title: "``density_ratio`` : compute Density Ratios"
+title: "``brms::density_ratio`` : compute Density Ratios"
 output: html_document
 ---
 

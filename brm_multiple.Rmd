@@ -1,3 +1,13 @@
+---
+title: "``brms::brm_multiple``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 
 brm_multiple Run the same brms model on multiple datasets
 #### Description 

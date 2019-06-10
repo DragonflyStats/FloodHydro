@@ -1,5 +1,5 @@
 ---
-title: "brms"
+title: "``brms::fitted.brmsfit``"
 output: html_document
 ---
 

@@ -1,29 +1,39 @@
+---
+title: "``brms::loo.brmsfit``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 loo.brmsfit Compute the LOO information criterion
 #### Description 
 Perform approximate leave-one-out cross-validation based on the posterior likelihood using the loo
 package. for more details see loo.
 Usage
+<pre><code>
 ## S3 method for class 'brmsfit'
 loo(x, ..., compare = TRUE, resp = NULL,
 pointwise = FALSE, reloo = FALSE, k_threshold = 0.7,
 reloo_args = list(), model_names = NULL)
+</code></pre>
+
 #### Arguments
 x A fitted model object.
 ... More fitted model objects or further #### Arguments passed to the underlying postprocessing
 functions.
-compare A flag indicating if the information criteria of the models should be compared
-to each other via compare_ic.
+* ``compare``: A flag indicating if the information criteria of the models should be compared to each other via compare_ic.
 * `` resp``: Optional names of response variables. If specified, predictions are performed
 only for the specified response variables.
-pointwise A flag indicating whether to compute the full log-likelihood matrix at once or
-separately for each observation. The latter approach is usually considerably
-slower but requires much less working memory. Accordingly, if one runs into
+* pointwise A flag indicating whether to compute the full log-likelihood matrix at once or
+separately for each observation. The latter approach is usually considerably slower but requires much less working memory. Accordingly, if one runs into
 memory issues, pointwise = TRUE is the way to go.
-reloo Logical; Indicate whether reloo should be applied on problematic observations.
+* reloo Logical; Indicate whether reloo should be applied on problematic observations.
 Defaults to FALSE.
-k_threshold The threshold at which pareto k estimates are treated as problematic. Defaults to
-0.7. Only used if argument reloo is TRUE. See pareto_k_ids for more details.
-reloo_args Optional list of additional #### Arguments passed to reloo.
+* k_threshold The threshold at which pareto k estimates are treated as problematic. Defaults to 0.7. Only used if argument reloo is TRUE. See pareto_k_ids for more details.
+* reloo_args Optional list of additional arguments passed to reloo.
 model_names If NULL (the default) will use model names derived from deparsing the call. Otherwise
 will use the passed #### Values as model names.
 loo.brmsfit 89

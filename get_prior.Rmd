@@ -1,5 +1,5 @@
 ---
-title: "``get_prior``"
+title: "``brms::get_prior``"
 output: html_document
 ---
 
@@ -26,8 +26,8 @@ internal = FALSE)
 to no correlations. In multivariate models, autocor might also be a list of autocorrelation structures.
 * ``internal``; A flag indicating if the names of additional internal parameters should be displayed. Setting priors on these parameters is not recommended
 
-
 #### Examples 
+
 ```{r}
 ## get all parameters and parameters classes to define priors on
 (prior <- get_prior(count ~ log_Age_c + log_Base4_c * Trt_c
