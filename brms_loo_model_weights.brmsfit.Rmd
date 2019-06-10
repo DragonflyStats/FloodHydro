@@ -1,5 +1,5 @@
 ---
-title: "``loo_model_weights.brmsfit``"
+title: "``brms::loo_model_weights.brmsfit``"
 output: html_document
 ---
 
@@ -9,10 +9,13 @@ library(brms)
 ```
 
 Model averaging via stacking or pseudo-BMA weighting.
+
 #### Description 
+
 Compute model weights for brmsfit objects via stacking or pseudo-BMA weighting. For more details, see ``loo::loo_model_weights``.
 
 #### Usage
+
 <pre><code>
 ## S3 method for class 'brmsfit'
 loo_model_weights(x, ..., model_names = NULL)

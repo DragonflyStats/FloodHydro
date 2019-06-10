@@ -1,5 +1,13 @@
+---
+title: "``brms::residuals.brmsfit``"
+output: html_document
+---
 
-residuals.brmsfit Extract Model Residuals from brmsfit Objects
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 #### Description 
 Extract Model Residuals from brmsfit Objects
 
@@ -50,6 +58,7 @@ is TRUE.
 * `` ... ``: Further arguments passed to extract_draws that control several aspects of data
 validation and prediction.
 re.form Alias of re_formula.
+
 #### Details
 Residuals of type ordinary are of the form R = Y 􀀀 Y p, where Y is the observed and Y p is the
 predicted response. Residuals of type pearson are of the form R = (Y 􀀀 Y p)=SD(Y ), where
@@ -57,13 +66,16 @@ SD(Y ) is an estimation of the standard deviation of Y .
 Currently, residuals.brmsfit does not support categorical or ordinal models.
 Method predictive_error.brmsfit is an alias of residuals.brmsfit with method = "predict"
 and summary = FALSE.
+
 #### Value
 Model residuals. If summary = TRUE this is a N x C matrix and if summary = FALSE a S x
 N matrix, where S is the number of samples, N is the number of observations, and C is equal to
 length(probs) + 2.
 restructure 141
 
-Examples
+
+#### Examples
+
 ```{r}
 ## Not run:
 ## fit a model

@@ -1,4 +1,17 @@
-``mvbrmsformula`` 
+---
+title: "``mvbrmsformula`` "
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+
+```
+
+
+
+
 Set up a multivariate model formula for use in brms
 
 #### Description 

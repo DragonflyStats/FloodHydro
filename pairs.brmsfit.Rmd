@@ -1,4 +1,15 @@
-pairs.brmsfit Create a matrix of output plots from a brmsfit object
+---
+title: "``pairs.brmsfit `` "
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+
+```
+
+Create a matrix of output plots from a brmsfit object
 
 #### Description 
 A pairs method that is customized for MCMC output.

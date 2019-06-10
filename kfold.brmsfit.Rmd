@@ -1,5 +1,16 @@
+---
+title: "``kfold.brmsfit``"
+output: html_document
+---
 
-``kfold.brmsfit`` 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+
+data(epilepsy)
+```
+
+
 
 K-Fold Cross-Validation
 
@@ -40,6 +51,9 @@ brmsfit objects and the indices of the omitted observations for each fold. Defau
 fit1 <- brm(count ~ log_Age_c + log_Base4_c * Trt +
               (1|patient) + (1|obs),
             data = epilepsy, family = poisson())
+```
+
+```{r}
 # throws warning about some pareto k estimates being too high
 (loo1 <- loo(fit1))
 # perform 10-fold cross validation

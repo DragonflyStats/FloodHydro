@@ -1,3 +1,12 @@
+---
+title: "``brms::make_standata``   Data for brms Models"
+output: html_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
 
 mm Set up multi-membership grouping terms in brms
 #### Description 
@@ -12,11 +21,10 @@ Function to set up a multi-membership grouping term in brms. The function does n
 </code></pre>
   
 #### Arguments
-* ... One or more terms containing grouping factors.
-* weights A matrix specifying the weights of each member. It should have as many
-* columns as grouping terms specified in .... If NULL (the default), equally weights are used.
-* scale Logical; if TRUE (the default), weights are standardized in order to sum to one per row. If negative weights are specified, scale needs to be set to FALSE.
-* dist Name of the distribution of the group-level effects. Currently "gaussian" is the only option.
+* ``...``: One or more terms containing grouping factors.
+* ``weights``: A matrix specifying the weights of each member. It should have as many columns as grouping terms specified in .... If NULL (the default), equally weights are used.
+* ``scale``: Logical; if TRUE (the default), weights are standardized in order to sum to one per row. If negative weights are specified, scale needs to be set to FALSE.
+* ``dist``: Name of the distribution of the group-level effects. Currently "gaussian" is the only option.
 
 #### Examples
 ```{r}
@@ -44,5 +52,6 @@ dat$xc <- (dat$x1 + dat$x2) / 2
 fit3 <- brm(y ~ xc + (1 + mmc(x1, x2) | mm(g1, g2)), data = dat)
 summary(fit3)
 ```
-See Also
+
+#### See Also
 brmsformula, mmc

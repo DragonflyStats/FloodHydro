@@ -1,3 +1,14 @@
+---
+title: "``brms::cor_arr``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+
 
 cor_arr ARR(r) correlation structure
 
@@ -32,7 +43,4 @@ called ARR in brms.
 
 #### Value
 An object of class cor_arma containing solely autoregressive response terms.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-See Also
-cor_arma
+

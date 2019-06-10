@@ -1,13 +1,25 @@
+---
+title: "``brms::brm``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
 
 brm Fit Bayesian Generalized (Non-)Linear Multivariate Multilevel Models
 #### Description 
 Fit Bayesian generalized (non-)linear multivariate multilevel models using Stan for full Bayesian
 inference. A wide range of distributions and link functions are supported, allowing users to fit –
 among others – linear, robust linear, count data, survival, response times, ordinal, zero-inflated,
-hurdle, and even self-defined mixture models all in a multilevel context. Further modeling options
-include non-linear and smooth terms, auto-correlation structures, censored data, meta-analytic standard
+hurdle, and even self-defined mixture models all in a multilevel context. 
+
+Further modeling options include non-linear and smooth terms, auto-correlation structures, censored data, meta-analytic standard
 errors, and quite a few more. In addition, all parameters of the response distributions can
-be predicted in order to perform distributional regression. Prior specifications are flexible and explicitly
+be predicted in order to perform distributional regression. 
+
+Prior specifications are flexible and explicitly
 encourage users to apply prior distributions that actually reflect their beliefs. In addition,
 model fit can easily be assessed and compared with posterior predictive checks and leave-one-out
 cross-validation.
@@ -28,39 +40,126 @@ save_dso = TRUE, file = NULL, ...)
 </code></pre>
 
 #### Arguments
-formula An object of class formula, brmsformula, or mvbrmsformula (or one that can
-be coerced to that classes): A symbolic #### Description  of the model to be fitted.
-The #### Details of model specification are explained in brmsformula.
-data An object of class data.frame (or one that can be coerced to that class) containing
-data of all variables used in the model.
+* ``formula``: An object of class formula, brmsformula, or mvbrmsformula (or one that can
+be coerced to that classes): A symbolic description  of the model to be fitted.
+The details of model specification are explained in brmsformula.
+* ``data``: An object of class data.frame (or one that can be coerced to that class) containing data of all variables used in the model.
 * `` family`` A description  of the response distribution and link function to be used in the model. This can be a family function, a call to a family function or a character string naming the family. Every family function has a link argument allowing to
 specify the link function to be applied on the response variable. If not specified,
 default links are used. For details of supported families see brmsfamily. By
 default, a linear gaussian model is applied. In multivariate models, family
 might also be a list of families.
-* ``prior``: One or more brmsprior objects created by set_prior or related functions and
-combined using the c method or the + operator. See also get_prior for more
+* ``prior``: One or more brmsprior objects created by set_prior or related functions and combined using the c method or the + operator. See also ``get_prior`` for more
 help.
-* ``autocor`` An optional cor_brms object describing the correlation structure within the response
-variable (i.e., the ’autocorrelation’). See the documentation of cor_brms
-for a description  of the available correlation structures. Defaults to NULL, corresponding
-to no correlations. In multivariate models, autocor might also be a
+* ``autocor`` An optional cor_brms object describing the correlation structure within the response variable (i.e., the ’autocorrelation’). See the documentation of ``cor_brms``
+for a description  of the available correlation structures. Defaults to NULL, corresponding to no correlations. In multivariate models, autocor might also be a
 list of autocorrelation structures.
-* ``cov_ranef`` A list of matrices that are proportional to the (within) covariance structure of the
-group-level effects. The names of the matrices should correspond to columns in
-data that are used as grouping factors. All levels of the grouping factor should
-appear as rownames of the corresponding matrix. This argument can be used, among others to model pedigrees and phylogenetic effects. See vignette("brms_phylogenetics")
+* ``cov_ranef`` A list of matrices that are proportional to the (within) covariance structure of the group-level effects. The names of the matrices should correspond to columns in
+data that are used as grouping factors. All levels of the grouping factor should appear as rownames of the corresponding matrix. This argument can be used, among others to model pedigrees and phylogenetic effects. See vignette("brms_phylogenetics")
 for more details.
 * ``sample_prior``: Indicate if samples from all specified proper priors should be drawn additionally
-to the posterior samples (defaults to "no"). Among others, these samples can be
-used to calculate Bayes factors for point hypotheses via hypothesis. If set to
-"only", samples are drawn solely from the priors ignoring the likelihood, which
-allows among others to generate samples from the prior predictive distribution.
+to the posterior samples (defaults to "no"). Among others, these samples can be used to calculate Bayes factors for point hypotheses via hypothesis. If set to "only", samples are drawn solely from the priors ignoring the likelihood, which allows among others to generate samples from the prior predictive distribution.
 In this case, all parameters must have proper priors.
-* sparse Logical; indicates whether the population-level design matrices should be treated
+* ``sparse`` Logical; indicates whether the population-level design matrices should be treated
 as sparse (defaults to FALSE). For design matrices with many zeros, this can considerably
 reduce required memory. Sampling speed is currently not improved or
 even slightly decreased.
+
+#### Examples 
+
+```{r}
+## Not run:
+# Poisson regression for the number of seizures in epileptic patients
+# using student_t priors for population-level effects
+# and half cauchy priors for standard deviations of group-level effects
+bprior1 <- prior(student_t(5,0,10), class = b) +
+prior(cauchy(0,2), class = sd)
+fit1 <- brm(count ~ log_Age_c + log_Base4_c * Trt + (1|patient),
+data = epilepsy, family = poisson(), prior = bprior1)
+# generate a summary of the results
+summary(fit1)
+# plot the MCMC chains as well as the posterior distributions
+plot(fit1, ask = FALSE)
+```
+```{r}
+# predict responses based on the fitted model
+head(predict(fit1))
+# plot marginal effects for each predictor
+plot(marginal_effects(fit1), ask = FALSE)
+# investigate model fit
+loo(fit1)
+pp_check(fit1)
+```
+```{r}
+# Ordinal regression modeling patient's rating of inhaler instructions
+# category specific effects are estimated for variable 'treat'
+fit2 <- brm(rating ~ period + carry + cs(treat),
+data = inhaler, family = sratio("logit"),
+prior = set_prior("normal(0,5)"), chains = 2)
+summary(fit2)
+plot(fit2, ask = FALSE)
+WAIC(fit2)
+```
+```{r}
+# Survival regression modeling the time between the first
+# and second recurrence of an infection in kidney patients.
+fit3 <- brm(time | cens(censored) ~ age * sex + disease + (1|patient),
+data = kidney, family = lognormal())
+summary(fit3)
+plot(fit3, ask = FALSE)
+plot(marginal_effects(fit3), ask = FALSE)
+# Probit regression using the binomial family
+ntrials <- sample(1:10, 100, TRUE)
+success <- rbinom(100, size = ntrials, prob = 0.4)
+x <- rnorm(100)
+data4 <- data.frame(ntrials, success, x)
+fit4 <- brm(success | trials(ntrials) ~ x, data = data4,
+family = binomial("probit"))
+summary(fit4)
+```
+```{r}
+# Simple non-linear gaussian model
+x <- rnorm(100)
+y <- rnorm(100, mean = 2 - 1.5^x, sd = 1)
+data5 <- data.frame(x, y)
+bprior5 <- prior(normal(0, 2), nlpar = a1) +
+prior(normal(0, 2), nlpar = a2)
+fit5 <- brm(bf(y ~ a1 - a2^x, a1 + a2 ~ 1, nl = TRUE),
+data = data5, prior = bprior5)
+summary(fit5)
+plot(marginal_effects(fit5), ask = FALSE)
+```
+```{r}
+# Normal model with heterogeneous variances
+data_het <- data.frame(
+y = c(rnorm(50), rnorm(50, 1, 2)),
+x = factor(rep(c("a", "b"), each = 50))
+)
+fit6 <- brm(bf(y ~ x, sigma ~ 0 + x), data = data_het)
+summary(fit6)
+plot(fit6)
+marginal_effects(fit6)
+# extract estimated residual SDs of both groups
+sigmas <- exp(posterior_samples(fit6, "^b_sigma_"))
+ggplot(stack(sigmas), aes(#### Values)) +
+geom_density(aes(fill = ind))
+```
+```{r}
+# Quantile regression predicting the 25%-quantile
+fit7 <- brm(bf(y ~ x, quantile = 0.25), data = data_het,
+family = asym_laplace())
+summary(fit7)
+marginal_effects(fit7)
+```
+```{r}
+# use the future package for more flexible parallelization
+library(future)
+plan(multiprocess)
+fit7 <- update(fit7, future = TRUE)
+## End(Not run)
+```
+
+
 * `` knots ``:Optional list containing user specified knot #### Values to be used for basis construction
 of smoothing terms. See gamm for more details.
 stanvars An optional stanvars object generated by function stanvar to define additional
@@ -144,9 +243,9 @@ Fit a generalized (non-)linear multivariate multilevel model via full Bayesian i
 A general overview is provided in the vignettes vignette("brms_overview") and vignette("brms_multilevel").
 For a full list of available vignettes see vignette(package = "brms").
 Formula syntax of brms models
-#### Details of the formula syntax applied in brms can be found in brmsformula.
+Details of the formula syntax applied in brms can be found in brmsformula.
 Families and link functions
-#### Details of families supported by brms can be found in brmsfamily.
+Details of families supported by brms can be found in brmsfamily.
 Prior distributions
 Priors should be specified using the set_prior function. Its documentation contains detailed information
 on how to correctly specify priors. To find out on which parameters or parameter classes
@@ -187,83 +286,3 @@ Paul-Christian Buerkner (in review). Advanced Bayesian Multilevel Modeling with 
 brms. arXiv preprint.
 See Also
 brms, brmsformula, brmsfamily, brmsfit
-#### Examples 
-
-```{r}
-## Not run:
-# Poisson regression for the number of seizures in epileptic patients
-# using student_t priors for population-level effects
-# and half cauchy priors for standard deviations of group-level effects
-bprior1 <- prior(student_t(5,0,10), class = b) +
-prior(cauchy(0,2), class = sd)
-fit1 <- brm(count ~ log_Age_c + log_Base4_c * Trt + (1|patient),
-data = epilepsy, family = poisson(), prior = bprior1)
-# generate a summary of the results
-summary(fit1)
-# plot the MCMC chains as well as the posterior distributions
-plot(fit1, ask = FALSE)
-20 brm
-# predict responses based on the fitted model
-head(predict(fit1))
-# plot marginal effects for each predictor
-plot(marginal_effects(fit1), ask = FALSE)
-# investigate model fit
-loo(fit1)
-pp_check(fit1)
-# Ordinal regression modeling patient's rating of inhaler instructions
-# category specific effects are estimated for variable 'treat'
-fit2 <- brm(rating ~ period + carry + cs(treat),
-data = inhaler, family = sratio("logit"),
-prior = set_prior("normal(0,5)"), chains = 2)
-summary(fit2)
-plot(fit2, ask = FALSE)
-WAIC(fit2)
-# Survival regression modeling the time between the first
-# and second recurrence of an infection in kidney patients.
-fit3 <- brm(time | cens(censored) ~ age * sex + disease + (1|patient),
-data = kidney, family = lognormal())
-summary(fit3)
-plot(fit3, ask = FALSE)
-plot(marginal_effects(fit3), ask = FALSE)
-# Probit regression using the binomial family
-ntrials <- sample(1:10, 100, TRUE)
-success <- rbinom(100, size = ntrials, prob = 0.4)
-x <- rnorm(100)
-data4 <- data.frame(ntrials, success, x)
-fit4 <- brm(success | trials(ntrials) ~ x, data = data4,
-family = binomial("probit"))
-summary(fit4)
-# Simple non-linear gaussian model
-x <- rnorm(100)
-y <- rnorm(100, mean = 2 - 1.5^x, sd = 1)
-data5 <- data.frame(x, y)
-bprior5 <- prior(normal(0, 2), nlpar = a1) +
-prior(normal(0, 2), nlpar = a2)
-fit5 <- brm(bf(y ~ a1 - a2^x, a1 + a2 ~ 1, nl = TRUE),
-data = data5, prior = bprior5)
-summary(fit5)
-plot(marginal_effects(fit5), ask = FALSE)
-brmsfamily 21
-# Normal model with heterogeneous variances
-data_het <- data.frame(
-y = c(rnorm(50), rnorm(50, 1, 2)),
-x = factor(rep(c("a", "b"), each = 50))
-)
-fit6 <- brm(bf(y ~ x, sigma ~ 0 + x), data = data_het)
-summary(fit6)
-plot(fit6)
-marginal_effects(fit6)
-# extract estimated residual SDs of both groups
-sigmas <- exp(posterior_samples(fit6, "^b_sigma_"))
-ggplot(stack(sigmas), aes(#### Values)) +
-geom_density(aes(fill = ind))
-# Quantile regression predicting the 25%-quantile
-fit7 <- brm(bf(y ~ x, quantile = 0.25), data = data_het,
-family = asym_laplace())
-summary(fit7)
-marginal_effects(fit7)
-# use the future package for more flexible parallelization
-library(future)
-plan(multiprocess)
-fit7 <- update(fit7, future = TRUE)
-## End(Not run)

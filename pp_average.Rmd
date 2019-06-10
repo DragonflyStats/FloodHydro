@@ -1,4 +1,12 @@
+---
+title: "``brms::pp_average.brmsfit``"
+output: html_document
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
 ## ``pp_average.brmsfit`` 
 Posterior predictive samples averaged across models
 
@@ -50,5 +58,5 @@ Weights are computed with the ``model_weights`` method.
 Same as the output of the method specified in argument method.
 
 #### See Also
-model_weights, posterior_average
+``model_weights``, ``posterior_average``
 

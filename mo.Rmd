@@ -1,4 +1,12 @@
+---
+title: "``brms::mo``"
+output: html_document
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
 ``mo`` Monotonic Predictors in brms Models
 
 #### Description 

@@ -1,5 +1,13 @@
+---
+title: "``brms::set_prior``"
+output: html_document
+---
 
-set_prior Prior Definitions for brms Models
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+ Prior Definitions for brms Models
 #### Description 
 Define priors for specific parameters or classes of parameters
 
@@ -13,18 +21,18 @@ prior_string(prior, ...)
 </code></pre>
 #### Arguments
 
-* prior A character string defining a distribution in Stan language
+* ``prior``: A character string defining a distribution in Stan language
 * ``class``: The parameter class. Defaults to "b" (i.e. population-level effects). See ’ Details’ for other valid parameter classes.
-* coef Name of the (population- or group-level) parameter.
-* group Grouping factor of group-level parameters.
+* ``coef``: Name of the (population- or group-level) parameter.
+* ``group``: Grouping factor of group-level parameters.
 * resp Name of the response variable / category. Only used in multivariate models.
 * dpar Name of a distributional parameter. Only used in distributional models.
-* nlpar Name of a non-linear parameter. Only used in non-linear models.
+* ``nlpar``: Name of a non-linear parameter. Only used in non-linear models.
 * lb Lower bound for parameter restriction. Currently only allowed for classes "b",
 "ar", "ma", and "arr". Defaults to NULL, that is no restriction.
 * ub Upper bound for parameter restriction. Currently only allowed for classes "b",
 "ar", "ma", and "arr". Defaults to NULL, that is no restriction.
- *check Logical; Indicates whether priors should be checked for validity (as far as possible). Defaults to TRUE. If FALSE, prior is passed to the Stan code as is, and all other arguments are ignored.
+* ``check`` Logical; Indicates whether priors should be checked for validity (as far as possible). Defaults to TRUE. If FALSE, prior is passed to the Stan code as is, and all other arguments are ignored.
 ... arguments passed to set_prior.
 #### Value
 An object of class brmsprior to be used in the prior argument of brm.

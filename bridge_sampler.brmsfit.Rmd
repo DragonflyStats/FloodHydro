@@ -1,5 +1,13 @@
+---
+title: "``brms::bridge_sampler.brmsfit``"
+output: html_document
+---
 
-bridge_sampler.brmsfit
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 Log Marginal Likelihood via Bridge Sampling
 #### Description 
 Computes log marginal likelihood via bridge sampling, which can be used in the computation of

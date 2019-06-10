@@ -7,7 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-`
+
 
 make_standata Data for brms Models
 #### Description 
@@ -23,7 +23,7 @@ make_standata(formula, data, family = gaussian(), prior = NULL,
 * ``formula``: An object of class formula, brmsformula, or mvbrmsformula (or one that can
                                                                           be coerced to that classes): A symbolic description  of the model to be fitted.
 The details of model specification are explained in brmsformula.
-data An object of class data.frame (or one that can be coerced to that class) containing
+* ``data``: An object of class data.frame (or one that can be coerced to that class) containing
 data of all variables used in the model.
 * `` family`` A description  of the response distribution and link function to be used in the
 model. This can be a family function, a call to a family function or a character string naming the family. Every family function has a link argument allowing to
@@ -65,6 +65,3 @@ names(data2)
 
 #### Value
 A named list of objects containing the required data to fit a brms model with Stan.
-marginal_effects.brmsfit 97
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>

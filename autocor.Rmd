@@ -1,0 +1,11 @@
+autocor 11
+autocor Extract Autocorrelation Structures
+Description
+Extract Autocorrelation Structures
+Usage
+autocor(object, ...)
+Arguments
+object An R object.
+... Further arguments passed to or from other methods.
+#### Value
+What exactly is returned depends on the specific method.

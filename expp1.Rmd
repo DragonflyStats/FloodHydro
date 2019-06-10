@@ -1,4 +1,13 @@
-expp1 Exponential function plus one.
+---
+title: "``brms::expp1``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+ Exponential function plus one.
 #### Description 
 Computes exp(x) + 1.
 Usage

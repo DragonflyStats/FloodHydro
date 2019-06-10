@@ -1,4 +1,13 @@
-152 stanplot.brmsfit
+---
+title: "``brms::stanplot.brmsfit``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 stanplot.brmsfit MCMC Plots Implemented in bayesplot
 #### Description 
 Convenient way to call MCMC plotting functions implemented in the bayesplot package.
@@ -27,11 +36,14 @@ A ggplot object that can be further customized using the ggplot2 package.
 
 #### Examples 
 ```{r}
+data("epilepsy")
 ## Not run:
 model <- brm(count ~ log_Age_c + log_Base4_c * Trt
 + (1|patient) + (1|visit),
 data = epilepsy, family = "poisson")
-stanvar 153
+```
+
+```{r}
 # plot posterior intervals
 stanplot(model)
 # only show population-level effects in the plots

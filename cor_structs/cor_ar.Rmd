@@ -1,20 +1,33 @@
-cor_ar AR(p) correlation structure
-#### Description 
+---
+title: "``brms::cor_ar``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+AR(p) correlation structure
+
+#### Description
+
 This function is a constructor for the cor_arma class, allowing for autoregression terms only.
-Usage
+
+#### Usage
 <pre><code>
 cor_ar(formula = ~1, p = 1, cov = FALSE)
 </code></pre>
 
 #### Arguments
-* formula A one sided formula of the form ~ t, or ~ t | g, specifying a time covariate
+* ``formula`` A one sided formula of the form ~ t, or ~ t | g, specifying a time covariate
 t and, optionally, a grouping factor g. A covariate for this correlation structure
-must be integer #### Valued. When a grouping factor is present in formula, the
+must be integer valued. When a grouping factor is present in formula, the
 correlation structure is assumed to apply only to observations within the same
 grouping level; observations with different grouping levels are assumed to be
 uncorrelated. Defaults to ~ 1, which corresponds to using the order of the
 observations in the data as a covariate, and no groups.
-* p A non-negative integer specifying the autoregressive (AR) order of the ARMA
+* ``p`` A non-negative integer specifying the autoregressive (AR) order of the ARMA
 structure. Default is 1.
 * cov A flag indicating whether ARMA effects should be estimated by means of residual covariance matrices (currently only possible for stationary ARMA effects of order 1). If FALSE (the default) a regression formulation is used that is considerably
 faster and allows for ARMA effects of order higher than 1 but cannot
@@ -31,9 +44,7 @@ cor_ar(~visit|patient, p = 2)
 AR refers to autoregressive effects of residuals, which is what is typically understood as autoregressive
 effects. However, one may also model autoregressive effects of the response variable, which is
 called ARR in brms.
+
 #### Value
-An object of class cor_arma containing solely autoregression terms.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-See Also
-cor_arma
+An object of class ``cor_arma`` containing solely autoregression terms.
+

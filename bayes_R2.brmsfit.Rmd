@@ -1,25 +1,20 @@
 ---
-
-title: "brms"
-
+title: " ``brms::bayes_R2.brmsfit``"
 output: html_document
-
 ---
 
 
-
 ```{r setup, include=FALSE}
-
 knitr::opts_chunk$set(echo = TRUE)
 library(brms)
-
 ```
 
 
 
-`` bayes_R2.brmsfit``  Compute a Bayesian version of R-squared for regression models
+Compute a Bayesian version of R-squared for regression models
 
 #### Description 
+
 Compute a Bayesian version of R-squared for regression models
 
 #### Usage
@@ -50,6 +45,8 @@ TRUE.
 fit <- brm(mpg ~ wt + cyl, data = mtcars)
 summary(fit)
 bayes_R2(fit)
+```
+```{r}
 # compute R2 with new data
 nd <- data.frame(mpg = c(10, 20, 30), wt = c(4, 3, 2), cyl = c(8, 6, 4))
 bayes_R2(fit, newdata = nd)

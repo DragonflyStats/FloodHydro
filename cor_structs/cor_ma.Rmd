@@ -1,4 +1,14 @@
-## cor_ma MA(q) correlation structure
+---
+title: "``brms::cor_ma``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+##  MA(q) correlation structure
 
 #### Description 
 
@@ -20,12 +30,11 @@ faster and allows for ARMA effects of order higher than 1 but cannot handle user
 
 #### Examples
 
+```{r}
+data(epilepsy)
 cor_ma(~visit|patient, q = 2)
+```
 
 #### Value
 An object of class cor_arma containing solely moving average terms.
-Author(s)
-Paul-Christian Buerkner <paul.buerkner@gmail.com>
-cor_sar 51
-See Also
-cor_arma
+

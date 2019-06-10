@@ -1,20 +1,12 @@
 ---
-
-title: "brms"
-
+title: "``brms::ngrps.brmsfit``"
 output: html_document
-
 ---
 
-
-
 ```{r setup, include=FALSE}
-
 knitr::opts_chunk$set(echo = TRUE)
-
+library(brms)
 ```
-
-
 
 ``ngrps.brmsfit`` : Number of levels
 

@@ -1,3 +1,15 @@
+---
+title: "``brms::me``"
+output: html_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+
+
 ## ``me``
 
 Predictors with Measurement Error in brms Models
@@ -48,8 +60,4 @@ summary(fit2)
 For detailed documentation see help(brmsformula).
 By default, latent noise-free variables are assumed to be correlated. To change that, add set_mecor(FALSE)
 to your model formula object (see examples).
-
-
-#### See Also
-brmsformula, brmsformula-helpers
 

@@ -1,5 +1,5 @@
 ---
-title: "brms"
+title: "brms:::loo.brmsfit"
 author: "Kevin O Brien"
 date: "1 November 2018"
 output: html_document
@@ -47,7 +47,7 @@ object for later usage.
 If just one object is provided, an object of class ic. If multiple objects are provided, an object of
 class iclist.
 
-Examples
+#### Examples
 ```{r}
 ## Not run:
 # model with population-level effects only
