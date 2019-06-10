@@ -25,11 +25,11 @@ backwards compatibility, but setting it to TRUE is usually the better choice.
 scale Logical; Indicates whether weights should be scaled so that the average weight
 equals one. Defaults to FALSE.
 y2 A vector specifying the upper bounds in interval censoring.
-lb A numeric vector or single numeric #### Value specifying the lower truncation bound.
-ub A numeric vector or single numeric #### Value specifying the upper truncation bound.
+lb A numeric vector or single numeric value specifying the lower truncation bound.
+ub A numeric vector or single numeric value specifying the upper truncation bound.
 addition-terms 7
 sdy Optional known measurement error of the response treated as standard deviation.
-If specified, handles measurement error and (completely) missing #### Values
+If specified, handles measurement error and (completely) missing values
 at the same time using the plausible-#### Values-technique.
 #### Details
 These functions are almost solely useful when called in formulas passed to the brms package.
@@ -40,6 +40,7 @@ A vector containing additional information on the response variable in an approp
 See Also
 brm, brmsformula
 #### Examples
+```{r}
 ## Not run:
 ## Random effects meta-analysis
 nstudies <- 20
@@ -64,56 +65,8 @@ fit3 <- brm(time | cens(censored) ~ age * sex + disease + (1|patient),
 data = kidney, family = lognormal())
 summary(fit3)
 ## Poisson model with truncated counts
-fit4 <- brm(count | trunc(ub = 104) ~ log_Base4_c * Trt_c,
+fit4 <- brm(count | trunc(ub = 104) ~ zBase * Trt_c,
 data = epilepsy, family = poisson())
 summary(fit4)
 ## End(Not run)
-8 add_ic
-add_ic Add information criteria and fit indices to fitted model objects
-Description
-Add information criteria and fit indices to fitted model objects
-Usage
-<pre><code>
-add_ic(x, ...)
-## S3 method for class 'brmsfit'
-add_ic(x, ic = "loo", model_name = NULL,
-overwrite = FALSE, file = NULL, force_save = FALSE, ...)
-add_ic(x, ...) <- #### Value
-add_loo(x, ...)
-add_waic(x, ...)
-</code></pre>
-
-#### Arguments
-
-x An R object typically of class brmsfit.
-... Further arguments passed to the underlying functions computing the information
-criteria or fit indices.
-ic, #### Value Names of the information criteria / fit indices to compute. Currently supported
-are "loo", "waic", "kfold", "R2" (R-squared), and "marglik" (log marginal
-likelihood).
-model_name Optional name of the model. If NULL (the default) the name is taken from the
-call to x.
-overwrite Logical; Indicates if already stored fit indices should be overwritten. Defaults to
-FALSE.
-file Either NULL or a character string. In the latter case, the fitted model object
-including the newly added criterion #### Values is saved via saveRDS in a file named
-after the string supplied in file. The .rds extension is added automatically. If
-x was already stored in a file before, the file name will be reused automatically
-(with a message) unless overwritten by file. In any case, file only applies if
-new criteria were actually added via add_ic or if force_save was set to TRUE.
-force_save Logical; only relevant if file is specified and ignored otherwise. If TRUE, the
-fitted model object will be saved regardless of whether new criteria were added
-via add_ic.
-as.mcmc.brmsfit 9
-#### Details
-The methods add_loo and add add_waic are just convenient wrappers around add_ic.
-#### Value
-An object of the same class as x, but with information criteria added for later usage.
-Examples
-## Not run:
-fit <- brm(count ~ Trt, epilepsy, poisson())
-# add both LOO and WAIC at once
-fit <- add_ic(fit, ic = c("loo", "waic"))
-print(fit$loo)
-print(fit$waic)
-## End(Not run)
+```

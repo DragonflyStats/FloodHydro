@@ -1,3 +1,13 @@
+---
+title: "``brms::autocor``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 autocor 11
 autocor Extract Autocorrelation Structures
 Description

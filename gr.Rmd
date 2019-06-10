@@ -10,8 +10,7 @@ library(brms)
 
 `` gr``  Set up basic grouping terms in brms
 #### Description 
-Function used to set up a basic grouping term in brms. The function does not evaluate its </code></pre>
-#### Arguments
+Function used to set up a basic grouping term in brms. The function does not evaluate its arguments
 
 – it exists purely to help set up a model with grouping terms. gr is called implicitly inside the package and there is usually no need to call it directly.
 

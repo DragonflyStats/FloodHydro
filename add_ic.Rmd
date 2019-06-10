@@ -1,0 +1,51 @@
+
+8 add_ic
+add_ic Add information criteria and fit indices to fitted model objects
+
+Description
+Add information criteria and fit indices to fitted model objects
+Usage
+<pre><code>
+add_ic(x, ...)
+## S3 method for class 'brmsfit'
+add_ic(x, ic = "loo", model_name = NULL,
+overwrite = FALSE, file = NULL, force_save = FALSE, ...)
+add_ic(x, ...) <- #### Value
+add_loo(x, ...)
+add_waic(x, ...)
+</code></pre>
+
+#### Arguments
+
+x An R object typically of class brmsfit.
+... Further arguments passed to the underlying functions computing the information
+criteria or fit indices.
+ic, #### Value Names of the information criteria / fit indices to compute. Currently supported
+are "loo", "waic", "kfold", "R2" (R-squared), and "marglik" (log marginal
+likelihood).
+model_name Optional name of the model. If NULL (the default) the name is taken from the
+call to x.
+overwrite Logical; Indicates if already stored fit indices should be overwritten. Defaults to
+FALSE.
+file Either NULL or a character string. In the latter case, the fitted model object
+including the newly added criterion #### Values is saved via saveRDS in a file named
+after the string supplied in file. The .rds extension is added automatically. If
+x was already stored in a file before, the file name will be reused automatically
+(with a message) unless overwritten by file. In any case, file only applies if
+new criteria were actually added via add_ic or if force_save was set to TRUE.
+force_save Logical; only relevant if file is specified and ignored otherwise. If TRUE, the
+fitted model object will be saved regardless of whether new criteria were added
+via add_ic.
+as.mcmc.brmsfit 9
+#### Details
+The methods add_loo and add add_waic are just convenient wrappers around add_ic.
+#### Value
+An object of the same class as x, but with information criteria added for later usage.
+Examples
+## Not run:
+fit <- brm(count ~ Trt, epilepsy, poisson())
+# add both LOO and WAIC at once
+fit <- add_ic(fit, ic = c("loo", "waic"))
+print(fit$loo)
+print(fit$waic)
+## End(Not run)
