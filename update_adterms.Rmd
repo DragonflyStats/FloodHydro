@@ -1,4 +1,12 @@
+---
+title: "``brms::update_adterms``"
+output: html_document
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
 
 update_adterms Update Formula Addition Terms
 #### Description 

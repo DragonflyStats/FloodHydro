@@ -1,3 +1,13 @@
+---
+title: "``brms::posterior_average.brmsfit``  Extract Parameter Names"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 ## posterior_average.brmsfit
 Posterior samples of parameters averaged across models
 

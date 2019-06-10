@@ -1,3 +1,12 @@
+---
+title: "``brms::stanvar``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
 
 stanvar User-defined variables passed to Stan
 #### Description 

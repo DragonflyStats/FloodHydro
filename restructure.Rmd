@@ -1,5 +1,15 @@
+---
+title: "``brms::restructure ``"
+output: html_document
+---
 
-restructure Restructure Old brmsfit Objects
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+
+ Restructure Old brmsfit Objects
 
 #### Description 
 

@@ -1,5 +1,5 @@
 ---
-title: "``fixef.brmsfit`` "
+title: "``brms::fixef.brmsfit`` "
 output: html_document
 ---
 

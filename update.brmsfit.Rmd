@@ -1,3 +1,13 @@
+---
+title: "``brms::update.brmsfit ``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 update.brmsfit Update brms models
 
 #### Description 
@@ -14,9 +24,9 @@ recompile = NULL, ...)
 
 #### Arguments
 
-* object An object of class brmsfit.
+* ``object`` An object of class brmsfit.
 * formula. Changes to the formula; for details see update.formula and brmsformula.
-* newdata Optional data.frame to update the model with new data.
+* ``newdata``: Optional data.frame to update the model with new data.
 * recompile Logical, indicating whether the Stan model should be recompiled. If NULL (the default), update tries to figure out internally, if recompilation is necessary. Setting it to FALSE will cause all Stan code changing arguments to be ignored.
 * ... Other arguments passed to brm.
 

@@ -1,4 +1,15 @@
-marginal_smooths.brmsfit
+---
+title: "``brms::marginal_smooths.brmsfit``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+
+
 Display Smooth Terms
 #### Description 
 Display smooth s and t2 terms of models fitted with brms.

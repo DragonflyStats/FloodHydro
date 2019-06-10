@@ -1,3 +1,13 @@
+---
+title: "``brms::is.brmsfit``  Extract Parameter Names"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 ## ``is.brmsfit``: Checks if argument is a brmsfit object
 
 #### Description 

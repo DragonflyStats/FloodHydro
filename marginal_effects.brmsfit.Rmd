@@ -1,3 +1,14 @@
+---
+title: "``brms::marginal_effects.brmsfit``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+
 marginal_effects.brmsfit : Display Marginal Effects of Predictors
 
 #### Description 
@@ -21,45 +32,43 @@ theme = NULL, ask = TRUE, plot = TRUE, ...)
 * ``effects``: An optional character vector naming effects (main effects or interactions) for which to compute marginal plots. Interactions are specified by a : between variable names. If NULL (the default), plots are generated for all main effects
 and two-way interactions estimated in the model. When specifying effects manually, all two-way interactions may be plotted even if not originally modeled.
 * ``conditions``: An optional data.frame containing variable values to condition on. Each effect
-defined in effects will be plotted separately for each row of conditions. values in the cond__ column will be used as titles of the subplots. If cond__ is not given, the row names will be used for this purpose instead. It is recommended
-to only define a few rows in order to keep the plots clear. See make_conditions
+defined in effects will be plotted separately for each row of conditions. values in the cond__ column will be used as titles of the subplots. If ``cond__`` is not given, the row names will be used for this purpose instead. It is recommended to only define a few rows in order to keep the plots clear. See make_conditions
 for an easy way to define conditions. If NULL (the default), numeric variables will be marginalized by using their means and factors will get their reference level assigned.
 * ``int_conditions``: An optional named list whose elements are numeric vectors of values of the second variables in two-way interactions. At these values, predictions are evaluated. The names of int_conditions have to match the variable names exactly.
 Additionally, the elements of the numeric vectors may be named themselves, in which case their names appear as labels for the conditions in the plots. Instead of vectors, functions returning vectors may be passed and are applied on the original values of the corresponding variable. If NULL (the default), predictions are evaluated at the mean and at mean + = 􀀀 sd.
 * ``re_formula``: A formula containing random effects to be considered in the marginal predictions. If NULL, include all random effects; if NA (default), include no random effects.
-* robust If TRUE (the default) the median is used as the measure of central tendency. If FALSE the mean is used instead.
+* ``robust``: If TRUE (the default) the median is used as the measure of central tendency. If FALSE the mean is used instead.
 probs The quantiles to be used in the computation of credible intervals (defaults to 2.5 and 97.5 percent quantiles)
-* method Either "fitted" or "predict". If "fitted", plot marginal predictions of the regression curve. If "predict", plot marginal predictions of the responses.
-* spaghetti Logical. Indicates if predictions should be visualized via spaghetti plots. Only applied for numeric predictors. If TRUE, it is recommended to set argument nsamples to a relatively small value (e.g. 100) in order to reduce computation
+* ``method``: Either "fitted" or "predict". If "fitted", plot marginal predictions of the regression curve. If "predict", plot marginal predictions of the responses.
+* ``spaghetti``: Logical. Indicates if predictions should be visualized via spaghetti plots. Only applied for numeric predictors. If TRUE, it is recommended to set argument nsamples to a relatively small value (e.g. 100) in order to reduce computation
 time.
-surface Logical. Indicates if interactions or two-dimensional smooths should be visualized
+* ``surface``: Logical. Indicates if interactions or two-dimensional smooths should be visualized
 as a surface. Defaults to FALSE. The surface type can be controlled via
 argument stype of the related plotting method.
-categorical Logical. Indicates if effects of categorical or ordinal models should be shown in terms of probabilities of response categories. Defaults to FALSE.
+* ``categorical``: Logical. Indicates if effects of categorical or ordinal models should be shown in terms of probabilities of response categories. Defaults to FALSE.
 * ordinal Deprecated! Please use argument categorical. Logical. Indicates if effects in ordinal models should be visualized as a raster with the response categories on the y-axis. Defaults to FALSE.
 
 * ``transform``: A function or a character string naming a function to be applied on the predicted responses before summary statistics are computed. Only allowed if method = "predict".
 * ``resolution``: Number of support points used to generate the plots. Higher resolution leads to smoother plots. Defaults to 100. If surface is TRUE, this implies 10000 support points for interaction terms, so it might be necessary to reduce resolution
 when only few RAM is available.
-* ``select_points:``: Positive number. Only relevant if points or rug are set to TRUE: Actual data points of numeric variables that are too far away from the values specified in conditions can be excluded from the plot. #### Values are scaled into the unit interval
-and then points more than select_points from the #### Values in conditions are excluded. By default, all points are used.
-too_far Positive number. For surface plots only: Grid points that are too far away from the actual data points can be excluded from the plot. too_far determines what is too far. The grid is scaled into the unit square and then grid points more than
+* ``select_points:``: Positive number. Only relevant if points or rug are set to TRUE: Actual data points of numeric variables that are too far away from the values specified in conditions can be excluded from the plot. Values are scaled into the unit interval and then points more than select_points from the values in conditions are excluded. By default, all points are used.
+* ``too_far``: Positive number. For surface plots only: Grid points that are too far away from the actual data points can be excluded from the plot. ``too_far`` determines what is too far. The grid is scaled into the unit square and then grid points more than
 too_far from the predictor variables are excluded. By default, all grid points are used. Ignored for non-surface plots.
-... Further arguments  such as subset or nsamples passed to predict or fitted.
-ncol Number of plots to display per column for each effect. If NULL (default), ncol is computed internally based on the number of rows of conditions.
-points Logical; indicating whether the original data points should be added via geom_jitter.
+* ``...``: Further arguments  such as subset or nsamples passed to predict or fitted.
+* ``ncol``: Number of plots to display per column for each effect. If NULL (default), ncol is computed internally based on the number of rows of conditions.
+* ``points``: Logical; indicating whether the original data points should be added via geom_jitter.
 Default is FALSE. Note that only those data points will be added that match the specified conditions defined in conditions. For categorical predictors, the conditions have to match exactly. For numeric predictors, argument select_points
 is used to determine, which points do match a condition.
 * rug Logical; indicating whether a rug representation of predictor values should be added via geom_rug. Default is FALSE. Depends on select_points in the same way as points does.
-* mean Logical; only relevant for spaghetti plots. If TRUE (the default), display the mean regression line on top of the regression lines for each sample.
-* jitter_width Only used if points = TRUE: Amount of horizontal jittering of the data points. Mainly useful for ordinal models. Defaults to 0 that is no jittering.
+* ``mean``: Logical; only relevant for spaghetti plots. If TRUE (the default), display the mean regression line on top of the regression lines for each sample.
+* ``jitter_width``: Only used if points = TRUE: Amount of horizontal jittering of the data points. Mainly useful for ordinal models. Defaults to 0 that is no jittering.
 * stype Indicates how surface plots should be displayed. Either "contour" or "raster".
-* line_args Only used in plots of continuous predictors: A named list of arguments passed
+* ``line_args``: Only used in plots of continuous predictors: A named list of arguments passed
 to geom_smooth.
-* cat_args Only used in plots of categorical predictors: A named list of arguments
+* ``cat_args``: Only used in plots of categorical predictors: A named list of arguments
  passed to geom_point.
-errorbar_args Only used in plots of categorical predictors: A named list of arguments passed to geom_errorbar.
-surface_args Only used in surface plots: A named list of arguments passed to geom_contour
+* ``errorbar_args``: Only used in plots of categorical predictors: A named list of arguments passed to geom_errorbar.
+* ``surface_args``: Only used in surface plots: A named list of arguments passed to geom_contour
 or geom_raster (depending on argument stype).
 spaghetti_args Only used in spaghetti plots: A named list of arguments passed to geom_smooth.
 point_args Only used if points = TRUE: A named list of arguments passed to geom_jitter.
@@ -71,28 +80,6 @@ ask logical; indicates if the user is prompted before a new page is plotted. Onl
 if plot is TRUE.
 plot logical; indicates if plots should be plotted directly in the active graphic device.
 Defaults to TRUE.
-#### Details
-When creating marginal_effects for a particular predictor (or interaction of two predictors), one
-has to choose the values of all other predictors to condition on. By default, the mean is used
-for continuous variables and the reference category is used for factors, but you may change these
-values via argument conditions. This also has an implication for the points argument: In the
-created plots, only those points will be shown that correspond to the factor levels actually used in
-the conditioning, in order not to create the false impression of bad model fit, where it is just due
-to conditioning on certain factor levels. Since we condition on rather than actually marginalizing
-variables, the name marginal_effects is possibly not ideally chosen in retrospect.
-NA #### Values within factors in conditions, are interpreted as if all dummy variables of this factor are
-zero. This allows, for instance, to make predictions of the grand mean when using sum coding.
-To fully change colors of the created plots, one has to amend both scale_colour and scale_fill.
-See scale_colour_grey or scale_colour_gradient for more details.
-#### Value
-An object of class brmsMarginalEffects, which is a named list with one data.frame per effect containing
-all information required to generate marginal effects plots. Among others, these data.frames
-contain some special variables, namely estimate__ (predicted #### Values of the response), se__ (standard
-error of the predicted response), lower__ and upper__ (lower and upper bounds of the uncertainty
-interval of the response), as well as cond__ (used in faceting when conditions contains
-multiple rows).
-The corresponding plot method returns a named list of ggplot objects, which can be further customized
-using the ggplot2 package.
 
 ### Examples
 ```{r}
@@ -157,3 +144,28 @@ select_points = 0.1
 plot(me, points = TRUE)
 ## End(Not run)
 ```{r}
+
+#### Value
+An object of class brmsMarginalEffects, which is a named list with one data.frame per effect containing
+all information required to generate marginal effects plots. Among others, these data.frames
+contain some special variables, namely estimate__ (predicted values of the response), se__ (standard
+error of the predicted response), lower__ and upper__ (lower and upper bounds of the uncertainty
+interval of the response), as well as cond__ (used in faceting when conditions contains
+multiple rows).
+The corresponding plot method returns a named list of ggplot objects, which can be further customized
+using the ggplot2 package.
+
+
+#### Details
+When creating marginal_effects for a particular predictor (or interaction of two predictors), one
+has to choose the values of all other predictors to condition on. By default, the mean is used
+for continuous variables and the reference category is used for factors, but you may change these
+values via argument conditions. This also has an implication for the points argument: In the
+created plots, only those points will be shown that correspond to the factor levels actually used in
+the conditioning, in order not to create the false impression of bad model fit, where it is just due
+to conditioning on certain factor levels. Since we condition on rather than actually marginalizing
+variables, the name marginal_effects is possibly not ideally chosen in retrospect.
+NA values within factors in conditions, are interpreted as if all dummy variables of this factor are
+zero. This allows, for instance, to make predictions of the grand mean when using sum coding.
+To fully change colors of the created plots, one has to amend both scale_colour and scale_fill.
+See scale_colour_grey or scale_colour_gradient for more details.

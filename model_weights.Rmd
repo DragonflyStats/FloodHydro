@@ -1,10 +1,22 @@
+---
+title: "``brms::model_weights.brmsfit``  Extract Parameter Names"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
 
 model_weights.brmsfit Model Weighting Methods
+
 #### Description 
+
 Compute model weights in various ways, for instance via stacking of predictive distributions,
 Akaike weights, or marginal likelihoods.
 
 #### Usage
+
 <pre><code>
 ## S3 method for class 'brmsfit'
 model_weights(x, ..., weights = "loo2",
@@ -21,15 +33,18 @@ to compute weights based on log marginal likelihoodvalues (make sure to specify 
 
 
 #### Examples
+
 ```{r}
 # model with 'treat' as predictor
 fit1 <- brm(rating ~ treat + period + carry, data = inhaler)
 summary(fit1)
-
+```
+```{r}
 # model without 'treat' as predictor
 fit2 <- brm(rating ~ period + carry, data = inhaler)
-
 summary(fit2)
+```
+```{r}
 # obtain Akaike weights based on the WAIC
 model_weights(fit1, fit2, weights = "waic")
 ```

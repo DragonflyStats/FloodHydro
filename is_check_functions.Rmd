@@ -1,8 +1,15 @@
+---
+title: "``brms::is.mvbrmsformula``  Extract Parameter Names"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
 
 
-
-
-is.mvbrmsformula Checks if argument is a mvbrmsformula object
+ Checks if argument is a mvbrmsformula object
 #### Description 
 Checks if argument is a mvbrmsformula object
 

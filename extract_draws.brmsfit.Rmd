@@ -1,5 +1,5 @@
 ---
-title: "``extract_draws.brmsfit``"
+title: "``brms::extract_draws.brmsfit``"
 output: html_document
 ---
 

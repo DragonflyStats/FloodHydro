@@ -1,4 +1,14 @@
-VarCorr.brmsfit
+---
+title: "``brms::VarCorr.brmsfit``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+
 ## ``VarCorr.brmsfit``: Extract Variance and Correlation Components
 
 #### Description 

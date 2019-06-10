@@ -1,5 +1,5 @@
 ---
-title: "``parnames``  Extract Parameter Names"
+title: "``brms::parnames``  Extract Parameter Names"
 output: html_document
 ---
 

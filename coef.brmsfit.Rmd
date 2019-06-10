@@ -1,4 +1,15 @@
-coef.brmsfit Extract Model Coefficients
+---
+title: "``brms::coef.brmsfit``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
+
+ Extract Model Coefficients
 
 #### Description 
 

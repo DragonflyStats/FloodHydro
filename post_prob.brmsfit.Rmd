@@ -1,3 +1,12 @@
+---
+title: "``brms::post_prob.brmsfit``  Extract Parameter Names"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
 
 post_prob.brmsfit Posterior Model Probabilities from Marginal Likelihoods
 #### Description 
