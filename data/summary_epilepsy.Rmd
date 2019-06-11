@@ -1,0 +1,70 @@
+---
+title: "``brms::epilepsy``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+library(janitor)
+library(magrittr)
+library(dplyr)
+```
+
+Epileptic seizure counts
+
+#### Description 
+Breslow and Clayton (1993) analyze data initially provided by Thall and Vail (1990) concerning seizure counts in a randomized trial of anti-convulsant therapy in epilepsy. Covariates are treatment,
+8-week baseline seizure counts, and age of the patients in years.
+
+```{r}
+head(epilepsy)
+
+```
+
+```{r}
+epilepsy %>% tabyl(Age,Trt)
+```
+
+#### Format
+
+A dataframe of 236 observations containing information on the following 9 variables.
+
+* ``Age``: The age of the patients in years
+* ``Base``: The seizure count at 8-weeks baseline
+* ``Trt``: Either 0 or 1 indicating if the patient received anti-convulsant therapy
+* ``zAge``: The logarithm of Age centered around its mean
+* ``zBase``: The logarithm of Base divided by 4 (i.e. log(Base/4)) centered around its mean
+* ``Trt``: Trt centered around its mean
+* ``visit``: The session number from 1 (first visit) to 4 (last visit)
+* ``count``: The seizure count between two visits
+* ``patient``: The patient number
+* ``obs``: The observation number, i.e. a unique identifier for each observation
+
+
+#### Examples
+```{r}
+
+## poisson regression without random effects.
+fit1 <- brm(count ~ zAge + zBase * Trt,
+  data = epilepsy, family = poisson())
+summary(fit1)
+```
+```{r}
+plot(fit1)
+```
+
+```{r}
+## poisson regression with random intercepts of patients and visits
+## as well as normal priors for fixed effects parameters.
+fit2 <- brm(count ~ zAge + zBase * Trt
++ (1|patient) + (1|visit),
+data = epilepsy, family = poisson(),
+prior = set_prior("normal(0,5)"))
+```
+
+```{r}
+summary(fit2)
+plot(fit2)
+
+```

@@ -28,9 +28,9 @@ posterior_interval(object, pars = NA, prob = 0.95,...)
 
 #### Examples
 ```{r}
-## Not run:
+
 fit <- brm(count ~ zAge + zBase * Trt,
 data = epilepsy, family = negbinomial())
 posterior_interval(fit)
-## End(Not run)
+
 ```

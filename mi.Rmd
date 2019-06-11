@@ -7,10 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(brms)
 ```
-## ``mi`` 
-Predictors with Missing values in brms Models
-
-#### Description 
+## ``mi`` : Description 
 Predictors with Missing values in brms Models
 
 #### Usage
@@ -28,6 +25,8 @@ Predictors with Missing values in brms Models
 data("nhanes", package = "mice")
 bform <- bf(bmi | mi() ~ age * mi(chl)) +
   bf(chl | mi() ~ age) + set_rescor(FALSE)
+```
+```{r}
 fit <- brm(bform, data = nhanes)
 summary(fit)
 ```
@@ -39,6 +38,3 @@ LOO(fit, newdata = na.omit(fit$data))
 #### Details
 For detailed documentation see help(brmsformula).
 This function is almost solely useful when called in formulas passed to the brms package.
-See Also
-brmsformula
-mixture 105

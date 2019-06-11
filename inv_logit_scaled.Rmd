@@ -1,3 +1,13 @@
+---
+title: "``brms::inv_logit_scaled``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 ## ``inv_logit_scaled`` Scaled inverse logit-link
 
 #### Description 

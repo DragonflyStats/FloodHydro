@@ -1,3 +1,13 @@
+---
+title: "``brms::cs``"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+```
+
 ## ``cs`` 
 
 Category Specific Predictors in brms Models
@@ -20,9 +30,13 @@ cs(expr)
 
 ```{r}
 fit <- brm(rating ~ period + carry + cs(treat),
-data = inhaler, family = sratio("cloglog"),
-prior = set_prior("normal(0,5)"), chains = 2)
+  data = inhaler, family = sratio("cloglog"),
+  prior = set_prior("normal(0,5)"), chains = 2)
+```
+```{r}
 summary(fit)
+```
+```{r}
 plot(fit, ask = FALSE)
 
 ```
