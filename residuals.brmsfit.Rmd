@@ -18,6 +18,8 @@ residuals(object, newdata = NULL, re_formula = NULL,
 type = c("ordinary", "pearson"), method = c("fitted", "predict"),
 resp = NULL, nsamples = NULL, subset = NULL, sort = FALSE,
 summary = TRUE, robust = FALSE, probs = c(0.025, 0.975), ...)
+</code></pre>
+<pre><code>
 ## S3 method for class 'brmsfit'
 predictive_error(object, newdata = NULL,
 re_formula = NULL, re.form = NULL, resp = NULL, nsamples = NULL,
@@ -26,39 +28,44 @@ subset = NULL, sort = FALSE, robust = FALSE, probs = c(0.025,
 </code></pre>
 #### Arguments
 
-object An object of class brmsfit.
-newdata An optional data.frame for which to evaluate predictions. If NULL (default), the
+* ``object``: An object of class brmsfit.
+* ``newdata``: An optional data.frame for which to evaluate predictions. If NULL (default), the
 original data of the model is used.
-re_formula formula containing group-level effects to be considered in the prediction. If
-NULL (default), include all group-level effects; if NA, include no group-level effects.
-140 residuals.brmsfit
-type The type of the residuals, either "ordinary" or "pearson". More information
-is provided under ’#### Details’.
-method Indicates the method to compute model impliedvalues. Either "fitted" (predicted
-#### Values of the regression curve) or "predict" (predicted responsevalues).
-Using "predict" is recommended but "fitted" is the current default for reasons
-of backwards compatibility.
+* ``re_formula``: formula containing group-level effects to be considered in the prediction. If NULL (default), include all group-level effects; if NA, include no group-level effects.
+* type The type of the residuals, either "ordinary" or "pearson". More information
+is provided under ’Details’.
+* method Indicates the method to compute model impliedvalues. Either "fitted" (predicted values of the regression curve) or "predict" (predicted responsevalues).
+Using "predict" is recommended but "fitted" is the current default for reasons of backwards compatibility.
 * `` resp``: Optional names of response variables. If specified, predictions are performed
 only for the specified response variables.
-nsamples Positive integer indicating how many posterior samples should be used. If NULL
-(the default) all samples are used. Ignored if subset is not NULL.
-subset A numeric vector specifying the posterior samples to be used. If NULL (the
-default), all samples are used.
-sort Logical. Only relevant for time series models. Indicating whether to return
-predictedvalues in the original order (FALSE; default) or in the order of the time
+* ``nsamples``: Positive integer indicating how many posterior samples should be used. If NULL (the default) all samples are used. Ignored if subset is not NULL.
+* ``subset``: A numeric vector specifying the posterior samples to be used. If NULL (the default), all samples are used.
+* ``sort``: Logical. Only relevant for time series models. Indicating whether to return predictedvalues in the original order (FALSE; default) or in the order of the time
 series (TRUE).
-summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
+* ``summary``: Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
 of the rawvalues? Default is TRUE.
-robust If FALSE (the default) the mean is used as the measure of central tendency and
-the standard deviation as the measure of variability. If TRUE, the median and the
-median absolute deviation (MAD) are applied instead. Only used if summary is
-TRUE.
-probs The percentiles to be computed by the quantile function. Only used if summary
-is TRUE.
-* `` ... ``: Further arguments passed to extract_draws that control several aspects of data
-validation and prediction.
-re.form Alias of re_formula.
+* ``robust``: If FALSE (the default) the mean is used as the measure of central tendency and the standard deviation as the measure of variability. If TRUE, the median and the
+median absolute deviation (MAD) are applied instead. Only used if summary is TRUE.
+* ``probs``: The percentiles to be computed by the quantile function. Only used if summary is TRUE.
+* `` ... ``: Further arguments passed to extract_draws that control several aspects of data validation and prediction.
+* ``re.form``: Alias of ``re_formula``.
 
+
+#### Examples
+
+```{r}
+
+## fit a model
+fit <- brm(rating ~ treat + period + carry + (1|subject),
+data = inhaler, cores = 2)
+```
+
+```{r}
+## extract residuals
+res <- residuals(fit, summary = TRUE)
+head(res)
+
+```
 #### Details
 Residuals of type ordinary are of the form R = Y 􀀀 Y p, where Y is the observed and Y p is the
 predicted response. Residuals of type pearson are of the form R = (Y 􀀀 Y p)=SD(Y ), where
@@ -73,16 +80,3 @@ N matrix, where S is the number of samples, N is the number of observations, and
 length(probs) + 2.
 restructure 141
 
-
-#### Examples
-
-```{r}
-## Not run:
-## fit a model
-fit <- brm(rating ~ treat + period + carry + (1|subject),
-data = inhaler, cores = 2)
-## extract residuals
-res <- residuals(fit, summary = TRUE)
-head(res)
-## End(Not run)
-```

@@ -1,8 +1,22 @@
+---
+title: "``brms::kidney"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(brms)
+library(janitor)
+library(magrittr)
+library(dplyr)
+```
+
+
   kidney Infections in kidney patients
-  #### Description 
-  This dataset, originally discussed in McGilchrist and Aisbett (1991), describes the first and second
-  (possibly right censored) recurrence time of infection in kidney patients using portable dialysis
-  equipment. In addition, information on the risk variables age, sex and disease type is provided.
+#### Description 
+This dataset, originally discussed in McGilchrist and Aisbett (1991), describes the first and second
+(possibly right censored) recurrence time of infection in kidney patients using portable dialysis
+equipment. In addition, information on the risk variables age, sex and disease type is provided.
 
 ####  Usage
 <pre><code>
@@ -10,7 +24,7 @@ kidney
 </code></pre>
 
 #### Format
-  A dataframe of 76 observations containing information on the following 7 variables.
+ A dataframe of 76 observations containing information on the following 7 variables.
 
 * time The time to first or second recurrence of the infection, or the time of censoring
 * recur A factor of levels 1 or 2 indicating if the infection recurred for the first or second time for this patient

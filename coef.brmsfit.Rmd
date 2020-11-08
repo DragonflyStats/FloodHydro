@@ -23,31 +23,30 @@ probs = c(0.025, 0.975), ...)
 </code></pre>
 
 #### Arguments
-* object An object of class brmsfit.
-* summary Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead
-of the raw values? Default is TRUE.
-* robust If FALSE (the default) the mean is used as the measure of central tendency and the standard deviation as the measure of variability. If TRUE, the median and the
+* ``object``: An object of class brmsfit.
+* ``summary``: Should summary statistics (i.e. means, sds, and 95% intervals) be returned instead of the raw values? Default is TRUE.
+* ``robust``: If FALSE (the default) the mean is used as the measure of central tendency and the standard deviation as the measure of variability. If TRUE, the median and the
 median absolute deviation (MAD) are applied instead. Only used if summary is TRUE.
-* probs The percentiles to be computed by the quantile function. Only used if summary is TRUE.
+* ``probs``: The percentiles to be computed by the quantile function. Only used if summary is TRUE.
 * `` ... ``: Further arguments passed to fixef.brmsfit and ranef.brmsfit.
 
 #### Examples
 ```{r}
-## Not run:
-fit <- brm(count ~ log_Age_c + log_Base4_c * Trt_c + (1+Trt_c|visit),
+
+fit <- brm(count ~ zAge + zBase * Trt + (1+Trt|visit),
 data = epilepsy, family = gaussian(), chains = 2)
 ## extract population and group-level coefficients separately
 fixef(fit)
 ranef(fit)
 ## extract combined coefficients
-combine_models 41
 coef(fit)
-## End(Not run)
+
 ```
 #### Value
 If old is FALSE: A list of arrays (one per grouping factor). If summary is TRUE, names of the first
 dimension are the factor levels and names of the third dimension are the group-level effects. If
 summary is FALSE, names of the second dimension are the factor levels and names of the third
 dimension are the group-level effects.
-Author(s)
+
+#### Author(s)
 Paul-Christian Buerkner <paul.buerkner@gmail.com>
